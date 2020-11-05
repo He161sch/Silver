@@ -1,4 +1,4 @@
-import model.Player
+package model
 
 object StringManipulation {
 

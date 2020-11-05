@@ -1,5 +1,6 @@
 package model
 
+// import org.scalatest._ funktioniert nicht ?
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -13,7 +14,7 @@ class PlayerTest extends AnyWordSpec with Matchers{
         player1.toString should be ("Player1")
       }
     }}
-  
+
   "A Player2" when { "new" should {
     var player2 = Player("Player2")
     "have a name" in {
