@@ -18,11 +18,11 @@ object Silver {
     val c3 = Card(10)
     val c4 = Card(2)
     val c5 = Card(7)
-    val cards = Vector(c1, c2, c3, c4, c5)
+    val cards = List(c1, c2, c3, c4, c5)
     val hand = Hand(cards)
 
     board = board.concat(p1.toString())
-    board = board.concat(hand.toString())//.concat("\n")
+    board = board.concat(hand.toString())
     board = board.concat(p2.toString())
     board = board.concat(hand.toString())
 
