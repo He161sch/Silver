@@ -5,6 +5,8 @@ package model
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
+import scala.collection.mutable.ListBuffer
+
 class HandSpec extends AnyWordSpec with Matchers {
   "A Hand" when {
     "new" should {
