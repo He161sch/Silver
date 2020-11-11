@@ -1,21 +1,26 @@
-
 package model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
 class PlayerTest extends AnyWordSpec with Matchers {
-  "A Player1" when {
+  "A Player" when {
     "new" should {
-      var player1 = Player("Player1")
+      val player = Player("Player", Hand(List(Card(1))))
       "have a name" in {
-        player1.name should be("Player1")
+        player.name should be("Player")
       }
       "have this String representation" in {
-        player1.toString should be("Player1")
+        player.toString should be("Player")
+      }
+      "have a random hand" in {
+        player.hand should be (Hand(List(Card(1))))
+      }
+      "have a card" in {
+        player.randomCard() should be (1)
       }
       "when unapplied" in {
-        Player.unapply(player1).get should be ("Player1")
+        Player.unapply(player).get should be ("Player", Hand(List(Card(1))))
       }
     }
   }
