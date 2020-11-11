@@ -1,6 +1,7 @@
-import model.{Card, Hand, Player}
-import scala.io.StdIn._
 import aview.TUI
+import model.{Card, Hand, Player}
+
+import scala.io.StdIn._
 
 object Silver {
 
