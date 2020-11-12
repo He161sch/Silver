@@ -10,10 +10,13 @@ object Silver {
     //val board = gameBoard()
     //println(board)
     var p1 = Player("Player1", randomHand())
+    var p2 = Player("Player2", randomHand())
     var input: String = ""
+    var input2: String = ""
     val tui = new TUI
     do{
       var newCard = p1.randomCard()
+      println("Do you want to switch or discard ?")
       printf("new card = %d\n", newCard.number)
       println(p1.name +"'s hand: " + p1.hand.toString)
       input = readLine()

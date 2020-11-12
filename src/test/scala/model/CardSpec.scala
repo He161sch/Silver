@@ -17,7 +17,7 @@ class CardSpec extends AnyWordSpec with Matchers {
       "can't be seen" in {
         card.showing should be (false)
       }
-      "when unapplied" in {
+      "have unapply" in {
         Card.unapply(card).get should be (3)
       }
     }
