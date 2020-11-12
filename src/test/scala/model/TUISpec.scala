@@ -10,21 +10,34 @@ class TUISpec extends AnyWordSpec with Matchers {
     "new" should {
       val tui = new TUI
       val hand = Hand(List(Card(0), Card(1), Card(2)))
-      val player = Player("Player", Hand(List(Card(1))))
+      val player = Player("Player", Hand(List(Card(0), Card(2), Card(2))))
       val idx = 1
-      val newCard = player.randomCard()
+      val newCard = Card(3)
       "switch Cards of the Player" in{
-        tui.switchCard(player, idx, newCard).toString should be ("Player")
+        tui.switchCard(player, idx, newCard) should be (Player("Player", Hand(List(Card(0), Card(3), Card(2)))))
       }
       "remove a Card" in{
         tui.removeAtIdx(1, hand.cards) should be (List(Card(0), Card(2)))
       }
-      "can't be seen" in {
-        tui.processInputLine("s", player, newCard) should be (1)
+      "switch card with s <1-5>" in {
+        tui.processInputLine("s 1", player, newCard) should be (Player("Player", Hand(List(Card(0), Card(3), Card(2)))))
       }
-      "have unapply" in {
+      "combine cards if same value" in {
+        tui.combineCard(player, 1, 2, newCard) should be (Player("Player", Hand(List(Card(0), newCard))))
+      }
+      "dont combine cards if different value" in {
+        tui.combineCard(player, 0, 1, newCard) should be (player)
+      }
+      "check value of card with d" in {
+        tui.processInputLine("d 1", player, newCard) should be (player)
+      }
+      "combine 2 cards with s <0-4> <0-4>" in{
+        tui.processInputLine("c 0 1", player, newCard) should be (player)
+      }
+      "end game with e" in {
+        tui.processInputLine("e", player, newCard) should be (System.exit(0))
+      }
 
-      }
     }
   }
 }

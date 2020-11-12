@@ -20,10 +20,9 @@ class TUI {
           val newPlayer = combineCard(player, inputsplit(1).toInt, inputsplit(2).toInt, newCard)
           return newPlayer
         }
+        player
     }
-    player
   }
-
   def removeAtIdx[T](idx: Int, listToRemoveFrom: List[T]): List[T] = {
     assert(listToRemoveFrom.length > idx && idx >= 0)
     val (left, _ :: right) = listToRemoveFrom.splitAt(idx)
@@ -45,6 +44,4 @@ class TUI {
       player
     }
   }
-
 }
-
