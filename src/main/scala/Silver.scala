@@ -9,13 +9,13 @@ object Silver {
     //println("Welcome to Silver\n")
     //val board = gameBoard()
     //println(board)
-    var p1 = Player("player1", randomHand())
+    var p1 = Player("Player1", randomHand())
     var input: String = ""
     val tui = new TUI
     do{
       var newCard = p1.randomCard()
       printf("new card = %d\n", newCard.number)
-      println(p1.name +"hand: " + p1.hand.toString)
+      println(p1.name +"'s hand: " + p1.hand.toString)
       input = readLine()
       p1 = tui.processInputLine(input, p1, newCard)
     } while (input != "q")
