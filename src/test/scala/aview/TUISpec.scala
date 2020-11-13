@@ -1,7 +1,6 @@
-package model
+package aview
 
-
-import aview.TUI
+import model.{Card, Hand, Player}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

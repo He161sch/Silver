@@ -18,7 +18,7 @@ class PlayerTest extends AnyWordSpec with Matchers {
         player.hand should be (Hand(List(Card(1))))
       }
       "have a card" in {
-        player.randomCard() canEqual  (equal (Card(0))
+        player.randomCard() canEqual (equal (Card(0))
           or equal (Card(1))
           or equal (Card(2))
           or equal (Card(3))
