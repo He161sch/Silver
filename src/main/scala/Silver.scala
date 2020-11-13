@@ -2,10 +2,15 @@ import model.{Card, Hand, Player}
 
 import scala.io.StdIn._
 import aview.TUI
+import controller.Controller
 
 import scala.::
 
 object Silver {
+
+  val controller = new Controller()
+  val tui = new TUI(controller)
+  controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
     println("Welcome to Silver\n")
@@ -13,7 +18,8 @@ object Silver {
     //println(board)
     var p1 = Player("player1", randomHand())
     var input: String = ""
-    val tui = new TUI
+
+
     do{
       var newCard = p1.randomCard()
       printf("new card = %d\n", newCard.number)
