@@ -1,7 +1,6 @@
-package model
+package aview
 
-
-import aview.TUI
+import model.{Card, Hand, Player}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -31,7 +30,7 @@ class TUISpec extends AnyWordSpec with Matchers {
       "check value of card with d" in {
         tui.processInputLine("d 1", player, newCard) should be (player)
       }
-      "combine 2 cards with s <0-4> <0-4>" in{
+      "combine 2 cards with c <0-4> <0-4>" in{
         tui.processInputLine("c 0 1", player, newCard) should be (player)
       }
       "end game with e" in {
