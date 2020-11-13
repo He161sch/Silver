@@ -20,5 +20,6 @@ case class Hand(cards: List[Card]){
     val (left, _ :: right) = listToRemoveFrom.splitAt(idx)
     left ++ right
   }
+
 }
 
