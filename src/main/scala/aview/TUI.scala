@@ -1,42 +1,34 @@
 package aview
 
-import model.{Hand, Player, Card}
 
-class TUI {
+import controller.Controller
+import util.Observer
 
-  def processInputLine(input: String, player: Player, newCard: Card): Player = {
+class TUI(controller: Controller) extends Observer{
+
+  controller.add(this)
+
+  def processInputLine(input: String): Unit = {
     val inputsplit = input.split(" ").toList
     inputsplit match{
       case _ =>
-        if (inputsplit.head.matches("d") && inputsplit(1).matches("1|2|3|4|0")){
-          printf("card value: %d \n", player.hand.cards(inputsplit(1).toInt).number)
+        if (inputsplit.head.matches("d")){
+          controller.drawCard()
+        } else if (inputsplit.head.matches("v") && inputsplit(1).matches("1|2|3|4|0")){
+          controller.viewCard(inputsplit(1).toInt)
         } else if (inputsplit.head.matches("s") && inputsplit(1).matches("1|2|3|4|0")){
-          val x = inputsplit(1).toInt
-          println(x)
-          val newPlayer = Player(player.name, Hand(player.hand.cards.patch(inputsplit(1).toInt, List(newCard), 1)))
-          return newPlayer
+          controller.switchCard(inputsplit(1).toInt)
         } else if (inputsplit.head.matches("e")){  //end
-          printf("your points: %d", player.hand.handValue())
+          controller.showHandValue()
           System.exit(0)
         } else if (inputsplit.head.matches("c") && inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {   //combine
-          if(player.hand.cards(inputsplit(1).toInt).number.equals(player.hand.cards(inputsplit(2).toInt).number)){
-            val hand = Hand(player.hand.cards.updated(inputsplit(1).toInt, newCard))
-            val newPlayer = Player(player.name, Hand(removeAtIdx(inputsplit(2).toInt, hand.cards)))
-            return newPlayer
-          } else {
-            printf("card values are not the same! (%d, %d)\n",player.hand.cards(inputsplit(1).toInt).number, player.hand.cards(inputsplit(2).toInt).number)
-          }
-
+          controller.combineCard(inputsplit(1).toInt, inputsplit(2).toInt)
+        }else{
+          println("ungültiger befehl")
         }
+
     }
-    player
   }
 
-  def removeAtIdx[T](idx: Int, listToRemoveFrom: List[T]): List[T] = {
-    assert(listToRemoveFrom.length > idx && idx >= 0)
-    val (left, _ :: right) = listToRemoveFrom.splitAt(idx)
-    left ++ right
-  }
-
+  override def update: Unit = controller.playerToString
 }
-

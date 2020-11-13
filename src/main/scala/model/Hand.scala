@@ -15,5 +15,11 @@ case class Hand(cards: List[Card]){
     }
     sum
   }
+  def removeAtIdx[T](idx: Int, listToRemoveFrom: List[T]): List[T] = {
+    assert(listToRemoveFrom.length > idx && idx >= 0)
+    val (left, _ :: right) = listToRemoveFrom.splitAt(idx)
+    left ++ right
+  }
+
 }
 

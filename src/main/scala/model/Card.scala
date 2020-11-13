@@ -1,7 +1,6 @@
 package model
 
-case class Card(number: Int) {
-  var showing: Boolean = false
+case class Card(number: Int) { // konstruktor showing!
   override def toString: String = {
     "%d".format(number)
   }
