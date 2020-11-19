@@ -12,7 +12,10 @@ class PlayerTest extends AnyWordSpec with Matchers {
         player.name should be("Player")
       }
       "have this String representation" in {
-        player.toString should be("Player")
+        player.toString should be("Player's hand: " + Hand(List(Card(1))))
+      }
+      "get the Player" in {
+        player.getPlayer.toString should be ("Player's hand: " + Hand(List(Card(1))))
       }
       "have a hand" in {
         player.hand should be (Hand(List(Card(1))))
