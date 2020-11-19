@@ -17,6 +17,9 @@ class HandSpec extends AnyWordSpec with Matchers {
       "have a HandValue of" in {
         hand.handValue() should be (4)
       }
+      "have a Card removed" in {
+        hand.removeAtIdx(1, hand.cards)  should be (List(Card(1)))
+      }
       "have unapply" in {
         Hand.unapply(hand).get should be (List(Card(1), Card(3)))
       }
