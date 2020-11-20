@@ -3,16 +3,25 @@ package controller
 import model.{Card, Hand, Player}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import util.Observer
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
     "new" should {
       val controller = new Controller()
+      val observer = new Observer {
+        var updated: Boolean = false
+        def isUpdated: Boolean = updated
+        override def update: Unit = updated = true
+      }
+      controller.add(observer)
       controller.p1 = Player("player1", Hand(List(Card(1), Card(2), Card(2))))
       "have a Player" in {
+        observer.updated should be(true)
         controller.p1 should be(Player("player1", Hand(List(Card(1), Card(2), Card(2)))))
       }
       "have a newCard" in {
+        observer.updated should be(true)
         controller.newCard should be (Card(0))
       }
       "see a card" in {
@@ -42,10 +51,6 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "have a String representation for Player" in {
         controller.playerToString should be(Player.toString())
       }
-
-
-
     }
   }
-
 }
