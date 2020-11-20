@@ -3,7 +3,6 @@ import scala.io.StdIn._
 import aview.TUI
 import controller.Controller
 
-import scala.::
 
 object Silver {
 
