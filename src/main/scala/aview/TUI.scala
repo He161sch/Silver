@@ -33,12 +33,8 @@ class TUI(controller: Controller) extends Observer{
 
   override def update: Unit = {
     controller.gamestate match {
-      case NewGame => {
-        println("Welcome to Silver")
-        println(controller.statusToString)
-      }
       case CreatePlayer => {
-        println("Create Player")
+        println("Welcome to Silver")
         println(controller.statusToString)
       }
       case DrawCard => {
@@ -56,7 +52,7 @@ class TUI(controller: Controller) extends Observer{
         println(controller.statusToString)
       }
       case ShowHandValue => {
-        println("Your HandValue is: ")
+        println("Your HandValue is: " + controller.showHandValue())
         println(controller.statusToString)
       }
       case CombineCard => {
