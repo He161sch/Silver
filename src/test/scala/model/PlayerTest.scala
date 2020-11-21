@@ -43,4 +43,5 @@ class PlayerTest extends AnyWordSpec with Matchers {
       }
     }
   }
+  
 }
