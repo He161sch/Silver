@@ -10,7 +10,7 @@ class ObservableSpec extends AnyWordSpec with Matchers {
     val observer = new Observer {
       var updated: Boolean = false
       def isUpdated: Boolean = updated
-      override def update: Boolean = {updated = true; updated}
+      override def update: Unit = updated = true
     }
     "add an Observer" in {
       obserable.add(observer)

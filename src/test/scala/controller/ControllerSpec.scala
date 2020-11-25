@@ -17,11 +17,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       controller.add(observer)
       controller.p1 = Player("player1", Hand(List(Card(1), Card(2), Card(2))))
       "have a Player" in {
-        observer.updated should be(true)
         controller.p1 should be(Player("player1", Hand(List(Card(1), Card(2), Card(2)))))
       }
       "have a newCard" in {
-        observer.updated should be(true)
         controller.newCard should be (Card(0))
       }
       "see a card" in {
