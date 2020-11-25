@@ -1,64 +1,85 @@
 package controller
 
+
+
+import com.sun.jdi.Value
+import controller.GameState.CreatePlayer
 import model.{Card, Hand, Player}
 import util.Observable
 
 import scala.util.Random
-import scala.util.control.Breaks.break
 
+object GameState extends Enumeration {
+  type GameState = Value
+  val NewGame, CreatePlayer, ViewCard, SwitchCard, ShowHandValue, CombineCard, DrawCard, CCFailed, OOB = Value
+}
 
 class Controller() extends Observable {
   val r: Random.type = scala.util.Random
   var p1: Player = createPlayer()
   var newCard: Card = Card(0)
+  var viewedCard: Card = Card(0)
+  var gamestate: GameState.Value = CreatePlayer
 
+  import GameState._
 
   def createPlayer(): Player ={
     Player("Player 1", randomHand())
+
   }
 
+  def newGame(): Unit ={
+    gamestate = NewGame
+    p1 = Player("Player 1", randomHand())
+    notifyObservers
+
+  }
+  def drawCard(): Unit = {
+    gamestate = DrawCard
+    newCard = Card(r.nextInt(14))
+    notifyObservers
+  }
 
   def viewCard(idx: Int): Unit ={
-    printf("Card Value: %d\n", p1.hand.cards(idx).number)
-    println(p1.toString)
+    gamestate = ViewCard
+    viewedCard = p1.hand.cards(idx)
+    notifyObservers
   }
+
+  def getCardValue: Int = newCard.number
+
+  def getViewedCard: Int = viewedCard.number
 
 
   def switchCard(idx: Int): Unit = {
+    gamestate = SwitchCard
     p1 = Player(p1.name, Hand(p1.hand.cards.patch(idx, List(newCard), 1)))
-    println(p1.toString)
     notifyObservers
   }
 
 
   def showHandValue(): Unit ={
-    println(p1.toString)
-    println(p1.hand.handValue())
+    gamestate = ShowHandValue
+    notifyObservers
   }
+
+  def getHandValue: Int = p1.hand.handValue()
 
 
   def combineCard(idx1: Int, idx2: Int): Unit ={
     if (idx1 >= p1.hand.cards.size || idx2 >= p1.hand.cards.size){
-      println("check number of cards")
-      println(p1.toString)
-      return
-    }
-    if(p1.hand.cards(idx1).number.equals(p1.hand.cards(idx2).number)){
+      gamestate = OOB
+      notifyObservers
+    } else
+      if(p1.hand.cards(idx1).number.equals(p1.hand.cards(idx2).number)){
+      gamestate = CombineCard
       val hand = Hand(p1.hand.cards.updated(idx1, newCard))
       p1 = Player(p1.name, Hand(p1.hand.removeAtIdx(idx2, hand.cards)))
-      println(p1.toString)
       notifyObservers
     } else {
-      printf("card values are not the same! (%d, %d)\n",p1.hand.cards(idx1).number, p1.hand.cards(idx2).number)
-      println(p1.toString)
+      gamestate = CCFailed
       notifyObservers
     }
-  }
-
-  def drawCard(): Unit = {
-    newCard = Card(r.nextInt(14))
-    printf("new Card = %d\n", newCard.number)
-    println(p1.toString)
   }
 
 
@@ -77,4 +98,11 @@ class Controller() extends Observable {
     val hand = Hand(cards)
     hand
   }
+
+  def statusToString: String = {
+    gamestate match {
+      case _ => p1.toString
+    }
+  }
+
 }
