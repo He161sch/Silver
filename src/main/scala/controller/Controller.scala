@@ -10,7 +10,7 @@ import scala.util.Random
 
 object GameState extends Enumeration {
   type GameState = Value
-  val NewGame, CreatePlayer, ViewCard, SwitchCard, ShowHandValue, CombineCard, DrawCard, RandomHand = Value
+  val  CreatePlayer, ViewCard, SwitchCard, ShowHandValue, CombineCard, DrawCard = Value
 }
 
 class Controller() extends Observable {
@@ -27,12 +27,6 @@ class Controller() extends Observable {
 
   }
 
-  def newGame(): Unit ={
-    gamestate = NewGame
-    p1 = Player("Player 1", randomHand())
-    notifyObservers
-
-  }
   def drawCard(): Unit = {
     gamestate = DrawCard
     newCard = Card(r.nextInt(14))
