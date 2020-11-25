@@ -2,7 +2,6 @@ package controller
 
 
 
-import com.sun.jdi.Value
 import controller.GameState.CreatePlayer
 import model.{Card, Hand, Player}
 import util.Observable
@@ -11,15 +10,15 @@ import scala.util.Random
 
 object GameState extends Enumeration {
   type GameState = Value
-  val NewGame, CreatePlayer, ViewCard, SwitchCard, ShowHandValue, CombineCard, DrawCard, CCFailed, OOB = Value
+  val NewGame, CreatePlayer, ViewCard, SwitchCard, ShowHandValue, CombineCard, DrawCard, RandomHand = Value
 }
 
 class Controller() extends Observable {
   val r: Random.type = scala.util.Random
   var p1: Player = createPlayer()
   var newCard: Card = Card(0)
-  var viewedCard: Card = Card(0)
-  var gamestate: GameState.Value = CreatePlayer
+  var viewedCard = Card(0)
+  var gamestate = CreatePlayer
 
   import GameState._
 
@@ -63,24 +62,24 @@ class Controller() extends Observable {
     notifyObservers
   }
 
-  def getHandValue: Int = p1.hand.handValue()
-
 
   def combineCard(idx1: Int, idx2: Int): Unit ={
+    gamestate = CombineCard
     if (idx1 >= p1.hand.cards.size || idx2 >= p1.hand.cards.size){
-      gamestate = OOB
-      notifyObservers
-    } else
-      if(p1.hand.cards(idx1).number.equals(p1.hand.cards(idx2).number)){
-      gamestate = CombineCard
+      println("check number of cards")
+      println(p1.toString)
+      return
+    }
+    if(p1.hand.cards(idx1).number.equals(p1.hand.cards(idx2).number)){
       val hand = Hand(p1.hand.cards.updated(idx1, newCard))
       p1 = Player(p1.name, Hand(p1.hand.removeAtIdx(idx2, hand.cards)))
       notifyObservers
     } else {
-      gamestate = CCFailed
+      printf("card values are not the same! (%d, %d)\n",p1.hand.cards(idx1).number, p1.hand.cards(idx2).number)
       notifyObservers
     }
   }
+
 
 
   def handToString: String = Hand.toString()

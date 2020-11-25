@@ -11,7 +11,6 @@ object Silver {
   controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
-    println("Welcome to Silver\n")
     var input: String = ""
 
 
