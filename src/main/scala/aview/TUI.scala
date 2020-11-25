@@ -57,13 +57,19 @@ class TUI(controller: Controller) extends Observer{
       }
       case ShowHandValue => {
         println("Your HandValue is: ")
-        println(controller.statusToString)
+        println("hand Value: " + controller.getHandValue)
+        //println(controller.statusToString)
       }
       case CombineCard => {
         println("You combined two Cards")
         println(controller.statusToString)
       }
-      case RandomHand => {
+      case CCFailed => {
+        println("Cards do not have the same Value!")
+        println(controller.statusToString)
+      }
+      case OOB =>{
+        println("Out of bouds")
         println(controller.statusToString)
       }
     }
