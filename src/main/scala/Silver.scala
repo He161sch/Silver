@@ -3,7 +3,6 @@ import scala.io.StdIn._
 import aview.TUI
 import controller.Controller
 
-import scala.::
 
 object Silver {
 
@@ -12,7 +11,6 @@ object Silver {
   controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
-    println("Welcome to Silver\n")
     var input: String = ""
 
 

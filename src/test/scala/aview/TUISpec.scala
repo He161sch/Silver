@@ -3,6 +3,7 @@ package aview
 import controller.Controller
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import util.Observer
 
 class TUISpec extends AnyWordSpec with Matchers {
   "A TUI" when {

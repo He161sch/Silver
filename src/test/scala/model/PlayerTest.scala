@@ -3,6 +3,7 @@ package model
 
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import util.Observer
 
 class PlayerTest extends AnyWordSpec with Matchers {
   "A Player" when {
@@ -42,4 +43,5 @@ class PlayerTest extends AnyWordSpec with Matchers {
       }
     }
   }
+  
 }
