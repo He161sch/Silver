@@ -1,4 +1,4 @@
-https://coveralls.io/repos/github/He161sch/Silver/badge.svg?branch=master(Coverage Status)
+[![Coverage Status](https://coveralls.io/repos/github/He161sch/Silver/badge.svg?branch=master)](https://coveralls.io/github/He161sch/Silver?branch=master)
 
 # Silver
 This is our Project for the course Software Engineering
