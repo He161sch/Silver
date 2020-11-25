@@ -59,9 +59,6 @@ class TUI(controller: Controller) extends Observer{
         println("You combined two Cards")
         println(controller.statusToString)
       }
-      case RandomHand => {
-        println(controller.statusToString)
-      }
     }
   }
 }

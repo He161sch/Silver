@@ -38,10 +38,13 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.combineCard(2, 3) should be(println("check number of cards"))
       }
       "fail if values are not the same" in {
-        controller.combineCard(0, 1) should be(println("card values are not the same! (1, 2)"))
+        controller.combineCard(0, 1) should be(println("card values are not the same! (1, 2)\n"))
       }
       "draw a new card" in {
         controller.drawCard() should be(println(controller.p1.toString))
+      }
+      "get Card Value" in {
+        controller.getCardValue should (be >= 0 and be <= 13)
       }
       "have a String representation for Hand" in {
         controller.handToString should be(Hand.toString())
