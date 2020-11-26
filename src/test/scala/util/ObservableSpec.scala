@@ -22,7 +22,6 @@ class ObservableSpec extends AnyWordSpec with Matchers {
     }
     "notify a Observer" in {
       obserable.notifyObservers
-
     }
   }
 }
