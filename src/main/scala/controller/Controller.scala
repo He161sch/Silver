@@ -33,10 +33,6 @@ class Controller() extends Observable {
     notifyObservers(State.ViewCard)
   }
 
-  def getCardValue: Int = newCard.number
-
-  def getViewedCard: Int = viewedCard.number
-
 
   def switchCard(idx: Int): Unit = {
     gamestate = State.SwitchCard
@@ -44,12 +40,10 @@ class Controller() extends Observable {
     notifyObservers(State.SwitchCard)
   }
 
-
   def showHandValue(): Unit ={
     gamestate = State.ShowHandValue
     notifyObservers(State.ShowHandValue)
   }
-
 
   def combineCard(idx1: Int, idx2: Int): Unit ={
     gamestate = State.CombineCard
@@ -68,13 +62,6 @@ class Controller() extends Observable {
     }
   }
 
-
-
-  def handToString: String = Hand.toString()
-
-
-  def playerToString: String = Player.toString()
-
   def randomHand(): Hand ={
     val r = scala.util.Random
     var cards = List[Card]()
@@ -91,9 +78,15 @@ class Controller() extends Observable {
     }
   }
 
+  def handToString: String = Hand.toString()
+
+  def playerToString: String = Player.toString()
+
+  def getCardValue: Int = newCard.number
+
+  def getViewedCard: Int = viewedCard.number
 
   def ObserverInState(): Unit = {
     notifyObservers(gamestate)
   }
-
 }
