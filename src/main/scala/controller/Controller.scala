@@ -1,8 +1,6 @@
 package controller
 
 
-
-import controller.State
 import model.{Card, Hand, Player}
 import util.Observable
 
@@ -77,7 +75,6 @@ class Controller() extends Observable {
 
   def playerToString: String = Player.toString()
 
-
   def randomHand(): Hand ={
     val r = scala.util.Random
     var cards = List[Card]()
@@ -93,6 +90,8 @@ class Controller() extends Observable {
       case _ => p1.toString
     }
   }
+
+
   def notifyObserver(): Unit = {
     notifyObservers(gamestate)
   }
