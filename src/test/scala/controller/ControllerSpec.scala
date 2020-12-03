@@ -29,11 +29,14 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "notify the observer" in {
         controller.ObserverInState() should be ()
       }
+      "viewed a Card" in {
+        controller.viewedCard should be (Card(1))
+      }
       "switch a card" in {
         controller.switchCard(0) should be(println(Player("player1", Hand(List(Card(0), Card(2)))).toString))
       }
       "show value of hand" in {
-        controller.showHandValue() should be (println("3"))
+        controller.showHandValue() should be (println("Your HandValue is: 3"))
       }
       "combine 2 cards with same value" in{
         controller.combineCard(1, 2) should be(println("player1's hand = [1, 0]"))
@@ -50,6 +53,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "get Card Value" in {
         controller.getCardValue should (be >= 0 and be <= 13)
       }
+      "get Viewed Card" in {
+        controller.getViewedCard should (be >= 0 and be <= 13)
+      }
       "have a String representation for Hand" in {
         controller.handToString should be(Hand.toString())
       }
@@ -59,7 +65,6 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "have a StatusToString" in {
         controller.statusToString should be (controller.p1.toString)
       }
-
     }
   }
 }
