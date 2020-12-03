@@ -12,8 +12,8 @@ class Controller() extends Observable {
   val r: Random.type = scala.util.Random
   var p1: Player = createPlayer()
   var newCard: Card = Card(0)
-  var viewedCard = Card(0)
-  var gamestate = State.CreatePlayer
+  var viewedCard: Card = Card(0)
+  var gamestate: State.Value = State.CreatePlayer
 
 
   def createPlayer(): Player ={
@@ -92,7 +92,7 @@ class Controller() extends Observable {
   }
 
 
-  def notifyObserver(): Unit = {
+  def ObserverInState(): Unit = {
     notifyObservers(gamestate)
   }
 
