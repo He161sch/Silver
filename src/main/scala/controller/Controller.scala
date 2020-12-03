@@ -93,5 +93,8 @@ class Controller() extends Observable {
       case _ => p1.toString
     }
   }
+  def notifyObserver(): Unit = {
+    notifyObservers(gamestate)
+  }
 
 }
