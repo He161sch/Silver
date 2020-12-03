@@ -1,19 +1,18 @@
 
 import scala.io.StdIn._
 import aview.TUI
-import controller.Controller
+import controller.{Controller, State}
 
 
 object Silver {
 
   val controller = new Controller()
   val tui = new TUI(controller)
-  controller.notifyObservers
+  controller.notifyObservers(State.CreatePlayer)
 
   def main(args: Array[String]): Unit = {
-    var input: String = args(0)
-    if (!input.isEmpty) tui.processInputLine(input)
-    else do{
+    var input: String = ""
+    do{
       input = readLine()
       tui.processInputLine(input)
     } while (input != "q")

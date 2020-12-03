@@ -2,25 +2,21 @@ package controller
 
 
 
-import controller.GameState.CreatePlayer
+import controller.State
 import model.{Card, Hand, Player}
 import util.Observable
 
 import scala.util.Random
 
-object GameState extends Enumeration {
-  type GameState = Value
-  val  CreatePlayer, ViewCard, SwitchCard, ShowHandValue, CombineCard, DrawCard = Value
-}
+
 
 class Controller() extends Observable {
   val r: Random.type = scala.util.Random
   var p1: Player = createPlayer()
   var newCard: Card = Card(0)
   var viewedCard = Card(0)
-  var gamestate = CreatePlayer
+  var gamestate = State.CreatePlayer
 
-  import GameState._
 
   def createPlayer(): Player ={
     Player("Player 1", randomHand())
@@ -28,15 +24,15 @@ class Controller() extends Observable {
   }
 
   def drawCard(): Unit = {
-    gamestate = DrawCard
+    gamestate = State.DrawCard
     newCard = Card(r.nextInt(14))
-    notifyObservers
+    notifyObservers(State.DrawCard)
   }
 
   def viewCard(idx: Int): Unit ={
-    gamestate = ViewCard
+    gamestate = State.ViewCard
     viewedCard = p1.hand.cards(idx)
-    notifyObservers
+    notifyObservers(State.ViewCard)
   }
 
   def getCardValue: Int = newCard.number
@@ -45,20 +41,20 @@ class Controller() extends Observable {
 
 
   def switchCard(idx: Int): Unit = {
-    gamestate = SwitchCard
+    gamestate = State.SwitchCard
     p1 = Player(p1.name, Hand(p1.hand.cards.patch(idx, List(newCard), 1)))
-    notifyObservers
+    notifyObservers(State.SwitchCard)
   }
 
 
   def showHandValue(): Unit ={
-    gamestate = ShowHandValue
-    notifyObservers
+    gamestate = State.ShowHandValue
+    notifyObservers(State.ShowHandValue)
   }
 
 
   def combineCard(idx1: Int, idx2: Int): Unit ={
-    gamestate = CombineCard
+    gamestate = State.CombineCard
     if (idx1 >= p1.hand.cards.size || idx2 >= p1.hand.cards.size){
       println("check number of cards")
       println(p1.toString)
@@ -67,10 +63,10 @@ class Controller() extends Observable {
     if(p1.hand.cards(idx1).number.equals(p1.hand.cards(idx2).number)){
       val hand = Hand(p1.hand.cards.updated(idx1, newCard))
       p1 = Player(p1.name, Hand(p1.hand.removeAtIdx(idx2, hand.cards)))
-      notifyObservers
+      notifyObservers(State.CombineCard)
     } else {
       printf("card values are not the same! (%d, %d)\n",p1.hand.cards(idx1).number, p1.hand.cards(idx2).number)
-      notifyObservers
+      notifyObservers(State.CombineCard)
     }
   }
 
