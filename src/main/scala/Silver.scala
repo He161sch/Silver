@@ -13,13 +13,13 @@ object Silver extends Runnable{
   def run(): Unit = {
     var input: String = ""
 
-    println("Which interface do you want to use? [TUI,GUI]")
-    val iface = readLine()
-    if (iface != "TUI" && iface != "GUI" ) {
-      println("There is only TUI and GUI")
-      println("Try again with one of those")
-    }
-    val uiinterface = UIInterface(iface , controller)
+//    println("Which interface do you want to use? [TUI,GUI]")
+//    val iface = readLine()
+//    if (iface != "TUI" && iface != "GUI" ) {
+//      println("There is only TUI and GUI")
+//      println("Try again with one of those")
+//    }
+    val uiinterface = UIInterface("TUI" , controller)
 
     controller.notifyObservers(State.WelcomeState)
     do{
