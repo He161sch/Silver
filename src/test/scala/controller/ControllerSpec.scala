@@ -10,7 +10,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     "new" should {
       val controller = new Controller()
       val gamestate = State.WelcomeState
-      val observer = new Observer {
+      val observer: Observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
         override def update(status: State.Value): Boolean = {updated = true; updated}
@@ -25,6 +25,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       }
       "see a card" in {
         controller.viewCard(0) should be(println(controller.p1.toString))
+      }
+      "notify the observer" in {
+        controller.ObserverInState() should be ()
       }
       "switch a card" in {
         controller.switchCard(0) should be(println(Player("player1", Hand(List(Card(0), Card(2)))).toString))
