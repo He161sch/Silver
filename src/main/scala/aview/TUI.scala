@@ -1,9 +1,9 @@
 package aview
 
 
-import controller.Controller
+import controller.{Controller, State}
 import util.Observer
-import controller.GameState._
+
 
 class TUI(controller: Controller) extends Observer{
 
@@ -31,33 +31,39 @@ class TUI(controller: Controller) extends Observer{
     }
   }
 
-  override def update: Unit = {
-    controller.gamestate match {
-      case CreatePlayer => {
+  override def update(status: State.Value): Boolean = {
+    status match {
+      case State.CreatePlayer => {
         println("Welcome to Silver")
         println(controller.statusToString)
+        true
       }
-      case DrawCard => {
+      case State.DrawCard => {
         println("You drew a Card")
         println("The new Card is: " + controller.getCardValue)
         println(controller.statusToString)
+        true
       }
-      case ViewCard => {
+      case State.ViewCard => {
         println("You viewed a Card")
         println("Cards Value: " + controller.getViewedCard)
         println(controller.statusToString)
+        true
       }
-      case SwitchCard => {
+      case State.SwitchCard => {
         println("You switched a Card")
         println(controller.statusToString)
+        true
       }
-      case ShowHandValue => {
+      case State.ShowHandValue => {
         println("Your HandValue is: " + controller.showHandValue())
         println(controller.statusToString)
+        true
       }
-      case CombineCard => {
+      case State.CombineCard => {
         println("You combined two Cards")
         println(controller.statusToString)
+        true
       }
     }
   }

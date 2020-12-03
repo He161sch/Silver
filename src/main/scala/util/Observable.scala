@@ -1,7 +1,8 @@
 package util
+import controller.State
 
 trait Observer {
-  def update: Unit
+  def update(status: State.Value): Boolean
 }
 
 class Observable {
@@ -11,5 +12,6 @@ class Observable {
 
   def remove(s: Observer): Unit = subscribers = subscribers.filterNot(o => o == s)
 
-  def notifyObservers: Unit = subscribers.foreach(o => o.update)
+  def notifyObservers(status: State.Value): Unit = subscribers.foreach(observer => observer.update(status: State.Value))
+
 }
