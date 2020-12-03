@@ -1,21 +1,41 @@
 
 import scala.io.StdIn._
-import aview.TUI
-import controller.Controller
+import aview.{TUI, UIInterface, GUI}
+import controller.{Controller, State}
 
 
-object Silver {
+object Silver extends Runnable{
 
   val controller = new Controller()
-  val tui = new TUI(controller)
-  controller.notifyObservers
+
+
+
+  def run(): Unit = {
+    var input: String = ""
+
+//    println("Which interface do you want to use? [TUI,GUI]")
+//    val iface = readLine()
+//    if (iface != "TUI" && iface != "GUI" ) {
+//      println("There is only TUI and GUI")
+//      println("Try again with one of those")
+//    }
+    val uiinterface = UIInterface("TUI" , controller)
+
+    controller.notifyObservers(State.WelcomeState)
+    do{
+      input = readLine()
+      uiinterface.inputCommand(input)
+    } while (input != "q")
+  }
+
+
+
+
+
+
 
   def main(args: Array[String]): Unit = {
-    var input: String = args(0)
-    if (!input.isEmpty) tui.processInputLine(input)
-    else do{
-      input = readLine()
-      tui.processInputLine(input)
-    } while (input != "q")
+
+    Silver.run()
   }
 }

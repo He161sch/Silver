@@ -9,10 +9,11 @@ class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
     "new" should {
       val controller = new Controller()
+      val gamestate = State.WelcomeState
       val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
-        override def update: Unit = updated = true
+        override def update(status: State.Value): Boolean = {updated = true; updated}
       }
       controller.add(observer)
       controller.p1 = Player("player1", Hand(List(Card(1), Card(2), Card(2))))
@@ -52,6 +53,10 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "have a String representation for Player" in {
         controller.playerToString should be(Player.toString())
       }
+      "have a StatusToString" in {
+        controller.statusToString should be (controller.p1.toString)
+      }
+
     }
   }
 }

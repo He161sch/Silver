@@ -1,13 +1,15 @@
 package aview
 
 
-import controller.Controller
+import controller.{Controller, State}
 import util.Observer
-import controller.GameState._
 
-class TUI(controller: Controller) extends Observer{
+
+class TUI(controller: Controller) extends Observer with UIInterface {
 
   controller.add(this)
+
+  override def inputCommand(input: String): Unit = processInputLine(input)
 
   def processInputLine(input: String): Unit = {
     val inputsplit = input.split(" ").toList
@@ -27,38 +29,48 @@ class TUI(controller: Controller) extends Observer{
         }else{
           println("ungültiger befehl")
         }
-
     }
   }
 
-  override def update: Unit = {
-    controller.gamestate match {
-      case CreatePlayer => {
-        println("Welcome to Silver")
+  override def update(status: State.Value): Boolean = {
+    status match {
+      case State.WelcomeState => welcomeGame();true
+      case State.CreatePlayer => {
         println(controller.statusToString)
+        true
       }
-      case DrawCard => {
+      case State.DrawCard => {
         println("You drew a Card")
         println("The new Card is: " + controller.getCardValue)
         println(controller.statusToString)
+        true
       }
-      case ViewCard => {
+      case State.ViewCard => {
         println("You viewed a Card")
         println("Cards Value: " + controller.getViewedCard)
         println(controller.statusToString)
+        true
       }
-      case SwitchCard => {
+      case State.SwitchCard => {
         println("You switched a Card")
         println(controller.statusToString)
+        true
       }
-      case ShowHandValue => {
+      case State.ShowHandValue => {
         println("Your HandValue is: " + controller.showHandValue())
         println(controller.statusToString)
+        true
       }
-      case CombineCard => {
+      case State.CombineCard => {
         println("You combined two Cards")
         println(controller.statusToString)
+        true
       }
     }
+  }
+
+  def welcomeGame(): Unit = {
+    println("Welcome to Silver")
+    controller.notifyObservers(State.CreatePlayer)
   }
 }
