@@ -5,9 +5,11 @@ import controller.{Controller, State}
 import util.Observer
 
 
-class TUI(controller: Controller) extends Observer{
+class TUI(controller: Controller) extends Observer with UIInterface {
 
   controller.add(this)
+
+  override def inputCommand(input: String): Unit = processInputLine(input)
 
   def processInputLine(input: String): Unit = {
     val inputsplit = input.split(" ").toList
@@ -27,14 +29,13 @@ class TUI(controller: Controller) extends Observer{
         }else{
           println("ungültiger befehl")
         }
-
     }
   }
 
   override def update(status: State.Value): Boolean = {
     status match {
+      case State.WelcomeState => welcomeGame();true
       case State.CreatePlayer => {
-        println("Welcome to Silver")
         println(controller.statusToString)
         true
       }
@@ -66,5 +67,10 @@ class TUI(controller: Controller) extends Observer{
         true
       }
     }
+  }
+
+  def welcomeGame(): Unit = {
+    println("Welcome to Silver")
+    controller.notifyObservers(State.CreatePlayer)
   }
 }

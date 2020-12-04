@@ -9,10 +9,11 @@ class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
     "new" should {
       val controller = new Controller()
-      val observer = new Observer {
+      val gamestate = State.WelcomeState
+      val observer: Observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
-        override def update: Unit = updated = true
+        override def update(status: State.Value): Boolean = {updated = true; updated}
       }
       controller.add(observer)
       controller.p1 = Player("player1", Hand(List(Card(1), Card(2), Card(2))))
@@ -25,11 +26,17 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "see a card" in {
         controller.viewCard(0) should be(println(controller.p1.toString))
       }
+      "notify the observer" in {
+        controller.ObserverInState() should be ()
+      }
+      "viewed a Card" in {
+        controller.viewedCard should be (Card(1))
+      }
       "switch a card" in {
         controller.switchCard(0) should be(println(Player("player1", Hand(List(Card(0), Card(2)))).toString))
       }
       "show value of hand" in {
-        controller.showHandValue() should be (println("3"))
+        controller.showHandValue() should be (println("Your HandValue is: 3"))
       }
       "combine 2 cards with same value" in{
         controller.combineCard(1, 2) should be(println("player1's hand = [1, 0]"))
@@ -46,11 +53,17 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       "get Card Value" in {
         controller.getCardValue should (be >= 0 and be <= 13)
       }
+      "get Viewed Card" in {
+        controller.getViewedCard should (be >= 0 and be <= 13)
+      }
       "have a String representation for Hand" in {
         controller.handToString should be(Hand.toString())
       }
       "have a String representation for Player" in {
         controller.playerToString should be(Player.toString())
+      }
+      "have a StatusToString" in {
+        controller.statusToString should be (controller.p1.toString)
       }
     }
   }
