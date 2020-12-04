@@ -21,7 +21,7 @@ object Silver extends Runnable{
 //    }
     val uiinterface = UIInterface("TUI" , controller)
 
-    controller.notifyObservers(State.WelcomeState)
+    controller.notifyObservers()
     do{
       input = readLine()
       uiinterface.inputCommand(input)

@@ -11,7 +11,7 @@ class ObservableSpec extends AnyWordSpec with Matchers {
     val observer = new Observer {
       var updated: Boolean = false
       def isUpdated: Boolean = updated
-      override def update(status: State.Value): Boolean = {updated = true; updated}
+      override def update(): Boolean = {updated = true; updated}
     }
     "add an Observer" in {
       obserable.add(observer)
@@ -22,7 +22,7 @@ class ObservableSpec extends AnyWordSpec with Matchers {
       obserable.subscribers should not contain (observer)
     }
     "notify a Observer" in {
-      obserable.notifyObservers(State.WelcomeState)
+      obserable.notifyObservers()
     }
   }
 }

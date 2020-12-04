@@ -6,7 +6,7 @@ import util.Observer
 class GUI(controller: Controller) extends Observer with UIInterface{
   controller.add(this)
 
-  override def update(status: State.Value): Boolean = {
+  override def update(): Boolean = {
     println("Try it with TUI again");true
   }
 

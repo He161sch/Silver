@@ -13,8 +13,8 @@ class Controller() extends Observable {
   var p1: Player = createPlayer()
   var newCard: Card = Card(0)
   var viewedCard: Card = Card(0)
-  var gamestate: State.Value = State.CreatePlayer
-
+//  var gamestate: State.Value = State.CreatePlayer
+  var context = new Context()
 
   def createPlayer(): Player ={
     Player("Player 1", randomHand())
@@ -22,31 +22,34 @@ class Controller() extends Observable {
   }
 
   def drawCard(): Unit = {
-    gamestate = State.DrawCard
+    //gamestate = State.DrawCard
+    context.state = new DrawCard()
     newCard = Card(r.nextInt(14))
-    notifyObservers(State.DrawCard)
+    notifyObservers()
   }
 
   def viewCard(idx: Int): Unit ={
-    gamestate = State.ViewCard
+   // gamestate = State.ViewCard
     viewedCard = p1.hand.cards(idx)
-    notifyObservers(State.ViewCard)
+    notifyObservers()
   }
 
 
   def switchCard(idx: Int): Unit = {
-    gamestate = State.SwitchCard
+   // gamestate = State.SwitchCard
+   // context.state = new SwitchCard()
     p1 = Player(p1.name, Hand(p1.hand.cards.patch(idx, List(newCard), 1)))
-    notifyObservers(State.SwitchCard)
+    notifyObservers()
   }
 
   def showHandValue(): Unit ={
-    gamestate = State.ShowHandValue
-    notifyObservers(State.ShowHandValue)
+   // gamestate = State.ShowHandValue
+    notifyObservers()
   }
 
   def combineCard(idx1: Int, idx2: Int): Unit ={
-    gamestate = State.CombineCard
+  //  gamestate = State.CombineCard
+    context.state = new CombineCard()
     if (idx1 >= p1.hand.cards.size || idx2 >= p1.hand.cards.size){
       println("check number of cards")
       println(p1.toString)
@@ -55,10 +58,10 @@ class Controller() extends Observable {
     if(p1.hand.cards(idx1).number.equals(p1.hand.cards(idx2).number)){
       val hand = Hand(p1.hand.cards.updated(idx1, newCard))
       p1 = Player(p1.name, Hand(p1.hand.removeAtIdx(idx2, hand.cards)))
-      notifyObservers(State.CombineCard)
+      notifyObservers()
     } else {
       printf("card values are not the same! (%d, %d)\n",p1.hand.cards(idx1).number, p1.hand.cards(idx2).number)
-      notifyObservers(State.CombineCard)
+      notifyObservers()
     }
   }
 
@@ -73,7 +76,7 @@ class Controller() extends Observable {
   }
 
   def statusToString: String = {
-    gamestate match {
+    context match {
       case _ => p1.toString
     }
   }
@@ -87,6 +90,6 @@ class Controller() extends Observable {
   def getViewedCard: Int = viewedCard.number
 
   def ObserverInState(): Unit = {
-    notifyObservers(gamestate)
+    notifyObservers()
   }
 }
