@@ -1,101 +1,89 @@
 package controller
 
-
-
-import controller.GameState.CreatePlayer
-import model.{Card, Hand, Player}
-import util.Observable
+import model.{Card, Hand, Player, Deck, GameConfig}
+import util.{Observable, UndoManager}
 
 import scala.util.Random
 
-object GameState extends Enumeration {
-  type GameState = Value
-  val  CreatePlayer, ViewCard, SwitchCard, ShowHandValue, CombineCard, DrawCard = Value
+object GameState extends Enumeration{
+  val  WELCOMESTATE, NAME_CREATION, PLAYER_TURN,
+
+
+  gameStarted, getAmount, playerCreate, roundStarted, gameOver, nextPlayerCard, playersChoice ,roundOver,
+  ViewCard, SwitchCard, ShowHandValue, switchOrCombineCard, drawViewCard = Value
 }
 
-class Controller() extends Observable {
-  val r: Random.type = scala.util.Random
-  var p1: Player = createPlayer()
-  var newCard: Card = Card(0)
-  var viewedCard = Card(0)
-  var gamestate = CreatePlayer
 
-  import GameState._
+import GameState._
 
-  def createPlayer(): Player ={
-    Player("Player 1", randomHand())
+class Controller(var deck: Deck) extends Observable {
 
+  var gameState = WELCOMESTATE
+  var running: State = IsNotRunning()
+  var gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0, Vector[Player]())
+  private val undoManager = new UndoManager
+
+  def getState(): Unit = {
+    val (state, output) = running.handle(running)
+    running = state
+    println(output)
+  }
+
+  def performInitGame(playerAmount: Int): Unit = {
+    undoManager.doStep(new CommandPlayerAmount(this, playerAmount))
+    notifyObservers
+  }
+  def performSetPlayerName(playerName: String): Unit = {
+    undoManager.doStep(new CommandInputNames(this, playerName))
+    notifyObservers
+  }
+
+  def initGame(playeramount: Int): Unit = {
+    for (_ <- 1 to playeramount) {
+      gameConfig = gameConfig.createPlayer()
+    }
+
+    gameState = NAME_CREATION
+    running = IsRunning()
+  }
+
+  def getActivePlayerName: String = gameConfig.getActivePlayerName
+
+  def getPlayerName: String = {
+    "Please enter Playername " + {gameConfig.activePlayerIdx + 1}+ ":"
+  }
+
+
+  def setPlayerName(playerName: String): Unit = {
+    gameConfig = gameConfig.setPlayerName(playerName, gameConfig.activePlayerIdx)
+    gameConfig = gameConfig.incrementActivePlayerIdx()
+
+//    if (gameConfig.activePlayerIdx >= gameConfig.players.size) {
+//      gameConfig = gameConfig.resetActivePlayerIdx()
+//    }
   }
 
   def drawCard(): Unit = {
-    gamestate = DrawCard
-    newCard = Card(r.nextInt(14))
-    notifyObservers
+    deck.drawCards(1)
   }
 
-  def viewCard(idx: Int): Unit ={
-    gamestate = ViewCard
-    viewedCard = p1.hand.cards(idx)
-    notifyObservers
-  }
+  def combineCard(): Unit = {
 
-  def getCardValue: Int = newCard.number
-
-  def getViewedCard: Int = viewedCard.number
-
-
-  def switchCard(idx: Int): Unit = {
-    gamestate = SwitchCard
-    p1 = Player(p1.name, Hand(p1.hand.cards.patch(idx, List(newCard), 1)))
-    notifyObservers
   }
 
 
-  def showHandValue(): Unit ={
-    gamestate = ShowHandValue
-    notifyObservers
-  }
-
-
-  def combineCard(idx1: Int, idx2: Int): Unit ={
-    gamestate = CombineCard
-    if (idx1 >= p1.hand.cards.size || idx2 >= p1.hand.cards.size){
-      println("check number of cards")
-      println(p1.toString)
-      return
-    }
-    if(p1.hand.cards(idx1).number.equals(p1.hand.cards(idx2).number)){
-      val hand = Hand(p1.hand.cards.updated(idx1, newCard))
-      p1 = Player(p1.name, Hand(p1.hand.removeAtIdx(idx2, hand.cards)))
-      notifyObservers
-    } else {
-      printf("card values are not the same! (%d, %d)\n",p1.hand.cards(idx1).number, p1.hand.cards(idx2).number)
-      notifyObservers
+  def gameStateToString: String = {
+    gameState match {
+      case PLAYER_TURN => gameConfig.getActivePlayer.toString
     }
   }
-
-
-
-  def handToString: String = Hand.toString()
-
-
-  def playerToString: String = Player.toString()
-
-
-  def randomHand(): Hand ={
-    val r = scala.util.Random
-    var cards = List[Card]()
-    for(x <- 0 to 4){
-      cards = Card(r.nextInt(14)) :: cards
-    }
-    val hand = Hand(cards)
-    hand
+  def undoStep: Unit = {
+    undoManager.undoStep
+    notifyObservers
   }
-
-  def statusToString: String = {
-    gamestate match {
-      case _ => p1.toString
-    }
+  def redoStep: Unit = {
+    undoManager.redoStep
+    notifyObservers
   }
 
 }

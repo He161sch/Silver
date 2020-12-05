@@ -2,63 +2,82 @@ package aview
 
 
 import controller.Controller
-import util.Observer
 import controller.GameState._
+import util.Observer
 
-class TUI(controller: Controller) extends Observer{
+
+class TUI(controller: Controller) extends Observer with UIFactory {
 
   controller.add(this)
 
+   override def processCommands(input: String): Unit = {
+    if (controller.gameState == WELCOMESTATE) {
+      input match {
+        case "z" => controller.undoStep
+        case "y" => controller.redoStep
+        case _ => initPlayers(input)
+      }
+    } else if (controller.gameState == NAME_CREATION) {
+      input match {
+        case "z" => controller.undoStep
+        case "y" => controller.redoStep
+        case _ => controller.performSetPlayerName(input)
+      }
+    } else {
+      processInputLine(input)
+    }
+  }
+
+  def initPlayers(input: String): Unit = {
+    if (!List("2", "3").contains(input)) {
+      println("You can only play with 2 or 3 Players\n. . .\nTry again")
+    } else {
+      controller.performInitGame(input.toInt)
+    }
+  }
+
+
+
   def processInputLine(input: String): Unit = {
     val inputsplit = input.split(" ").toList
-    inputsplit match{
-      case _ =>
-        if (inputsplit.head.matches("d")){
-          controller.drawCard()
-        } else if (inputsplit.head.matches("v") && inputsplit(1).matches("1|2|3|4|0")){
-          controller.viewCard(inputsplit(1).toInt)
-        } else if (inputsplit.head.matches("s") && inputsplit(1).matches("1|2|3|4|0")){
-          controller.switchCard(inputsplit(1).toInt)
-        } else if (inputsplit.head.matches("e")){  //end
-          controller.showHandValue()
-          System.exit(0)
-        } else if (inputsplit.head.matches("c") && inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {   //combine
-          controller.combineCard(inputsplit(1).toInt, inputsplit(2).toInt)
-        }else{
-          println("ungültiger befehl")
-        }
-
+    inputsplit.head match{
+      case "d" => controller.drawCard()
+      case "state" => controller.getState()
+      case _ => println("unknown command ... Try again")
+//          println("new card is: " + controller.getCardValue)
+//        } else if (inputsplit.head.matches("v") && inputsplit(1).matches("1|2|3|4|0")){
+//          controller.viewCard(inputsplit(1).toInt)
+//          println("viewed card is: " + controller.getViewedCard)
+//        } else if (inputsplit.head.matches("s") && inputsplit(1).matches("1|2|3|4|0")){
+//          controller.switchCard(inputsplit(1).toInt)
+//        } else if (inputsplit.head.matches("e")){  //end
+//          controller.showHandValue()
+//          System.exit(0)
+//        } else if (inputsplit.head.matches("c") && inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {   //combine
+//          controller.combineCard(inputsplit(1).toInt, inputsplit(2).toInt)
+//        }else{
+//          println("ungültiger befehl")
+//        }
+//    }
     }
   }
 
-  override def update: Unit = {
-    controller.gamestate match {
-      case CreatePlayer => {
-        println("Welcome to Silver")
-        println(controller.statusToString)
+  override def update: Boolean = {
+    controller.gameState match {
+      case WELCOMESTATE => {
+        println("Welcome to Silver :)\nHow many players want to play[2 or 3]?");true
       }
-      case DrawCard => {
-        println("You drew a Card")
-        println("The new Card is: " + controller.getCardValue)
-        println(controller.statusToString)
+      case NAME_CREATION => {
+        println(controller.getPlayerName);true
       }
-      case ViewCard => {
-        println("You viewed a Card")
-        println("Cards Value: " + controller.getViewedCard)
-        println(controller.statusToString)
+      case newGameStart => {
+        println("A new Game started ... Deck is now shuffeled!");true
       }
-      case SwitchCard => {
-        println("You switched a Card")
-        println(controller.statusToString)
-      }
-      case ShowHandValue => {
-        println("Your HandValue is: " + controller.showHandValue())
-        println(controller.statusToString)
-      }
-      case CombineCard => {
-        println("You combined two Cards")
-        println(controller.statusToString)
+      case PLAYER_TURN => {
+        println(s"${controller.getActivePlayerName}'s turn. Draw or View a Card?(d/ v [0-4])\n")
+        println(controller.gameStateToString);true
       }
     }
   }
+
 }
