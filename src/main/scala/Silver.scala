@@ -2,13 +2,11 @@
 import scala.io.StdIn._
 import aview.UIFactory
 import controller.Controller
-import model.Deck
 
 
 object Silver {
 
-  val deck = new Deck()
-  val controller = new Controller(deck)
+  val controller = new Controller()
 
   def main(args: Array[String]): Unit = {
     var input: String = ""

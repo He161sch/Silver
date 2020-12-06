@@ -6,7 +6,7 @@ import util.{Observable, UndoManager}
 import scala.util.Random
 
 object GameState extends Enumeration{
-  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART,
+  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD,
 
 
   gameStarted, getAmount, playerCreate, roundStarted, gameOver, nextPlayerCard, playersChoice ,roundOver,
@@ -16,8 +16,9 @@ object GameState extends Enumeration{
 
 import GameState._
 
-class Controller(var deck: Deck) extends Observable {
+class Controller() extends Observable {
 
+  var deck = new Deck
   var gameState = WelcomeState
   var running: State = IsNotRunning()
   var gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0, Vector[Player]())
@@ -35,6 +36,10 @@ class Controller(var deck: Deck) extends Observable {
   }
   def performSetPlayerName(playerName: String): Unit = {
     undoManager.doStep(new CommandInputNames(this, playerName))
+    notifyObservers
+  }
+  def performSwitchCard(idx: Int): Unit = {
+    undoManager.doStep(new CommandSwitchCard(this, idx))
     notifyObservers
   }
 
@@ -67,7 +72,18 @@ class Controller(var deck: Deck) extends Observable {
   }
 
   def drawCard(): Unit = {
-    deck.drawCards(1)
+    gameConfig = gameConfig.drawCard()
+    gameState = DRAWEDCARD
+    notifyObservers
+  }
+
+  def printdrawedCard(): String = {
+    "" + gameConfig.players(gameConfig.activePlayerIdx).newCard + ""
+  }
+
+  def switchCard(idx: Int): Unit = {
+    gameConfig = gameConfig.switchCard(idx)
+    gameState = SWITCHCARD
   }
 
   def combineCard(): Unit = {
@@ -78,6 +94,7 @@ class Controller(var deck: Deck) extends Observable {
   def gameStateToString: String = {
     gameState match {
       case PLAYER_TURN => gameConfig.getActivePlayer.toString
+      case SWITCHCARD => gameConfig.getActivePlayer.toString
     }
   }
   def undoStep: Unit = {

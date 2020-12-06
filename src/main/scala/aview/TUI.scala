@@ -11,7 +11,8 @@ class TUI(controller: Controller) extends Observer with UIFactory {
   controller.add(this)
 
    override def processCommands(input: String): Unit = {
-    if (controller.gameState == WelcomeState) {
+     val inputsplit = input.split(" ").toList
+     if (controller.gameState == WelcomeState) {
       input match {
         case "z" => controller.undoStep
         case "y" => controller.redoStep
@@ -22,6 +23,16 @@ class TUI(controller: Controller) extends Observer with UIFactory {
         case "z" => controller.undoStep
         case "y" => controller.redoStep
         case _ => controller.performSetPlayerName(input)
+      }
+    } else if (controller.gameState == DRAWEDCARD) {
+      inputsplit.head match {
+        case "z" => controller.undoStep
+        case "y" => controller.redoStep
+        case "s" =>  {
+          if(inputsplit(1).matches("1|2|3|4|0")) {
+            controller.performSwitchCard(inputsplit(1).toInt)
+          }
+        }
       }
     } else {
       processInputLine(input)
@@ -65,19 +76,29 @@ class TUI(controller: Controller) extends Observer with UIFactory {
   override def update: Boolean = {
     controller.gameState match {
       case WelcomeState => {
-        println("Welcome to Silver :)\nHow many players want to play[2 or 3]?");true
+        println("Welcome to Silver :)\nHow many players want to play[2 or 3]?")
       }
       case InputName => {
-        println(controller.getPlayerName);true
+        println(controller.getPlayerName)
       }
       case NEWGAMESTART => {
-        println("A new Game started ... Deck is now shuffeled!");true
+        println("A new Game started ... Deck is now shuffeled!")
       }
       case PLAYER_TURN => {
         println(controller.getActivePlayerName + "'s turn. Draw or View a Card?(d/ v [0-4])\n")
-        println(controller.gameStateToString);true
+        println(controller.gameStateToString)
+      }
+      case DRAWEDCARD => {
+        print("Your drawed Card is: ")
+        println(controller.printdrawedCard())
+        println("Do you want to Swap or Combine the drawn Card?[s [0-4] / c [0-4] [0-4]")
+      }
+      case SWITCHCARD => {
+        println("You switched the draw Card with on of yours")
+        println(controller.gameStateToString)
       }
     }
+    true
   }
 
 }
