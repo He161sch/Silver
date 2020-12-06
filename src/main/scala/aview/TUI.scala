@@ -11,13 +11,13 @@ class TUI(controller: Controller) extends Observer with UIFactory {
   controller.add(this)
 
    override def processCommands(input: String): Unit = {
-    if (controller.gameState == WELCOMESTATE) {
+    if (controller.gameState == WelcomeState) {
       input match {
         case "z" => controller.undoStep
         case "y" => controller.redoStep
         case _ => initPlayers(input)
       }
-    } else if (controller.gameState == NAME_CREATION) {
+    } else if (controller.gameState == InputName) {
       input match {
         case "z" => controller.undoStep
         case "y" => controller.redoStep
@@ -64,17 +64,17 @@ class TUI(controller: Controller) extends Observer with UIFactory {
 
   override def update: Boolean = {
     controller.gameState match {
-      case WELCOMESTATE => {
+      case WelcomeState => {
         println("Welcome to Silver :)\nHow many players want to play[2 or 3]?");true
       }
-      case NAME_CREATION => {
+      case InputName => {
         println(controller.getPlayerName);true
       }
       case NEWGAMESTART => {
         println("A new Game started ... Deck is now shuffeled!");true
       }
       case PLAYER_TURN => {
-        println(s"${controller.getActivePlayerName}'s turn. Draw or View a Card?(d/ v [0-4])\n")
+        println(controller.getActivePlayerName + "'s turn. Draw or View a Card?(d/ v [0-4])\n")
         println(controller.gameStateToString);true
       }
     }
