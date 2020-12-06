@@ -6,7 +6,7 @@ import util.{Observable, UndoManager}
 import scala.util.Random
 
 object GameState extends Enumeration{
-  val  WELCOMESTATE, NAME_CREATION, PLAYER_TURN,
+  val  WELCOMESTATE, NAME_CREATION, PLAYER_TURN, NEWGAMESTART,
 
 
   gameStarted, getAmount, playerCreate, roundStarted, gameOver, nextPlayerCard, playersChoice ,roundOver,
@@ -58,9 +58,12 @@ class Controller(var deck: Deck) extends Observable {
     gameConfig = gameConfig.setPlayerName(playerName, gameConfig.activePlayerIdx)
     gameConfig = gameConfig.incrementActivePlayerIdx()
 
-//    if (gameConfig.activePlayerIdx >= gameConfig.players.size) {
-//      gameConfig = gameConfig.resetActivePlayerIdx()
-//    }
+    if (gameConfig.activePlayerIdx >= gameConfig.players.size) {
+      gameConfig = gameConfig.resetActivePlayerIdx()
+      gameState = NEWGAMESTART
+      notifyObservers
+      gameState = PLAYER_TURN
+    }
   }
 
   def drawCard(): Unit = {

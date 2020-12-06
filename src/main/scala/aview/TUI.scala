@@ -70,7 +70,7 @@ class TUI(controller: Controller) extends Observer with UIFactory {
       case NAME_CREATION => {
         println(controller.getPlayerName);true
       }
-      case newGameStart => {
+      case NEWGAMESTART => {
         println("A new Game started ... Deck is now shuffeled!");true
       }
       case PLAYER_TURN => {

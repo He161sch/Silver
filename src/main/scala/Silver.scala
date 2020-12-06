@@ -1,7 +1,7 @@
 
 import scala.io.StdIn._
 import aview.UIFactory
-import controller.{Controller}
+import controller.Controller
 import model.Deck
 
 
