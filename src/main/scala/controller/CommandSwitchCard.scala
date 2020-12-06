@@ -12,7 +12,7 @@ class CommandSwitchCard(controller: Controller, idx: Int) extends Command {
   override def undoStep: Unit = {
   controller.gameState = gameState
   controller.gameConfig = gameConfig
-}
+  }
 
   override def redoStep: Unit = controller.switchCard(idx)
 }

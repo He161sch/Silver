@@ -25,15 +25,29 @@ class TUI(controller: Controller) extends Observer with UIFactory {
         case _ => controller.performSetPlayerName(input)
       }
     } else if (controller.gameState == DRAWEDCARD) {
-      inputsplit.head match {
-        case "z" => controller.undoStep
-        case "y" => controller.redoStep
-        case "s" =>  {
-          if(inputsplit(1).matches("1|2|3|4|0")) {
-            controller.performSwitchCard(inputsplit(1).toInt)
-          }
-        }
-      }
+       inputsplit.head match {
+         case "z" => controller.undoStep
+         case "y" => controller.redoStep
+         case "s" => {
+           if (inputsplit(1).matches("1|2|3|4|0")) {
+             controller.performSwitchCard(inputsplit(1).toInt)
+           }
+         }
+         case "c" => {
+           if (inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {
+             controller.performCombineCard(inputsplit(1).toInt, inputsplit(2).toInt)
+           }
+         }
+         case _ => println("Ungültiger befehl")
+       }
+     } else if (controller.gameState == VIEWCARD) {
+       case "z" => controller.undoStep
+       case "y" => controller.redoStep
+       case "v" => {
+         if (inputsplit(1).matches("1|2|3|4|0")) {
+           controller.performViewCard(inputsplit(1).toInt)
+         }
+       }
     } else {
       processInputLine(input)
     }
@@ -55,15 +69,6 @@ class TUI(controller: Controller) extends Observer with UIFactory {
       case "d" => controller.drawCard()
       case "state" => controller.getState()
       case _ => println("unknown command ... Try again")
-//          println("new card is: " + controller.getCardValue)
-//        } else if (inputsplit.head.matches("v") && inputsplit(1).matches("1|2|3|4|0")){
-//          controller.viewCard(inputsplit(1).toInt)
-//          println("viewed card is: " + controller.getViewedCard)
-//        } else if (inputsplit.head.matches("s") && inputsplit(1).matches("1|2|3|4|0")){
-//          controller.switchCard(inputsplit(1).toInt)
-//        } else if (inputsplit.head.matches("e")){  //end
-//          controller.showHandValue()
-//          System.exit(0)
 //        } else if (inputsplit.head.matches("c") && inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {   //combine
 //          controller.combineCard(inputsplit(1).toInt, inputsplit(2).toInt)
 //        }else{
@@ -96,6 +101,14 @@ class TUI(controller: Controller) extends Observer with UIFactory {
       case SWITCHCARD => {
         println("You switched the draw Card with on of yours")
         println(controller.gameStateToString)
+      }
+      case COMBINECARD => {
+        println("You combined two Cards and got rid of one :)")
+        println(controller.gameStateToString)
+      }
+      case VIEWCARD => {
+        println("You viewed a Card hope it helps you win")
+        println(controller.printViewedCard())
       }
     }
     true

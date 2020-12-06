@@ -26,6 +26,12 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
    GameConfig(newPlayers, newDeck, activePlayerIdx)
   }
 
+  def viewCard(idx: Int): GameConfig = {
+    val viewCard = players(activePlayerIdx).hand.cards
+
+    updatePlayerAtIdx(players(activePlayerIdx), activePlayerIdx, deck)
+  }
+
   def drawCard(): GameConfig = {
     val (newDeck, drawedCard) = deck.drawCards(1)
     val newPlayer = Player(players(activePlayerIdx).name, players(activePlayerIdx).hand, drawedCard(0))
@@ -37,6 +43,16 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
   def switchCard(idx: Int): GameConfig = {
     val drawedCard = players(activePlayerIdx).newCard
     val newPlayer = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx, drawedCard)), Card(0))
+
+    updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
+  }
+
+  def combineCard(idx1: Int, idx2: Int): GameConfig = {
+    val drawedCard = players(activePlayerIdx).newCard
+
+    val np = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(0))
+//    updatePlayerAtIdx(np, activePlayerIdx, deck)
+    val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(0))
 
     updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
   }

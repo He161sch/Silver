@@ -6,11 +6,11 @@ import util.{Observable, UndoManager}
 import scala.util.Random
 
 object GameState extends Enumeration{
-  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD,
+  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD,
 
 
-  gameStarted, getAmount, playerCreate, roundStarted, gameOver, nextPlayerCard, playersChoice ,roundOver,
-  ViewCard, SwitchCard, ShowHandValue, switchOrCombineCard, drawViewCard = Value
+  roundStarted, gameOver, nextPlayerCard, playersChoice ,roundOver,
+  ShowHandValue, switchOrCombineCard, drawViewCard = Value
 }
 
 
@@ -38,8 +38,16 @@ class Controller() extends Observable {
     undoManager.doStep(new CommandInputNames(this, playerName))
     notifyObservers
   }
+  def performViewCard(idx: Int): Unit = {
+    undoManager.doStep(new CommandViewCard(this, idx))
+    notifyObservers
+  }
   def performSwitchCard(idx: Int): Unit = {
     undoManager.doStep(new CommandSwitchCard(this, idx))
+    notifyObservers
+  }
+  def performCombineCard(idx1: Int, idx2: Int): Unit = {
+    undoManager.doStep(new CommandCombineCard(this, idx1, idx2))
     notifyObservers
   }
 
@@ -71,6 +79,15 @@ class Controller() extends Observable {
     }
   }
 
+  def viewCard(idx: Int): Unit = {
+    gameConfig = gameConfig.viewCard(idx)
+    gameState = VIEWCARD
+  }
+
+  def printViewedCard(): Unit = {
+    "" + gameConfig.players
+  }
+
   def drawCard(): Unit = {
     gameConfig = gameConfig.drawCard()
     gameState = DRAWEDCARD
@@ -86,15 +103,19 @@ class Controller() extends Observable {
     gameState = SWITCHCARD
   }
 
-  def combineCard(): Unit = {
+  def combineCard(idx1: Int, idx2: Int): Unit = {
+    gameConfig = gameConfig.combineCard(idx1, idx2)
+    gameState = COMBINECARD
+  }
 
+  def nextPlayer(): Unit = {
+    gameConfig = gameConfig.incrementActivePlayerIdx()
   }
 
 
   def gameStateToString: String = {
     gameState match {
-      case PLAYER_TURN => gameConfig.getActivePlayer.toString
-      case SWITCHCARD => gameConfig.getActivePlayer.toString
+      case PLAYER_TURN | SWITCHCARD | COMBINECARD => gameConfig.getActivePlayer.toString
     }
   }
   def undoStep: Unit = {
