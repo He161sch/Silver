@@ -7,11 +7,14 @@ class GUI(controller: Controller) extends Observer with UIFactory{
   controller.add(this)
 
   override def processCommands(input: String): Unit = {
-    println("gui not implemented yet")
+    println("still in progress")
+  }
+  def run(): Unit = {
+    println("still in progress")
   }
 
   override def update: Boolean = {
-    println("gui not implemented yet")
+    println("still in progress")
     true
   }
 }

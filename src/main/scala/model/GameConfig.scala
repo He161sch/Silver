@@ -26,16 +26,17 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
    GameConfig(newPlayers, newDeck, activePlayerIdx)
   }
 
-  def viewCard(idx: Int): GameConfig = {
-    val viewCard = players(activePlayerIdx).hand.cards
 
+
+  def viewCard(idx: Int): GameConfig = {
+    val viewedCard = players(activePlayerIdx).hand.cards(idx)
+    println("Your Card on place " + idx + " is: " + viewedCard)
     updatePlayerAtIdx(players(activePlayerIdx), activePlayerIdx, deck)
   }
 
   def drawCard(): GameConfig = {
     val (newDeck, drawedCard) = deck.drawCards(1)
     val newPlayer = Player(players(activePlayerIdx).name, players(activePlayerIdx).hand, drawedCard(0))
-
 
     updatePlayerAtIdx(newPlayer, activePlayerIdx, newDeck)
   }
@@ -51,15 +52,11 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
     val drawedCard = players(activePlayerIdx).newCard
 
     val np = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(0))
-//    updatePlayerAtIdx(np, activePlayerIdx, deck)
     val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(0))
 
     updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
   }
 
-  def getActivePlayerName = players(activePlayerIdx).name
-
-  def getActivePlayer = players(activePlayerIdx)
 
   def incrementActivePlayerIdx(): GameConfig = {
     copy(players, deck, activePlayerIdx + 1)
@@ -69,8 +66,9 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
     copy(players, deck, 0)
   }
 
+  def getActivePlayerName = players(activePlayerIdx).name
 
-
+  def getActivePlayer = players(activePlayerIdx)
 
 
 }

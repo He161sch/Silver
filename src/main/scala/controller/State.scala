@@ -8,7 +8,7 @@ case class IsRunning() extends State{
   override def handle(e: State): (State, String) = {
     e match {
       case isRunning: IsRunning => (IsRunning(), "Game is running!")
-      case isNotRunning: IsNotRunning => (IsNotRunning(), "No game is running!")
+      case isNotRunning: IsNotRunning => (IsNotRunning(), "Game is not running!")
     }
   }
 }
@@ -17,7 +17,7 @@ case class IsNotRunning() extends State{
   override def handle(e: State): (State, String) = {
     e match {
       case isRunning: IsRunning => (IsRunning(), "Game is running!")
-      case isNotRunning: IsNotRunning => (IsNotRunning(), "No game is running!")
+      case isNotRunning: IsNotRunning => (IsNotRunning(), "Game is not running!")
     }
   }
 }

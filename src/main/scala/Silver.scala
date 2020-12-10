@@ -3,6 +3,8 @@ import scala.io.StdIn._
 import aview.UIFactory
 import controller.Controller
 
+import scala.util.{Failure, Success, Try}
+
 
 object Silver {
 
@@ -11,14 +13,12 @@ object Silver {
   def main(args: Array[String]): Unit = {
     var input: String = ""
 
-    val uiType = "TUI"
-    val ui = UIFactory(uiType, controller)
+    val uiType = args(0)
 
-    controller.notifyObservers
-    do {
-      input = readLine()
-      ui.processCommands(input)
-      //tui.processInputLine(input)
-    } while (input != "q")
+    Try(UIFactory(uiType, controller)) match {
+      case Failure(v) => println("Could not start UI because: " + v.getMessage)
+      case Success(v) => println("You closed the game with q")
+
+    }
   }
 }

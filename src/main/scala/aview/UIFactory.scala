@@ -8,7 +8,7 @@ trait UIFactory {
 
 object UIFactory {
   def apply(kind: String, controller: Controller) = kind match {
-    case "GUI" => new GUI(controller)
-    case "TUI" => new TUI(controller)
+    case "GUI" => new GUI(controller).run()
+    case "TUI" => new TUI(controller).run()
   }
 }

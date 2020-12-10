@@ -1,9 +1,10 @@
 package controller
 
-import model.{Card, Hand, Player, Deck, GameConfig}
+import model.{Card, Deck, GameConfig, Hand, Player}
 import util.{Observable, UndoManager}
 
 import scala.util.Random
+import scala.util.control.Exception.allCatch
 
 object GameState extends Enumeration{
   val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD,
@@ -43,6 +44,7 @@ class Controller() extends Observable {
     notifyObservers
   }
   def performSwitchCard(idx: Int): Unit = {
+
     undoManager.doStep(new CommandSwitchCard(this, idx))
     notifyObservers
   }
@@ -79,13 +81,14 @@ class Controller() extends Observable {
     }
   }
 
+  def viewCard(): Unit = {
+    gameState = VIEWCARD
+    notifyObservers
+  }
   def viewCard(idx: Int): Unit = {
     gameConfig = gameConfig.viewCard(idx)
-    gameState = VIEWCARD
-  }
-
-  def printViewedCard(): Unit = {
-    "" + gameConfig.players
+    notifyObservers
+    nextPlayer()
   }
 
   def drawCard(): Unit = {
@@ -106,16 +109,23 @@ class Controller() extends Observable {
   def combineCard(idx1: Int, idx2: Int): Unit = {
     gameConfig = gameConfig.combineCard(idx1, idx2)
     gameState = COMBINECARD
+    nextPlayer()
   }
 
   def nextPlayer(): Unit = {
     gameConfig = gameConfig.incrementActivePlayerIdx()
+
+    if (gameConfig.activePlayerIdx >= gameConfig.players.size) {
+      gameState = PLAYER_TURN
+      gameConfig.resetActivePlayerIdx()
+      notifyObservers
+    }
   }
 
 
   def gameStateToString: String = {
     gameState match {
-      case PLAYER_TURN | SWITCHCARD | COMBINECARD => gameConfig.getActivePlayer.toString
+      case PLAYER_TURN | SWITCHCARD | COMBINECARD | VIEWCARD => gameConfig.getActivePlayer.toString
     }
   }
   def undoStep: Unit = {
@@ -126,5 +136,11 @@ class Controller() extends Observable {
     undoManager.redoStep
     notifyObservers
   }
+
+  def validIndex(input: String): Option[String] = {
+    if(input.toInt > 4) None
+    else Some(input)
+  }
+
 
 }
