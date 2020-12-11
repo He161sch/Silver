@@ -18,7 +18,7 @@ class TUI(controller: Controller) extends Observer with UIFactory {
     controller.notifyObservers
     var input: String = ""
 
-    while (input != "q") {
+    while (input != "q" && controller.gameState != EndGame) {
       input = readLine()
       processCommands(input)
     }
@@ -81,13 +81,9 @@ class TUI(controller: Controller) extends Observer with UIFactory {
       case "d" => controller.drawCard()
       case "v" => controller.viewCard()
       case "state" => controller.getState()
+      case "cabo" => controller.whoWon()
       case _ => println("unknown command ... Try again")
-//        } else if (inputsplit.head.matches("c") && inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {   //combine
-//          controller.combineCard(inputsplit(1).toInt, inputsplit(2).toInt)
-//        }else{
-//          println("ungültiger befehl")
-//        }
-//    }
+
     }
   }
 
@@ -102,8 +98,11 @@ class TUI(controller: Controller) extends Observer with UIFactory {
       case NEWGAMESTART => {
         println("A new Game started ... Deck is now shuffeled!")
       }
+      case LastPlayerName => {
+        println(controller.getLastPlayerName)
+      }
       case PLAYER_TURN => {
-        println(controller.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n")
+        print(controller.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n")
         println(controller.gameStateToString)
       }
       case DRAWEDCARD => {
@@ -116,12 +115,17 @@ class TUI(controller: Controller) extends Observer with UIFactory {
         println(controller.gameStateToString)
       }
       case COMBINECARD => {
-        println("You combined two Cards and got rid of one :)")
         println(controller.gameStateToString)
       }
       case VIEWCARD => {
         println(controller.gameStateToString)
         println("Which Card you want to view ?[v [0-4]]")
+      }
+      case PlayerWon => {
+        println(controller.gameStateToString)
+      }
+      case EndGame => {
+        println("Was fun playing!")
       }
     }
     true

@@ -7,8 +7,8 @@ import scala.util.Random
 import scala.util.control.Exception.allCatch
 
 object GameState extends Enumeration{
-  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD,
-
+  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD, LastPlayerName,
+        PlayerWon, EndGame,
 
   roundStarted, gameOver, nextPlayerCard, playersChoice ,roundOver,
   ShowHandValue, switchOrCombineCard, drawViewCard = Value
@@ -22,7 +22,7 @@ class Controller() extends Observable {
   var deck = new Deck
   var gameState = WelcomeState
   var running: State = IsNotRunning()
-  var gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0, Vector[Player]())
+  var gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0)
   private val undoManager = new UndoManager
 
   def getState(): Unit = {
@@ -61,6 +61,8 @@ class Controller() extends Observable {
     gameState = InputName
     running = IsRunning()
   }
+
+  def getLastPlayerName: String = gameConfig.getLastPlayerName.toString
 
   def getActivePlayerName: String = gameConfig.getActivePlayerName
 
@@ -104,6 +106,8 @@ class Controller() extends Observable {
   def switchCard(idx: Int): Unit = {
     gameConfig = gameConfig.switchCard(idx)
     gameState = SWITCHCARD
+    notifyObservers
+    nextPlayer()
   }
 
   def combineCard(idx1: Int, idx2: Int): Unit = {
@@ -115,17 +119,45 @@ class Controller() extends Observable {
   def nextPlayer(): Unit = {
     gameConfig = gameConfig.incrementActivePlayerIdx()
 
+    gameState = PLAYER_TURN
+
     if (gameConfig.activePlayerIdx >= gameConfig.players.size) {
-      gameState = PLAYER_TURN
-      gameConfig.resetActivePlayerIdx()
-      notifyObservers
+      gameConfig = gameConfig.resetActivePlayerIdx()
+
     }
+  }
+
+  def whoWon(): Unit = {
+    var closestValue = 0
+    for (i <- gameConfig.players.indices) {
+      val handValue = gameConfig.players(i).hand.handValue()
+      if (handValue >= 0) {
+        closestValue = handValue
+      }
+    }
+    for (i <- gameConfig.players.indices) {
+      val handValue = gameConfig.players(i).hand.handValue()
+      if (handValue == closestValue) {
+        gameConfig = gameConfig.addWinner(gameConfig.players(i))
+      }
+    }
+    gameState = PlayerWon
+    notifyObservers
+    running = IsNotRunning()
+    quitGame()
+
+  }
+
+  def quitGame(): Unit = {
+    gameState = EndGame
+    notifyObservers
   }
 
 
   def gameStateToString: String = {
     gameState match {
-      case PLAYER_TURN | SWITCHCARD | COMBINECARD | VIEWCARD => gameConfig.getActivePlayer.toString
+      case PLAYER_TURN | VIEWCARD | SWITCHCARD => gameConfig.getActivePlayer.toString
+      case PlayerWon => gameConfig.winnerToString()
     }
   }
   def undoStep: Unit = {
@@ -137,10 +169,7 @@ class Controller() extends Observable {
     notifyObservers
   }
 
-  def validIndex(input: String): Option[String] = {
-    if(input.toInt > 4) None
-    else Some(input)
-  }
 
 
+  // Nach dem Ziehen kann man auch keine Karte tauschen
 }

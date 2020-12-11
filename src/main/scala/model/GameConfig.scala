@@ -1,7 +1,7 @@
 package model
 
 
-case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int = 0, winner: Vector[Player] = Vector[Player]()){
+case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int = 0, winners: Vector[Player] = Vector[Player]()){
 
   def createPlayer(playerName: String = ""): GameConfig = {
     val (newDeck, newHand) = deck.drawCards(5)
@@ -51,12 +51,28 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
   def combineCard(idx1: Int, idx2: Int): GameConfig = {
     val drawedCard = players(activePlayerIdx).newCard
 
-    val np = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(0))
-    val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(0))
-
-    updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
+    if (players(activePlayerIdx).hand.cards(idx1).number.equals(players(activePlayerIdx).hand.cards(idx2).number)) {
+      val np = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(0))
+      val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(0))
+      updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
+    } else {
+      updatePlayerAtIdx(players(activePlayerIdx), activePlayerIdx, deck)
+    }
   }
 
+  def addWinner(winner: Player): GameConfig = {
+    val isWinner = winners :+ winner
+    copy(players, deck, 0, isWinner)
+  }
+
+  def winnerToString(): String = {
+    val sb = new StringBuilder
+    if (winners.size == 1) {
+      sb.append(winners(0).name).append(" has won with a total of ").append(winners(0).hand.handValue())
+        .append(" points\n")
+    }
+    sb.toString()
+  }
 
   def incrementActivePlayerIdx(): GameConfig = {
     copy(players, deck, activePlayerIdx + 1)
@@ -68,7 +84,10 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
 
   def getActivePlayerName = players(activePlayerIdx).name
 
+  def getLastPlayerName= players(activePlayerIdx-1)
+
   def getActivePlayer = players(activePlayerIdx)
+
 
 
 }

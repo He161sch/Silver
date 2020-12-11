@@ -16,8 +16,8 @@ object Silver {
     val uiType = args(0)
 
     Try(UIFactory(uiType, controller)) match {
-      case Failure(v) => println("Could not start UI because: " + v.getMessage)
-      case Success(v) => println("You closed the game with q")
+      case Failure(v) => println("Ui Failed because: " + v.getMessage)
+      case Success(v) => println("See you next time :)")
 
     }
   }
