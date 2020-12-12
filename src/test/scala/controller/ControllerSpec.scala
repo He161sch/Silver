@@ -58,6 +58,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         observer.updated should be(true)
         controller.gameConfig.getActivePlayerName should be("SETest")
       }
+
     }
   }
 }

@@ -17,7 +17,7 @@ class CommandCombineCardSpec extends AnyWordSpec with Matchers{
     "doStep" in {
       controller.gameConfig = tempGameConfig
       undoManager.doStep(new CommandCombineCard(controller,0, 1))
-      controller.gameConfig.players(0).hand.cards.size should be (3)
+      controller.gameConfig.players(0).hand.cards.size should be (4)
     }
     "undoStep" in {
       controller.gameConfig = tempGameConfig
@@ -25,11 +25,11 @@ class CommandCombineCardSpec extends AnyWordSpec with Matchers{
       undoManager.undoStep()
       controller.gameConfig.players(0).hand.cards.size should be (4)
     }
-//    "redoStep" in {
-//      controller.gameConfig = tempGameConfig
-//      undoManager.doStep(new CommandCombineCard(controller,0, 1))
-//      undoManager.redoStep()
-//      controller.gameConfig.players(0).hand.cards.size should be (4)
-//    }
+    "redoStep" in {
+      controller.gameConfig = tempGameConfig
+      undoManager.doStep(new CommandCombineCard(controller,0, 1))
+      undoManager.redoStep()
+      controller.gameConfig.players(0).hand.cards.size should be (4)
+    }
   }
 }
