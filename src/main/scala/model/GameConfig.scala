@@ -84,8 +84,6 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
 
   def getActivePlayerName = players(activePlayerIdx).name
 
-  def getLastPlayerName= players(activePlayerIdx-1)
-
   def getActivePlayer = players(activePlayerIdx)
 
 

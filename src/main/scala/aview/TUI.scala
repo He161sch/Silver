@@ -1,21 +1,22 @@
 package aview
 
 
-import controller.Controller
+import controller.{Controller, updateData}
 import controller.GameState._
 import util.Observer
 
 import scala.io.StdIn.readLine
+import scala.swing._
 
 
 
-class TUI(controller: Controller) extends Observer with UIFactory {
+class TUI(controller: Controller) extends Reactor {
 
-  controller.add(this)
+  listenTo(controller)
 
   def run(): Unit = {
     controller.gameState = WelcomeState
-    controller.notifyObservers
+    controller.publish(new updateData)
     var input: String = ""
 
     while (input != "q" && controller.gameState != EndGame) {
@@ -24,7 +25,7 @@ class TUI(controller: Controller) extends Observer with UIFactory {
     }
   }
 
-   override def processCommands(input: String): Unit = {
+   def processCommands(input: String): Unit = {
 
      val inputsplit = input.split(" ").toList
      if (controller.gameState == WelcomeState) {
@@ -87,7 +88,11 @@ class TUI(controller: Controller) extends Observer with UIFactory {
     }
   }
 
-  override def update: Boolean = {
+  reactions += {
+    case event: updateData => update
+  }
+
+   def update: Unit = {
     controller.gameState match {
       case WelcomeState => {
         println("Welcome to Silver :)\nHow many players want to play[2 or 3]?")
@@ -97,9 +102,6 @@ class TUI(controller: Controller) extends Observer with UIFactory {
       }
       case NEWGAMESTART => {
         println("A new Game started ... Deck is now shuffeled!")
-      }
-      case LastPlayerName => {
-        println(controller.getLastPlayerName)
       }
       case PLAYER_TURN => {
         print(controller.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n")
@@ -128,7 +130,6 @@ class TUI(controller: Controller) extends Observer with UIFactory {
         println("Was fun playing!")
       }
     }
-    true
   }
 
   def validateSwitch(idx: Int): Option[Unit] = {

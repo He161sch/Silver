@@ -3,21 +3,19 @@ package controller
 import model.{Card, Deck, GameConfig, Hand, Player}
 import util.{Observable, UndoManager}
 
+import scala.swing.Publisher
 import scala.util.Random
 import scala.util.control.Exception.allCatch
 
 object GameState extends Enumeration{
-  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD, LastPlayerName,
-        PlayerWon, EndGame,
-
-  roundStarted, gameOver, nextPlayerCard, playersChoice ,roundOver,
-  ShowHandValue, switchOrCombineCard, drawViewCard = Value
+  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD,
+        PlayerWon, EndGame = Value
 }
 
 
 import GameState._
 
-class Controller() extends Observable {
+class Controller() extends Publisher {
 
   var deck = new Deck
   var gameState = WelcomeState
@@ -33,24 +31,24 @@ class Controller() extends Observable {
 
   def performInitGame(playerAmount: Int): Unit = {
     undoManager.doStep(new CommandPlayerAmount(this, playerAmount))
-    notifyObservers
+    publish(new updateData)
   }
   def performSetPlayerName(playerName: String): Unit = {
     undoManager.doStep(new CommandInputNames(this, playerName))
-    notifyObservers
+    publish(new updateData)
   }
   def performViewCard(idx: Int): Unit = {
     undoManager.doStep(new CommandViewCard(this, idx))
-    notifyObservers
+    publish(new updateData)
   }
   def performSwitchCard(idx: Int): Unit = {
 
     undoManager.doStep(new CommandSwitchCard(this, idx))
-    notifyObservers
+    publish(new updateData)
   }
   def performCombineCard(idx1: Int, idx2: Int): Unit = {
     undoManager.doStep(new CommandCombineCard(this, idx1, idx2))
-    notifyObservers
+    publish(new updateData)
   }
 
   def initGame(playeramount: Int): Unit = {
@@ -62,7 +60,6 @@ class Controller() extends Observable {
     running = IsRunning()
   }
 
-  def getLastPlayerName: String = gameConfig.getLastPlayerName.toString
 
   def getActivePlayerName: String = gameConfig.getActivePlayerName
 
@@ -78,25 +75,25 @@ class Controller() extends Observable {
     if (gameConfig.activePlayerIdx >= gameConfig.players.size) {
       gameConfig = gameConfig.resetActivePlayerIdx()
       gameState = NEWGAMESTART
-      notifyObservers
+      publish(new updateData)
       gameState = PLAYER_TURN
     }
   }
 
   def viewCard(): Unit = {
     gameState = VIEWCARD
-    notifyObservers
+    publish(new updateData)
   }
   def viewCard(idx: Int): Unit = {
     gameConfig = gameConfig.viewCard(idx)
-    notifyObservers
+    publish(new updateData)
     nextPlayer()
   }
 
   def drawCard(): Unit = {
     gameConfig = gameConfig.drawCard()
     gameState = DRAWEDCARD
-    notifyObservers
+    publish(new updateData)
   }
 
   def printdrawedCard(): String = {
@@ -106,7 +103,7 @@ class Controller() extends Observable {
   def switchCard(idx: Int): Unit = {
     gameConfig = gameConfig.switchCard(idx)
     gameState = SWITCHCARD
-    notifyObservers
+    publish(new updateData)
     nextPlayer()
   }
 
@@ -142,7 +139,7 @@ class Controller() extends Observable {
       }
     }
     gameState = PlayerWon
-    notifyObservers
+    publish(new updateData)
     running = IsNotRunning()
     quitGame()
 
@@ -150,23 +147,23 @@ class Controller() extends Observable {
 
   def quitGame(): Unit = {
     gameState = EndGame
-    notifyObservers
+    publish(new updateData)
   }
 
 
   def gameStateToString: String = {
     gameState match {
-      case PLAYER_TURN | VIEWCARD | SWITCHCARD => gameConfig.getActivePlayer.toString
+      case PLAYER_TURN | VIEWCARD | SWITCHCARD | COMBINECARD => gameConfig.getActivePlayer.toString
       case PlayerWon => gameConfig.winnerToString()
     }
   }
   def undoStep: Unit = {
     undoManager.undoStep
-    notifyObservers
+    publish(new updateData)
   }
   def redoStep: Unit = {
     undoManager.redoStep
-    notifyObservers
+    publish(new updateData)
   }
 
 
