@@ -31,24 +31,18 @@ class Controller() extends Publisher {
 
   def performInitGame(playerAmount: Int): Unit = {
     undoManager.doStep(new CommandPlayerAmount(this, playerAmount))
-    publish(new updateData)
   }
   def performSetPlayerName(playerName: String): Unit = {
     undoManager.doStep(new CommandInputNames(this, playerName))
-    publish(new updateData)
   }
   def performViewCard(idx: Int): Unit = {
     undoManager.doStep(new CommandViewCard(this, idx))
-    publish(new updateData)
   }
   def performSwitchCard(idx: Int): Unit = {
-
     undoManager.doStep(new CommandSwitchCard(this, idx))
-    publish(new updateData)
   }
   def performCombineCard(idx1: Int, idx2: Int): Unit = {
     undoManager.doStep(new CommandCombineCard(this, idx1, idx2))
-    publish(new updateData)
   }
 
   def initGame(playeramount: Int): Unit = {
@@ -82,11 +76,10 @@ class Controller() extends Publisher {
 
   def viewCard(): Unit = {
     gameState = VIEWCARD
-    publish(new updateData)
+
   }
   def viewCard(idx: Int): Unit = {
     gameConfig = gameConfig.viewCard(idx)
-    publish(new updateData)
     nextPlayer()
   }
 
@@ -94,6 +87,7 @@ class Controller() extends Publisher {
     gameConfig = gameConfig.drawCard()
     gameState = DRAWEDCARD
     publish(new updateData)
+
   }
 
   def printdrawedCard(): String = {
@@ -110,7 +104,12 @@ class Controller() extends Publisher {
   def combineCard(idx1: Int, idx2: Int): Unit = {
     gameConfig = gameConfig.combineCard(idx1, idx2)
     gameState = COMBINECARD
+    publish(new updateData)
     nextPlayer()
+  }
+
+  def updateGui(): Unit = {
+    publish(new updateData)
   }
 
   def nextPlayer(): Unit = {
@@ -122,6 +121,7 @@ class Controller() extends Publisher {
       gameConfig = gameConfig.resetActivePlayerIdx()
 
     }
+    //publish(new updateData)
   }
 
   def whoWon(): Unit = {
@@ -139,7 +139,6 @@ class Controller() extends Publisher {
       }
     }
     gameState = PlayerWon
-    publish(new updateData)
     running = IsNotRunning()
     quitGame()
 
@@ -173,6 +172,14 @@ class Controller() extends Publisher {
     for (card <- gameConfig.getActivePlayer.hand.cards) {
       cardImageNames = cardImageNames :+ (card.toString + ".png")
     }
+    cardImageNames
+  }
+
+  def mapDrawedCard(hidePlayerCards: Boolean): List[String] = {
+    var cardImageNames = List[String]()
+
+      cardImageNames = cardImageNames :+ (gameConfig.getActivePlayer.newCard.toString + ".png")
+
     cardImageNames
   }
 

@@ -32,7 +32,7 @@ class SetupGui(controller: Controller) extends Frame {
     text = controller.getPlayerName
   }
 
-  contents = new GridPanel(4,1) {
+  contents = new GridPanel(4, 1) {
     contents += playername
     contents += inputName
     contents += undoButton
@@ -43,9 +43,9 @@ class SetupGui(controller: Controller) extends Frame {
 
     reactions += {
       case ButtonClicked(component) => {
-        if(component == undoButton) {
+        if (component == undoButton) {
           controller.undoStep
-        } else if(component == doButton) {
+        } else if (component == doButton) {
           controller.performSetPlayerName(inputName.text)
           if (controller.gameConfig.activePlayerIdx == 0) {
             dispose()
