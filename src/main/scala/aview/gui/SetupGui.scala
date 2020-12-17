@@ -12,18 +12,15 @@ class SetupGui(controller: Controller) extends Frame {
   title = "Silver"
 
   val undoButton = new Button {
-    text = "Undo"
+    text = "\u2190"
   }
-  val redoButton = new Button {
-    text = "Redo"
-  }
+
   val doButton = new Button {
-    text = "Do"
+    text = "\u2192"
   }
 
   val flowPanel = new FlowPanel {
     contents += undoButton
-    contents += redoButton
     contents += doButton
   }
 
@@ -31,26 +28,28 @@ class SetupGui(controller: Controller) extends Frame {
     columns = 40
   }
 
-  val lbl_playername = new Label {
+  val playername = new Label {
     text = controller.getPlayerName
   }
 
-  contents = new GridPanel(3,1) {
-    contents += lbl_playername
+  contents = new GridPanel(4,1) {
+    contents += playername
     contents += inputName
-    contents += flowPanel
+    contents += undoButton
+    contents += doButton
+
     listenTo(undoButton)
-    listenTo(redoButton)
     listenTo(doButton)
 
     reactions += {
       case ButtonClicked(component) => {
         if(component == undoButton) {
           controller.undoStep
-        } else if(component == redoButton) {
-          controller.redoStep
         } else if(component == doButton) {
           controller.performSetPlayerName(inputName.text)
+          if (controller.gameConfig.activePlayerIdx == 0) {
+            dispose()
+          }
         }
 
         if (controller.gameState == PLAYER_TURN) {
@@ -58,7 +57,7 @@ class SetupGui(controller: Controller) extends Frame {
           new BoardPanel(controller).visible = true
         }
 
-        lbl_playername.text = controller.getPlayerName
+        playername.text = controller.getPlayerName
         inputName.text = ""
       }
     }
@@ -66,7 +65,7 @@ class SetupGui(controller: Controller) extends Frame {
 
   reactions += {
     case event: updateData => {
-      lbl_playername.text = controller.getPlayerName
+      playername.text = controller.getPlayerName
       inputName.text = ""
     }
   }

@@ -167,6 +167,14 @@ class Controller() extends Publisher {
   }
 
 
+  def mapSymbolToChar(hidePlayerCards: Boolean): List[String] = {
+    var cardImageNames = List[String]()
+
+    for (card <- gameConfig.getActivePlayer.hand.cards) {
+      cardImageNames = cardImageNames :+ (card.toString + ".png")
+    }
+    cardImageNames
+  }
 
   // Nach dem Ziehen kann man auch keine Karte tauschen
 }

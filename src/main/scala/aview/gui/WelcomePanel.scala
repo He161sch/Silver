@@ -56,8 +56,10 @@ class WelcomePanel(controller: Controller) extends Frame {
         case ButtonClicked(component) => {
           if (component == `twoPlayers`) {
             controller.performInitGame(2)
+            dispose()
           } else if (component == `threePlayers`) {
             controller.performInitGame(3)
+            dispose()
           }
           new SetupGui(controller).visible = true
           peer.setVisible(false)
