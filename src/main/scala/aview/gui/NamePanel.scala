@@ -26,6 +26,7 @@ class NamePanel(controller:Controller) extends Frame {
     val nextPlayer = new Button("Enter")
     val lastPlayer = new Button("Undo")
 
+    listenTo(nextPlayer, lastPlayer)
     contents += new FlowPanel() {
       contents += new Label("Player " + controller.gameConfig.activePlayerIdx + " please enter your name :)" ) {
         font = myFont
@@ -38,11 +39,10 @@ class NamePanel(controller:Controller) extends Frame {
       contents += lastPlayer
       contents += nextPlayer
     }
-    listenTo(nextPlayer, lastPlayer)
+
     reactions += {
       case ButtonClicked(`nextPlayer`) => controller.performSetPlayerName(nameInput.text)
       case ButtonClicked(`lastPlayer`) => controller.undoStep
     }
-
   }
 }
