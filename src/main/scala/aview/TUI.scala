@@ -1,76 +1,144 @@
 package aview
 
 
-import controller.{Controller, State}
+import controller.controllercomponent.controllerbaseimpl.Controller
+import controller.controllercomponent.GameState._
+import controller.controllercomponent.updateData
 import util.Observer
 
+import scala.io.StdIn.readLine
+import scala.swing._
 
-class TUI(controller: Controller) extends Observer with UIInterface {
 
-  controller.add(this)
 
-  override def inputCommand(input: String): Unit = processInputLine(input)
+class TUI(controller: Controller) extends Reactor {
+
+  listenTo(controller)
+
+  def run(): Unit = {
+    controller.gameState = WelcomeState
+    controller.publish(new updateData)
+    var input: String = ""
+
+    while (input != "q" && controller.gameState != EndGame) {
+      input = readLine()
+      processCommands(input)
+    }
+  }
+
+   def processCommands(input: String): Unit = {
+
+     val inputsplit = input.split(" ").toList
+     if (controller.gameState == WelcomeState) {
+      input match {
+        case "z" => controller.undoStep
+        case "y" => controller.redoStep
+        case _ => initPlayers(input)
+      }
+    } else if (controller.gameState == InputName) {
+      input match {
+        case "z" => controller.undoStep
+        case "y" => controller.redoStep
+        case _ => controller.performSetPlayerName(input)
+      }
+    } else if (controller.gameState == DRAWEDCARD) {
+       inputsplit.head match {
+         case "z" => controller.undoStep
+         case "y" => controller.redoStep
+         case "s" => validateSwitch(inputsplit(1).toInt).getOrElse(println(inputsplit(1).toInt + " is out of Bounds try again"))
+         case "c" =>
+           if (inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {
+             controller.performCombineCard(inputsplit(1).toInt, inputsplit(2).toInt)
+           }
+         case _ => println("Ungültiger befehl")
+       }
+     } else if (controller.gameState == VIEWCARD) {
+       inputsplit.head match {
+         case "z" => controller.undoStep
+         case "y" => controller.redoStep
+         case "v" =>
+           if (inputsplit(1).matches("1|2|3|4|0")) {
+             controller.viewCard(inputsplit(1).toInt)
+           }
+         case _ => println("Ungültiger befehl")
+       }
+    } else {
+      processInputLine(input)
+    }
+  }
+
+  def initPlayers(input: String): Unit = {
+    if (!List("2", "3").contains(input)) {
+      println("You can only play with 2 or 3 Players\n. . .\nTry again")
+    } else {
+      controller.performInitGame(input.toInt)
+    }
+  }
+
+
 
   def processInputLine(input: String): Unit = {
     val inputsplit = input.split(" ").toList
-    inputsplit match{
-      case _ =>
-        if (inputsplit.head.matches("d")){
-          controller.drawCard()
-        } else if (inputsplit.head.matches("v") && inputsplit(1).matches("1|2|3|4|0")){
-          controller.viewCard(inputsplit(1).toInt)
-        } else if (inputsplit.head.matches("s") && inputsplit(1).matches("1|2|3|4|0")){
-          controller.switchCard(inputsplit(1).toInt)
-        } else if (inputsplit.head.matches("e")){  //end
-          controller.showHandValue()
-          System.exit(0)
-        } else if (inputsplit.head.matches("c") && inputsplit(1).matches("1|2|3|4|0") && inputsplit(2).matches("1|2|3|4|0")) {   //combine
-          controller.combineCard(inputsplit(1).toInt, inputsplit(2).toInt)
-        }else{
-          println("ungültiger befehl")
-        }
+    inputsplit.head match{
+      case "d" => controller.drawCard()
+      case "v" => controller.viewCard()
+      case "state" => controller.getState()
+      case "cabo" => controller.whoWon()
+      case _ => println("unknown command ... Try again")
+
     }
   }
 
-  override def update(status: State.Value): Boolean = {
-    status match {
-      case State.WelcomeState => welcomeGame();true
-      case State.CreatePlayer => {
-        println(controller.statusToString)
-        true
+  reactions += {
+    case event: updateData => update
+  }
+
+   def update: Unit = {
+    controller.gameState match {
+      case WelcomeState => {
+        println("Welcome to Silver :)\nHow many players want to play[2 or 3]?")
       }
-      case State.DrawCard => {
-        println("You drew a Card")
-        println("The new Card is: " + controller.getCardValue)
-        println(controller.statusToString)
-        true
+      case InputName => {
+        println(controller.getPlayerName)
       }
-      case State.ViewCard => {
-        println("You viewed a Card")
-        println("Cards Value: " + controller.getViewedCard)
-        println(controller.statusToString)
-        true
+      case NEWGAMESTART => {
+        println("A new Game started ... Deck is now shuffeled!")
       }
-      case State.SwitchCard => {
-        println("You switched a Card")
-        println(controller.statusToString)
-        true
+      case PLAYER_TURN => {
+        print(controller.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n")
+        println(controller.gameStateToString)
       }
-      case State.ShowHandValue => {
-        println("Your HandValue is: " + controller.showHandValue())
-        println(controller.statusToString)
-        true
+      case DRAWEDCARD => {
+        print("Your drawed Card is: ")
+        println(controller.printdrawedCard())
+        println("Do you want to Swap or Combine the drawn Card?[s [0-4] / c [0-4] [0-4]")
       }
-      case State.CombineCard => {
-        println("You combined two Cards")
-        println(controller.statusToString)
-        true
+      case SWITCHCARD => {
+        println("You switched the drawn Card with on of yours")
+        println(controller.gameStateToString)
+      }
+      case COMBINECARD => {
+        println(controller.gameStateToString)
+      }
+      case VIEWCARD => {
+        println(controller.gameStateToString)
+        println("Which Card you want to view ?[v [0-4]]")
+      }
+      case PlayerWon => {
+        println(controller.gameStateToString)
+      }
+      case EndGame => {
+        println("Was fun playing!")
       }
     }
   }
 
-  def welcomeGame(): Unit = {
-    println("Welcome to Silver")
-    controller.notifyObservers(State.CreatePlayer)
+  def validateSwitch(idx: Int): Option[Unit] = {
+    if (idx >= 0 && idx < 5) {
+      Some(controller.performSwitchCard(idx))
+    } else {
+      None
+    }
+
   }
 }
