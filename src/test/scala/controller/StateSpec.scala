@@ -1,5 +1,6 @@
 package controller
 
+import controller.controllercomponent.{IsNotRunning, IsRunning}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

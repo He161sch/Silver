@@ -1,7 +1,8 @@
-package controller
+package controller.controllercomponent
 
-import util.Command
+import controllerbaseimpl.Controller
 import model.GameConfig
+import util.Command
 
 class CommandSwitchCard(controller: Controller, idx: Int) extends Command {
   var gameConfig: GameConfig = controller.gameConfig

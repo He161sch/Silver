@@ -1,26 +1,21 @@
-package controller
+package controller.controllercomponent.controllerbaseimpl
 
-import model.{Card, Deck, GameConfig, Hand, Player}
-import util.{Observable, UndoManager}
+import controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, EndGame, InputName, NEWGAMESTART, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD, WelcomeState}
+import controller.controllercomponent._
+import model.{Deck, GameConfig, Player}
+import util.UndoManager
 
 import scala.swing.Publisher
-import scala.util.Random
-import scala.util.control.Exception.allCatch
-
-object GameState extends Enumeration{
-  val  WelcomeState, InputName, PLAYER_TURN, NEWGAMESTART, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD,
-        PlayerWon, EndGame = Value
-}
 
 
-import GameState._
+class Controller() extends ControllerInterface with Publisher{
 
-class Controller() extends Publisher {
+  // Überflüssig
+  // var deck = new Deck
+  // var gameState = WelcomeState
+  // var running: State = IsNotRunning()
+  // var gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0)
 
-  var deck = new Deck
-  var gameState = WelcomeState
-  var running: State = IsNotRunning()
-  var gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0)
   private val undoManager = new UndoManager
 
   def getState(): Unit = {
@@ -35,20 +30,17 @@ class Controller() extends Publisher {
   }
   def performSetPlayerName(playerName: String): Unit = {
     undoManager.doStep(new CommandInputNames(this, playerName))
-    publish(new updateData)
   }
   def performViewCard(idx: Int): Unit = {
     undoManager.doStep(new CommandViewCard(this, idx))
-    publish(new updateData)
   }
   def performSwitchCard(idx: Int): Unit = {
 
     undoManager.doStep(new CommandSwitchCard(this, idx))
-    publish(new updateData)
+
   }
   def performCombineCard(idx1: Int, idx2: Int): Unit = {
     undoManager.doStep(new CommandCombineCard(this, idx1, idx2))
-    publish(new updateData)
   }
 
   def initGame(playeramount: Int): Unit = {
@@ -82,7 +74,6 @@ class Controller() extends Publisher {
 
   def viewCard(): Unit = {
     gameState = VIEWCARD
-    publish(new updateData)
   }
   def viewCard(idx: Int): Unit = {
     gameConfig = gameConfig.viewCard(idx)
@@ -110,6 +101,7 @@ class Controller() extends Publisher {
   def combineCard(idx1: Int, idx2: Int): Unit = {
     gameConfig = gameConfig.combineCard(idx1, idx2)
     gameState = COMBINECARD
+    publish(new updateData)
     nextPlayer()
   }
 
@@ -122,6 +114,7 @@ class Controller() extends Publisher {
       gameConfig = gameConfig.resetActivePlayerIdx()
 
     }
+    publish(new updateData)
   }
 
   def whoWon(): Unit = {
@@ -173,6 +166,14 @@ class Controller() extends Publisher {
     for (card <- gameConfig.getActivePlayer.hand.cards) {
       cardImageNames = cardImageNames :+ (card.toString + ".png")
     }
+    cardImageNames
+  }
+
+  def mapDrawedCard(hidePlayerCards: Boolean): List[String] = {
+    var cardImageNames = List[String]()
+
+    cardImageNames = cardImageNames :+ (gameConfig.getActivePlayer.newCard.toString + ".png")
+
     cardImageNames
   }
 

@@ -1,4 +1,4 @@
-package controller
+package controller.controllercomponent
 
 trait State {
   def handle(e: State): (State, String)

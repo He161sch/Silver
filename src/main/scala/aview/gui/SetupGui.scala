@@ -1,28 +1,26 @@
 package aview.gui
 
-import controller.{Controller, updateData}
+import controller.controllercomponent.controllerbaseimpl.Controller
 
 import scala.swing._
 import scala.swing.event.ButtonClicked
-import controller.GameState._
+import controller.controllercomponent.GameState._
+import controller.controllercomponent.updateData
 
 class SetupGui(controller: Controller) extends Frame {
   listenTo(controller)
+  peer.setPreferredSize(new Dimension(500,150))
   peer.setLocationRelativeTo(null)
   title = "Silver"
 
-  val undoButton = new Button {
-    text = "\u2190"
-  }
+  // Do & undo Buttons
+  val undoButton = new Button("\u2190" + " undo")
+  val doButton = new Button("do " + "\u2192")
 
-  val doButton = new Button {
-    text = "\u2192"
-  }
-
-  val flowPanel = new FlowPanel {
-    contents += undoButton
-    contents += doButton
-  }
+//  val flowPanel = new FlowPanel {
+//    contents += undoButton
+//    contents += doButton
+//  }
 
   val inputName = new TextField {
     columns = 40
@@ -32,11 +30,16 @@ class SetupGui(controller: Controller) extends Frame {
     text = controller.getPlayerName
   }
 
-  contents = new GridPanel(4,1) {
-    contents += playername
-    contents += inputName
+  def createButtonGrid: GridPanel = new GridPanel(1,2) {
     contents += undoButton
     contents += doButton
+  }
+
+
+  contents = new GridPanel(3,1) {
+    contents += playername
+    contents += inputName
+    contents += createButtonGrid
 
     listenTo(undoButton)
     listenTo(doButton)

@@ -1,8 +1,9 @@
 package aview
 
 
-import controller.{Controller, updateData}
-import controller.GameState._
+import controller.controllercomponent.controllerbaseimpl.Controller
+import controller.controllercomponent.GameState._
+import controller.controllercomponent.updateData
 import util.Observer
 
 import scala.io.StdIn.readLine

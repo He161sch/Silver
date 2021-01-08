@@ -1,5 +1,6 @@
-package controller
+package controller.controllercomponent
 
+import controllerbaseimpl.Controller
 import model.GameConfig
 import util.Command
 

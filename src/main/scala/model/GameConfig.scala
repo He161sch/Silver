@@ -5,12 +5,12 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
 
   def createPlayer(playerName: String = ""): GameConfig = {
     val (newDeck, newHand) = deck.drawCards(5)
-    val player = Player(playerName, Hand(newHand), Card(0))
+    val player = Player(playerName, Hand(newHand), Card(14))
     copy(players :+ player, newDeck)
   }
 
   def setPlayerName(playerName: String, playerIdx: Int): GameConfig = {
-    val newPlayer = Player(playerName, players(playerIdx).hand, Card(0))
+    val newPlayer = Player(playerName, players(playerIdx).hand, Card(14))
     updatePlayerAtIdx(newPlayer, playerIdx, deck)
   }
 
@@ -43,7 +43,7 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
 
   def switchCard(idx: Int): GameConfig = {
     val drawedCard = players(activePlayerIdx).newCard
-    val newPlayer = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx, drawedCard)), Card(0))
+    val newPlayer = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx, drawedCard)), Card(14))
 
     updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
   }
@@ -52,8 +52,8 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
     val drawedCard = players(activePlayerIdx).newCard
 
     if (players(activePlayerIdx).hand.cards(idx1).number.equals(players(activePlayerIdx).hand.cards(idx2).number)) {
-      val np = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(0))
-      val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(0))
+      val np = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(14))
+      val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(14))
       updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
     } else {
       updatePlayerAtIdx(players(activePlayerIdx), activePlayerIdx, deck)

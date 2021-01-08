@@ -1,7 +1,7 @@
 //package aview
 //
 //import aview.gui.GUI
-//import controller.Controller
+//import controller.controllerComponent.Controller
 //
 //trait UIFactory {
 //  def processCommands(input: String)

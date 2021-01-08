@@ -1,8 +1,8 @@
 
-import scala.io.StdIn._
+
 import aview.TUI
 import aview.gui.WelcomePanel
-import controller.{Controller, updateData}
+import _root_.controller.controllercomponent.controllerbaseimpl.Controller
 
 import scala.util.{Failure, Success, Try}
 
@@ -15,8 +15,6 @@ object Silver {
 
 
   def main(args: Array[String]): Unit = {
-
-
     tui.run()
   }
 

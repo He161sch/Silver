@@ -1,5 +1,6 @@
-package controller
+package controller.controllercomponent
 
+import controller.controllercomponent.controllerbaseimpl.Controller
 import model.{Card, Deck, GameConfig, Hand, Player}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
