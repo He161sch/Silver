@@ -1,16 +1,17 @@
 package aview.gui
 
+import controller.controllercomponent.ControllerInterface
+
 import java.awt.Image
-
 import controller.controllercomponent.controllerbaseimpl.Controller
-import javax.swing._
 
+import javax.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event.{ButtonClicked, MouseClicked}
 import scala.swing.{Label, _}
 import scala.util.Try
 
-class WelcomePanel(controller: Controller) extends Frame {
+class WelcomePanel(controller: ControllerInterface) extends Frame {
   background = new Color(0,100,0)
   visible = true
   centerOnScreen()

@@ -3,7 +3,7 @@ package aview
 
 import controller.controllercomponent.controllerbaseimpl.Controller
 import controller.controllercomponent.GameState._
-import controller.controllercomponent.updateData
+import controller.controllercomponent.{ControllerInterface, updateData}
 import util.Observer
 
 import scala.io.StdIn.readLine
@@ -11,7 +11,7 @@ import scala.swing._
 
 
 
-class TUI(controller: Controller) extends Reactor {
+class TUI(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 

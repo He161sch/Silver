@@ -1,7 +1,7 @@
 package controller.controllercomponent
 
 import controllerbaseimpl.Controller
-import model.GameConfig
+import model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
 import util.Command
 
 class CommandCombineCard(controller: Controller, idx1: Int, idx2: Int) extends Command{

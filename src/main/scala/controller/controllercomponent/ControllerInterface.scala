@@ -1,6 +1,9 @@
 package controller.controllercomponent
 
-import model.{Deck, GameConfig, Player}
+import model.gameconfigcomponent.gameconfigbaseimpl
+import model.deckcomponent.deckbaseimpl.Deck
+import model.playercomponent.playerbaseimpl.Player
+
 import util.UndoManager
 
 import scala.swing.Publisher
@@ -18,7 +21,7 @@ trait ControllerInterface extends Publisher {
   var deck = new Deck
   var gameState = WelcomeState
   var running: State = IsNotRunning()
-  var gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0)
+  var gameConfig = gameconfigbaseimpl.GameConfig(Vector[Player](), deck.resetDeck(), 0)
   private val undoManager = new UndoManager
 
   def getState(): Unit

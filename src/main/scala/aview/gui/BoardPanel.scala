@@ -1,15 +1,14 @@
 package aview.gui
 
 import java.awt.Image
-
 import controller.controllercomponent.controllerbaseimpl.Controller
-import controller.controllercomponent.updateData
-import javax.swing.ImageIcon
+import controller.controllercomponent.{ControllerInterface, updateData}
 
+import javax.swing.ImageIcon
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
-class BoardPanel(controller: Controller) extends Frame {
+class BoardPanel(controller: ControllerInterface) extends Frame {
   listenTo(controller)
   title = "Silver"
   peer.setPreferredSize(new Dimension(1000, 1000))

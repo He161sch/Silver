@@ -1,7 +1,7 @@
 package controller.controllercomponent
 
 import controllerbaseimpl.Controller
-import model.GameConfig
+import model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
 import util.Command
 
 class CommandPlayerAmount(controller: Controller, playerAmount: Int) extends Command {

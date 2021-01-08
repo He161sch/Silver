@@ -1,6 +1,6 @@
 package model
 
-
+import model.cardcomponent.cardbaseimlp.Card
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

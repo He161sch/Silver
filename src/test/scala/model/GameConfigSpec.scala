@@ -1,5 +1,11 @@
 package model
 
+import model.cardcomponent.cardbaseimlp.Card
+import model.gameconfigcomponent.gameconfigbaseimpl
+import model.deckcomponent.deckbaseimpl.Deck
+import model.handcomponent.handbaseimpl.Hand
+import model.playercomponent.playerbaseimpl
+import model.playercomponent.playerbaseimpl.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -9,7 +15,7 @@ class GameConfigSpec extends AnyWordSpec with Matchers {
       val deck = Deck(Vector(Card(0),Card(1), Card(2), Card(3), Card(4), Card(5), Card(6), Card(7), Card(8),
         Card(9), Card(10), Card(11), Card(12), Card(13)))
 
-      val gameConfig = GameConfig(Vector(Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0))), deck: Deck, 0, Vector[Player]())
+      val gameConfig = gameconfigbaseimpl.GameConfig(Vector(Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0))), deck: Deck, 0, Vector[Player]())
 
       "create Player with default name" in {
         val config = gameConfig.createPlayer()
@@ -29,7 +35,7 @@ class GameConfigSpec extends AnyWordSpec with Matchers {
       }
 
       "update PlayerIdx" in {
-        val player1 = Player("SETest", Hand(Vector[Card]()), Card(0))
+        val player1 = playerbaseimpl.Player("SETest", Hand(Vector[Card]()), Card(0))
         var config = gameConfig.createPlayer("SE1")
         config = config.createPlayer("SE2")
         config = config.updatePlayerAtIdx(player1, 0, deck)
@@ -84,10 +90,10 @@ class GameConfigSpec extends AnyWordSpec with Matchers {
       }
 
       "addWinner" in {
-        gameConfig.addWinner(Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0))).winners.size should be (1)
+        gameConfig.addWinner(playerbaseimpl.Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0))).winners.size should be (1)
       }
       "winnerToString" in {
-        val config = gameConfig.addWinner(Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0)))
+        val config = gameConfig.addWinner(playerbaseimpl.Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0)))
         config.winnerToString() should be ("SETest has won with a total of 2 points\n")
       }
     }

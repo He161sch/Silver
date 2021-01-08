@@ -2,7 +2,7 @@ package controller.controllercomponent.controllermockimpl
 
 
 import controller.controllercomponent.{CommandCombineCard, CommandInputNames, CommandPlayerAmount, CommandSwitchCard, CommandViewCard, ControllerInterface, IsNotRunning, IsRunning, State, updateData}
-import model.{Deck, GameConfig, Player}
+import model.playercomponent.playerbaseimpl.Player
 import util.UndoManager
 
 import scala.swing.Publisher

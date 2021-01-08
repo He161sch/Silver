@@ -1,11 +1,12 @@
 package aview.gui
 
+import controller.controllercomponent.ControllerInterface
 import controller.controllercomponent.controllerbaseimpl.Controller
-import javax.swing.BorderFactory
 
+import javax.swing.BorderFactory
 import scala.swing._
 
-class GameOverPanel(controller: Controller) extends Frame {
+class GameOverPanel(controller: ControllerInterface) extends Frame {
   background = new Color(0,100,0)
   visible = true
   centerOnScreen()

@@ -1,6 +1,7 @@
 package model
 
-
+import model.cardcomponent.cardbaseimlp.Card
+import model.handcomponent.handbaseimpl.Hand
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

@@ -5,9 +5,9 @@ import controller.controllercomponent.controllerbaseimpl.Controller
 import scala.swing._
 import scala.swing.event.ButtonClicked
 import controller.controllercomponent.GameState._
-import controller.controllercomponent.updateData
+import controller.controllercomponent.{ControllerInterface, updateData}
 
-class SetupGui(controller: Controller) extends Frame {
+class SetupGui(controller: ControllerInterface) extends Frame {
   listenTo(controller)
   peer.setPreferredSize(new Dimension(500,150))
   peer.setLocationRelativeTo(null)
@@ -35,6 +35,7 @@ class SetupGui(controller: Controller) extends Frame {
     contents += doButton
   }
 
+  this.defaultButton = doButton
 
   contents = new GridPanel(3,1) {
     contents += playername

@@ -2,14 +2,15 @@
 
 import aview.TUI
 import aview.gui.WelcomePanel
-import _root_.controller.controllercomponent.controllerbaseimpl.Controller
+import com.google.inject.Guice
+import controller.controllercomponent.ControllerInterface
 
 import scala.util.{Failure, Success, Try}
 
 
 object Silver {
-
-  val controller = new Controller()
+  val injector = Guice.createInjector(new SilverModule)
+  val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
   val gui = new WelcomePanel(controller)
 

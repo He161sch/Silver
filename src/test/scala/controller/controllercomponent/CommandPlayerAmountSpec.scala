@@ -1,8 +1,9 @@
 package controller.controllercomponent
 
-import controller.controllercomponent.CommandPlayerAmount
 import controller.controllercomponent.controllerbaseimpl.Controller
-import model.{Card, Deck, GameConfig, Hand, Player}
+import model.deckcomponent.deckbaseimpl.Deck
+import model.gameconfigcomponent.gameconfigbaseimpl
+import model.playercomponent.playerbaseimpl.Player
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 import util.UndoManager
@@ -12,7 +13,7 @@ class CommandPlayerAmountSpec extends AnyWordSpec with Matchers{
     val undoManager = new UndoManager
     val controller = new Controller
     val deck = new Deck()
-    val tempGameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0, Vector[Player]())
+    val tempGameConfig = gameconfigbaseimpl.GameConfig(Vector[Player](), deck.resetDeck(), 0, Vector[Player]())
 
     "doStep" in {
       controller.gameConfig = tempGameConfig

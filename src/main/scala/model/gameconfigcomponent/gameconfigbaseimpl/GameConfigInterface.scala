@@ -1,16 +1,24 @@
-package model
+package model.gameconfigcomponent.gameconfigbaseimpl
 
+import model.cardcomponent.cardbaseimlp.Card
+import model.gameconfigcomponent.GameConfigInterface
+import model.handcomponent.handbaseimpl.Hand
+import model.playercomponent.playerbaseimpl
+import model.playercomponent.playerbaseimpl.Player
+import model.deckcomponent.deckbaseimpl.Deck
 
-case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int = 0, winners: Vector[Player] = Vector[Player]()){
+import com.google.inject.Inject
+
+case class GameConfig (players: Vector[Player], deck: Deck, activePlayerIdx: Int = 0, winners: Vector[Player] = Vector[Player]()) extends GameConfigInterface {
 
   def createPlayer(playerName: String = ""): GameConfig = {
     val (newDeck, newHand) = deck.drawCards(5)
-    val player = Player(playerName, Hand(newHand), Card(14))
+    val player = playerbaseimpl.Player(playerName, Hand(newHand), Card(14))
     copy(players :+ player, newDeck)
   }
 
   def setPlayerName(playerName: String, playerIdx: Int): GameConfig = {
-    val newPlayer = Player(playerName, players(playerIdx).hand, Card(14))
+    val newPlayer = playerbaseimpl.Player(playerName, players(playerIdx).hand, Card(14))
     updatePlayerAtIdx(newPlayer, playerIdx, deck)
   }
 
@@ -23,9 +31,8 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
         newPlayers = newPlayers :+ players(i)
       }
     }
-   GameConfig(newPlayers, newDeck, activePlayerIdx)
+    GameConfig(newPlayers, newDeck, activePlayerIdx)
   }
-
 
 
   def viewCard(idx: Int): GameConfig = {
@@ -43,7 +50,7 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
 
   def switchCard(idx: Int): GameConfig = {
     val drawedCard = players(activePlayerIdx).newCard
-    val newPlayer = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx, drawedCard)), Card(14))
+    val newPlayer = playerbaseimpl.Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx, drawedCard)), Card(14))
 
     updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
   }
@@ -52,8 +59,8 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
     val drawedCard = players(activePlayerIdx).newCard
 
     if (players(activePlayerIdx).hand.cards(idx1).number.equals(players(activePlayerIdx).hand.cards(idx2).number)) {
-      val np = Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(14))
-      val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(14))
+      val np = playerbaseimpl.Player(players(activePlayerIdx).name, Hand(players(activePlayerIdx).hand.cards.updated(idx1, drawedCard)), Card(14))
+      val newPlayer = playerbaseimpl.Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.cards)), Card(14))
       updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
     } else {
       updatePlayerAtIdx(players(activePlayerIdx), activePlayerIdx, deck)
@@ -87,5 +94,5 @@ case class GameConfig(players: Vector[Player] , deck: Deck, activePlayerIdx: Int
   def getActivePlayer = players(activePlayerIdx)
 
 
-
 }
+

@@ -1,14 +1,15 @@
 package controller.controllercomponent.controllerbaseimpl
 
+import com.google.inject.{Guice, Inject}
 import controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, EndGame, InputName, NEWGAMESTART, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD, WelcomeState}
 import controller.controllercomponent._
-import model.{Deck, GameConfig, Player}
 import util.UndoManager
+
 
 import scala.swing.Publisher
 
 
-class Controller() extends ControllerInterface with Publisher{
+class Controller @Inject() () extends ControllerInterface with Publisher{
 
   // Überflüssig
   // var deck = new Deck
