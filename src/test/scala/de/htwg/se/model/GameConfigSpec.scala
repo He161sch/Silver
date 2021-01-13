@@ -68,34 +68,34 @@ class GameConfigSpec extends AnyWordSpec with Matchers {
 
       }
 
-//      "increment the activePlayerIdx" in {
-//        val currentIdx = gameConfig.activePlayerIdx
-//        val config = gameConfig.incrementActivePlayerIdx()
-//        (config.activePlayerIdx - currentIdx) should be (1)
-//      }
-//
-//      "reset the activePlayerIdx" in {
-//        val config = gameConfig.resetActivePlayerIdx()
-//        config.activePlayerIdx should be (0)
-//      }
-//
-//      "get activePlayerName" in {
-//        val config = gameConfig.createPlayer("SETest")
-//        config.getActivePlayerName should be ("SETest")
-//      }
-//
-//      "get activePlayer" in {
-//        val config = gameConfig.createPlayer("SETest")
-//        config.getActivePlayer should be (config.getPlayerAtIdx(0))
-//      }
-//
-//      "addWinner" in {
-//        gameConfig.addWinner(playerbaseimpl.Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0))).winners.size should be (1)
-//      }
-//      "winnerToString" in {
-//        val config = gameConfig.addWinner(playerbaseimpl.Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0)))
-//        config.winnerToString() should be ("SETest has won with a total of 2 points\n")
-//      }
+      //      "increment the activePlayerIdx" in {
+      //        val currentIdx = gameConfig.activePlayerIdx
+      //        val config = gameConfig.incrementActivePlayerIdx()
+      //        (config.activePlayerIdx - currentIdx) should be (1)
+      //      }
+      //
+      //      "reset the activePlayerIdx" in {
+      //        val config = gameConfig.resetActivePlayerIdx()
+      //        config.activePlayerIdx should be (0)
+      //      }
+      //
+      //      "get activePlayerName" in {
+      //        val config = gameConfig.createPlayer("SETest")
+      //        config.getActivePlayerName should be ("SETest")
+      //      }
+      //
+      //      "get activePlayer" in {
+      //        val config = gameConfig.createPlayer("SETest")
+      //        config.getActivePlayer should be (config.getPlayerAtIdx(0))
+      //      }
+      //
+      //      "addWinner" in {
+      //        gameConfig.addWinner(playerbaseimpl.Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0))).winners.size should be (1)
+      //      }
+      //      "winnerToString" in {
+      //        val config = gameConfig.addWinner(playerbaseimpl.Player("SETest", Hand(Vector(Card(1), Card(1))), Card(0)))
+      //        config.winnerToString() should be ("SETest has won with a total of 2 points\n")
+      //      }
     }
   }
 }

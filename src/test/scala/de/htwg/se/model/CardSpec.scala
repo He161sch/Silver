@@ -14,9 +14,20 @@ class CardSpec extends AnyWordSpec with Matchers {
       "have a nice String representation" in{
         card.toString should be("3")
       }
-      "have unapply" in {
-        Card.unapply(card).get should be (3)
+      "get the Number of the Card" in{
+        card.getNumber should be(3)
       }
+      "have unapply" in {
+        Card.unapply(card).get should be (false, 3)
+      }
+      "set the Visibility of the Card" in{
+        card.setVisibility(true)
+        card.getVisibility should be(true)
+      }
+      "get the Visibility of the Card" in{
+        card.getVisibility should be(true)
+      }
+
     }
   }
 }

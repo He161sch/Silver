@@ -32,11 +32,11 @@ class CommandCombineCardSpec extends AnyWordSpec with Matchers{
       undoManager.undoStep()
       controller.gameConfig.getPlayerAtIdx(0).getHand.getAllCards.size should be (4)
     }
-//    "redoStep" in {
-//      de.htwg.se.controller.gameConfig = tempGameConfig
-//      undoManager.doStep(new CommandCombineCard(de.htwg.se.controller,0, 1))
-//      undoManager.redoStep()
-//      de.htwg.se.controller.gameConfig.players(0).hand.cards.size should be (4)
-//    }
+    "redoStep" in {
+      controller.gameConfig = tempGameConfig
+      undoManager.doStep(new CommandCombineCard(controller,0, 1))
+      undoManager.redoStep()
+      controller.gameConfig.getPlayerAtIdx(0).getHand.getAllCards.size should be (4)
+    }
   }
 }
