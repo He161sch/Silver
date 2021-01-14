@@ -20,14 +20,13 @@ class Json extends FileIOInterface{
 
 
   def getGameConfigJson(game: JsLookupResult): GameConfigInterface = {
-    val n = GameConfig (
+    GameConfig (
       playersFromJson(game \ "players" \\ "player"),
       Deck(cardsFromJson(game \ "deck" \\ "card")),
       cardFromJson(game \ "discardDeck" \\ "card"),
       (game \ "activePlayerIdx").as[Int],
       playersFromJson(game \\ "winner")
     )
-    n
   }
 
   def getControllerJson(json: JsValue): ControllerInterface = {
@@ -39,14 +38,14 @@ class Json extends FileIOInterface{
 
 
   override def load: ControllerInterface = {
-    val source: String = Source.fromFile("SilverGameSaved.json").getLines().mkString
+    val source: String = Source.fromFile("SilverGame.json").getLines().mkString
     val json: JsValue = Json.parse(source)
     getControllerJson(json)
   }
 
   override def save(controller: ControllerInterface): Unit = {
     import java.io._
-    val printWriter = new PrintWriter(new File("SilverGameSaved.json"))
+    val printWriter = new PrintWriter(new File("SilverGame.json"))
     printWriter.write(Json.prettyPrint(controllerToJson(controller)))
     printWriter.close()
   }

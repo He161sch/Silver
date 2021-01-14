@@ -29,52 +29,61 @@ class WelcomePanel(controller: ControllerInterface) extends Frame {
   }
 
 
-    val twoPlayers: Button = new Button("2 Players") {
-      font = myFont
-    }
+  val twoPlayers = new Button("2 Players") {
+    font = myFont
+  }
 
-    val threePlayers: Button = new Button("3 Players") {
-      font = myFont
-    }
+  val threePlayers = new Button("3 Players") {
+    font = myFont
+  }
 
-    val askPlayer = new Label("How many Players want to play?") {
-      font = new Font("Herculanum", java.awt.Font.PLAIN, 30)
-    }
+  val loadButton = new Button("Load Game") {
+    font = myFont
+  }
 
-    val flowPanel = new FlowPanel {
+  val askPlayer = new Label("How many Players want to play?") {
+    font = new Font("Herculanum", java.awt.Font.PLAIN, 35)
+  }
+
+  val flowPanel = new FlowPanel {
 
 
-      contents += new FlowPanel()
-      contents += twoPlayers
-      contents += threePlayers
+    contents += new FlowPanel()
+    contents += twoPlayers
+    contents += threePlayers
+    contents += loadButton
 
 
-      listenTo(twoPlayers, threePlayers)
+    listenTo(twoPlayers, threePlayers, loadButton)
 
-      reactions += {
-        case ButtonClicked(component) => {
-          if (component == `twoPlayers`) {
-            controller.performInitGame(2)
-          } else if (component == `threePlayers`) {
-            controller.performInitGame(3)
-          }
+    reactions += {
+      case ButtonClicked(component) => {
+        if (component == twoPlayers) {
+          controller.performInitGame(2)
           new SetupGui(controller).visible = true
-          peer.setVisible(false)
-          dispose()
+        } else if (component == threePlayers) {
+          controller.performInitGame(3)
+          new SetupGui(controller).visible = true
+        } else if (component == loadButton) {
+          controller.load
+          new BoardPanel(controller).visible = true
         }
+        peer.setVisible(false)
+        dispose()
       }
     }
+  }
 
 
-    val grid = new GridPanel(2,1) {
-      contents += askPlayer
-      contents += flowPanel
+  val grid = new GridPanel(2, 1) {
+    contents += askPlayer
+    contents += flowPanel
 
-    }
-    contents = new GridPanel(2,1) {
-      contents += logo
-      contents += grid
-    }
+  }
+  contents = new GridPanel(2, 1) {
+    contents += logo
+    contents += grid
+  }
 
 
 }

@@ -6,7 +6,6 @@ import de.htwg.se.model.handcomponent.handbaseimpl.Hand
 import de.htwg.se.model.playercomponent.{PlayerInterface, playerbaseimpl}
 import de.htwg.se.model.playercomponent.playerbaseimpl.Player
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
-import com.google.inject.Inject
 import de.htwg.se.model.cardcomponent.CardInterface
 import de.htwg.se.model.deckcomponent.DeckInterface
 
@@ -63,7 +62,7 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
 
   def switchCard(idx: Int): GameConfigInterface = {
     val drawedCard = players(activePlayerIdx).getNewCard
-    val newPlayer = playerbaseimpl.Player(players(activePlayerIdx).getName, Hand(players(activePlayerIdx).getHand.getAllCards.updated(idx, drawedCard)), Card(false, 14))
+    val newPlayer = Player(players(activePlayerIdx).getName, Hand(players(activePlayerIdx).getHand.getAllCards.updated(idx, drawedCard)), Card(false, 14))
     updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
   }
 
@@ -73,16 +72,17 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
     if (players(activePlayerIdx).getHand.getCard(idx1).getNumber.equals(players(activePlayerIdx).getHand.getCard(idx2).getNumber)
       || players(activePlayerIdx).getHand.getCard(idx1).getNumber == 13
       || players(activePlayerIdx).getHand.getCard(idx2).getNumber == 13) {
-      val np = playerbaseimpl.Player(players(activePlayerIdx).getName, Hand(players(activePlayerIdx).getHand.getAllCards.updated(idx1, drawedCard)), Card(false, 14))
-      val newPlayer = playerbaseimpl.Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.getAllCards)), Card(false, 14))
+
+      val np = Player(players(activePlayerIdx).getName, Hand(players(activePlayerIdx).getHand.getAllCards.updated(idx1, drawedCard)), Card(false, 14))
+      val newPlayer = Player(np.name, Hand(np.hand.removeAtIdx(idx2, np.hand.getAllCards)), Card(false, 14))
       updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
+
     } else {
+      discardDeck = drawedCard
       updatePlayerAtIdx(players(activePlayerIdx), activePlayerIdx, deck)
     }
 
   }
-
-
 
   def addWinner(winner: PlayerInterface): GameConfigInterface = {
     val isWinner = winners :+ winner
@@ -124,6 +124,11 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
 
   def getDiscardDeck: CardInterface = discardDeck
 
+  def setDiscardDeck: CardInterface = {
+    discardDeck = players(activePlayerIdx).getNewCard
+    discardDeck
+  }
+
   def replaceDiscardDeck(idx: Int): CardInterface = {
     discardDeck = players(activePlayerIdx).getHand.getCard(idx)
     discardDeck
@@ -132,10 +137,6 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
   def restartGame(): GameConfigInterface = {
     val resetedGameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(),Card(false, 15), 0, Vector[PlayerInterface]())
 
-    //    for (i <- 0 until players.size) {
-    //      resetedGameConfig = resetedGameConfig.createPlayer(players(i).getName()).asInstanceOf[GameConfig]
-    //    }
     resetedGameConfig
   }
 }
-

@@ -4,91 +4,101 @@
     "gameConfig" : {
       "players" : [ {
         "player" : {
-          "name" : "wdda",
+          "name" : "Asd",
           "hand" : [ {
-            "card" : "13"
+            "card" : "7"
           }, {
-            "card" : "4"
+            "card" : "8"
           }, {
-            "card" : "2"
+            "card" : "9"
           }, {
             "card" : "7"
           }, {
-            "card" : "12"
+            "card" : "4"
           } ]
         }
       }, {
         "player" : {
-          "name" : "awdw",
+          "name" : "AA",
           "hand" : [ {
+            "card" : "12"
+          }, {
+            "card" : "8"
+          }, {
+            "card" : "2"
+          }, {
             "card" : "11"
           }, {
             "card" : "12"
-          }, {
-            "card" : "7"
-          }, {
-            "card" : "1"
-          }, {
-            "card" : "13"
           } ]
         }
       } ],
       "deck" : [ {
-        "card" : "8"
-      }, {
-        "card" : "1"
-      }, {
-        "card" : "10"
-      }, {
-        "card" : "9"
-      }, {
-        "card" : "9"
-      }, {
-        "card" : "5"
-      }, {
         "card" : "10"
       }, {
         "card" : "8"
       }, {
-        "card" : "6"
-      }, {
-        "card" : "7"
-      }, {
-        "card" : "4"
-      }, {
-        "card" : "0"
-      }, {
-        "card" : "0"
-      }, {
-        "card" : "1"
-      }, {
-        "card" : "9"
-      }, {
         "card" : "3"
-      }, {
-        "card" : "3"
-      }, {
-        "card" : "3"
-      }, {
-        "card" : "6"
       }, {
         "card" : "2"
+      }, {
+        "card" : "6"
       }, {
         "card" : "12"
       }, {
-        "card" : "11"
-      }, {
-        "card" : "2"
-      }, {
         "card" : "9"
       }, {
+        "card" : "6"
+      }, {
         "card" : "8"
+      }, {
+        "card" : "0"
       }, {
         "card" : "4"
       }, {
-        "card" : "8"
+        "card" : "9"
+      }, {
+        "card" : "9"
+      }, {
+        "card" : "2"
+      }, {
+        "card" : "3"
+      }, {
+        "card" : "7"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "12"
+      }, {
+        "card" : "13"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "10"
+      }, {
+        "card" : "10"
+      }, {
+        "card" : "1"
       }, {
         "card" : "6"
+      }, {
+        "card" : "11"
+      }, {
+        "card" : "4"
+      }, {
+        "card" : "13"
+      }, {
+        "card" : "7"
+      }, {
+        "card" : "0"
+      }, {
+        "card" : "10"
+      }, {
+        "card" : "4"
+      }, {
+        "card" : "11"
       }, {
         "card" : "11"
       }, {
@@ -96,24 +106,22 @@
       }, {
         "card" : "5"
       }, {
+        "card" : "3"
+      }, {
         "card" : "5"
       }, {
-        "card" : "10"
+        "card" : "1"
       }, {
-        "card" : "7"
+        "card" : "6"
       }, {
-        "card" : "4"
-      }, {
-        "card" : "10"
+        "card" : "3"
       }, {
         "card" : "2"
-      }, {
-        "card" : "11"
       } ],
       "discardDeck" : [ {
-        "card" : "4"
+        "card" : "15"
       } ],
-      "activePlayerIdx" : 1,
+      "activePlayerIdx" : 0,
       "winners" : [ ]
     }
   }

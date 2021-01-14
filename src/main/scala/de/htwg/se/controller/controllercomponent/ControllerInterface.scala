@@ -39,6 +39,7 @@ trait ControllerInterface extends Publisher {
   def switchCard(idx: Int): Unit
   def combineCard(idx1: Int, idx2: Int): Unit
   def nextPlayer(): Unit
+  def discardCard(): Unit
   def whoWon(): Unit
   def quitGame(): Unit
   def gameStateToString: String

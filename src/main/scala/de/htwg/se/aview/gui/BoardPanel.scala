@@ -43,6 +43,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
   val discardButton = new Button ("Discard")
   val discardPileButton = new Button ("Discard Pile")
   val nextPlayerButton = new Button ("Next Player")
+  val saveGameButton = new Button ("Save Game")
 
   // VIEW BUTTONS
 
@@ -158,6 +159,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
     contents += cb45
     contents += discardButton
     contents += caboButton
+    contents += saveGameButton
     contents += nextPlayerButton
 
     discardPileButton.visible = false
@@ -173,7 +175,8 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
     listenTo(drawButton, viewButton, switchButton, combineButton,
       caboButton, discardButton, view1, view2, view3, view4, view5,
       switch1, switch2, switch3, switch4, switch5, cb12, discardPileButton,
-      cb13, cb14, cb15, cb23, cb24, cb25, cb34, cb35, cb45, nextPlayerButton)
+      cb13, cb14, cb15, cb23, cb24, cb25, cb34, cb35, cb45, nextPlayerButton,
+      saveGameButton)
 
     reactions += {
       case ButtonClicked(component) => {
@@ -317,12 +320,17 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
           caboVisible(false)
           discardButton.visible = false
          } else if (component == discardButton) {
-          controller.nextPlayer()
+          controller.discardCard()
+          drawViewVisible(true)
+          viewSC(false)
+          caboVisible(true)
         } else if (component == nextPlayerButton) {
           controller.nextPlayer()
           drawViewVisible(true)
           caboVisible(true)
           nextPlayerButton.visible = false
+        } else if (component == saveGameButton) {
+          new savePanel(controller)
         }
       }
     }

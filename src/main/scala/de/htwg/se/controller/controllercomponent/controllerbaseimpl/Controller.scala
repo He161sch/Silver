@@ -1,7 +1,7 @@
 package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
 import com.google.inject.{Guice, Inject}
-import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, EndGame, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD, FALSECOMMAND, IDLE}
+import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, EndGame, FALSECOMMAND, IDLE, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
 import de.htwg.se.controller.controllercomponent._
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
 import de.htwg.se.model.gameconfigcomponent.GameConfigInterface
@@ -9,6 +9,8 @@ import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
 import de.htwg.se.model.fileiocomponent.FileIOInterface
 import de.htwg.se.util.UndoManager
 import de.htwg.se.SilverModule
+import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
+
 import scala.swing.Publisher
 
 
@@ -130,6 +132,12 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
 
     }
     publish(new updateData)
+  }
+
+  def discardCard(): Unit = {
+    gameConfig.setDiscardDeck
+    gameConfig.getActivePlayer.setNewCard
+    nextPlayer()
   }
 
   def whoWon(): Unit = {

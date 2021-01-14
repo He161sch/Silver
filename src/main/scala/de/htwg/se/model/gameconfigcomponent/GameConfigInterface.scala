@@ -30,5 +30,6 @@ trait GameConfigInterface {
   def getDiscardDeck: CardInterface
   def replaceDiscardDeck(idx: Int): CardInterface
   def restartGame(): GameConfigInterface
+  def setDiscardDeck: CardInterface
 
 }

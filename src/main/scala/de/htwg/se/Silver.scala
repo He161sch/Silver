@@ -11,9 +11,7 @@ object Silver {
   val tui = new TUI(controller)
   val gui = new WelcomePanel(controller)
 
-
   def main(args: Array[String]): Unit = {
     tui.run()
   }
-
 }
