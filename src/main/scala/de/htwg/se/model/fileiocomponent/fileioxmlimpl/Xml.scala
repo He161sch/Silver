@@ -58,7 +58,7 @@ class Xml extends FileIOInterface {
       players = players :+ Player(
         (p \ "name").text,
         Hand(cardsFromXml(p \ "hand")),
-        cardFromXml(p \ "newCard")
+        Card(false, 14)
       )
     }
     players
@@ -73,13 +73,14 @@ class Xml extends FileIOInterface {
   }
 
   def cardFromXml(seq: NodeSeq): CardInterface = {
-    var cards = Card(false, 0)
+    var card = Card(false, 0)
+    val cardSeq = seq \\ "card"
 
-    for (c <- seq) {
-      cards = Card(false, c.text.toInt)
+    for (c <- cardSeq) {
+      card = Card(false, c.text.toInt)
     }
 
-    cards
+    card
   }
 
   def cardsFromXml(seq: NodeSeq): Vector[CardInterface] = {
@@ -116,6 +117,7 @@ class Xml extends FileIOInterface {
       </gameConfig>
     c = addNode(c, playersToXml(gameConfig.getAllPlayers))
     c = addNode(c, deckToXml(gameConfig.getDeck))
+    c = addNode(c, cardToXml(gameConfig.getDiscardDeck))
     c = addNode(c, winnersToXml(gameConfig.getWinners))
     c
   }
@@ -134,7 +136,7 @@ class Xml extends FileIOInterface {
   def deckToXml(deck: DeckInterface): Node = {
     var deckNode: Node = <deck></deck>
     for (c <- deck.getAllCards) {
-      val card = cardToXml(c)
+      val card = cardsToXml(c)
       deckNode = addNode(deckNode, card)
 
     }
@@ -165,7 +167,7 @@ class Xml extends FileIOInterface {
   def handToXml(hand: HandInterface): Node = {
     var handN: Node = <hand></hand>
     for (c <- hand.getAllCards) {
-      val card = cardToXml(c)
+      val card = cardsToXml(c)
       handN = addNode(handN, card)
     }
     handN
@@ -177,10 +179,9 @@ class Xml extends FileIOInterface {
 
 
   def cardToXml(cards: CardInterface): Elem = {
-    <card>
-      <number>{cards.getNumber}</number>
-    </card>
-
+    <discardDeck>
+      <card>{cards.getNumber}</card>
+    </discardDeck>
   }
 
 
