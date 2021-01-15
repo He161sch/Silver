@@ -35,15 +35,48 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
     text = "Discard Pile"
   }
 
-  val viewButton = new Button ("View")
-  val drawButton = new Button ("Draw")
-  val switchButton = new Button ("Switch")
-  val combineButton = new Button ("Combine")
-  val caboButton = new Button ("Cabo")
-  val discardButton = new Button ("Discard")
-  val discardPileButton = new Button ("Discard Pile")
-  val nextPlayerButton = new Button ("Next Player")
-  val saveGameButton = new Button ("Save Game")
+  val viewButton = new Button {
+    text = "View"
+    preferredSize = new Dimension(200, 100)
+  }
+  val drawButton = new Button {
+    text = "Draw"
+    preferredSize = new Dimension(200, 100)
+  }
+  val switchButton = new Button {
+    text = "Switch"
+    preferredSize = new Dimension(200, 100)
+  }
+  val combineButton = new Button {
+    text = "Combine"
+    preferredSize = new Dimension(200, 100)
+  }
+  val caboButton = new Button {
+    text = "Cabo"
+    preferredSize = new Dimension(200, 100)
+  }
+  val discardButton = new Button {
+    text = "Discard"
+    preferredSize = new Dimension(200, 100)
+  }
+  val discardPileButton = new Button {
+    text = "Discard Pile"
+    preferredSize = new Dimension(200, 100)
+  }
+  val nextPlayerButton = new Button {
+    text = "Next Player"
+    preferredSize = new Dimension(200, 100)
+  }
+  val saveGameButton = new Button {
+    text = "Save Game"
+    preferredSize = new Dimension(200, 100)
+  }
+
+
+  val helpButton = new Button {
+    text = "Help Please"
+    preferredSize = new Dimension(200, 100)
+  }
 
   // VIEW BUTTONS
 
@@ -161,6 +194,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
     contents += caboButton
     contents += saveGameButton
     contents += nextPlayerButton
+    contents += helpButton
 
     discardPileButton.visible = false
     nextPlayerButton.visible = false
@@ -176,7 +210,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
       caboButton, discardButton, view1, view2, view3, view4, view5,
       switch1, switch2, switch3, switch4, switch5, cb12, discardPileButton,
       cb13, cb14, cb15, cb23, cb24, cb25, cb34, cb35, cb45, nextPlayerButton,
-      saveGameButton)
+      saveGameButton, helpButton)
 
     reactions += {
       case ButtonClicked(component) => {
@@ -331,6 +365,8 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
           nextPlayerButton.visible = false
         } else if (component == saveGameButton) {
           new savePanel(controller)
+        } else if (component == helpButton) {
+          new HelpPanel()
         }
       }
     }

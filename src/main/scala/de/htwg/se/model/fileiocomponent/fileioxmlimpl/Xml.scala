@@ -87,8 +87,9 @@ class Xml extends FileIOInterface {
     var cards = Vector[CardInterface]()
     val cardSeq = seq \\ "card"
 
+
     for(c <- cardSeq){
-      cards = cards :+ Card(false, c.text.toInt)
+      cards = cards :+ Card(true, c.text.toInt)
     }
     cards
   }

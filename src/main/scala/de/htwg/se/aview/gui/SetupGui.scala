@@ -13,14 +13,9 @@ class SetupGui(controller: ControllerInterface) extends Frame {
   peer.setLocationRelativeTo(null)
   title = "Silver"
 
-  // Do & undo Buttons
   val undoButton = new Button("\u2190" + " undo")
   val doButton = new Button("do " + "\u2192")
 
-//  val flowPanel = new FlowPanel {
-//    contents += undoButton
-//    contents += doButton
-//  }
 
   val inputName = new TextField {
     columns = 40
