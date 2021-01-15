@@ -1,9 +1,8 @@
 
 
 # Silver
-![Logo](images/Silver_logo.png)
+![Logo](src/main/images/Silver_logo.png)
 
-[comment]: <> (![alt text]&#40;https://github.com/he161sch/Silver/blob/master/image.jpg?raw=true&#41;)
 
 This is our Project for the course Software Engineering.
 <br>
@@ -23,7 +22,7 @@ your cards, and say Cabo when you think you have fewer points then the other pla
 The goal of this game is to have the fewest Points at the end, which determines the winner.
 
 ## GameField
-
+![GameField](src/main/images/GameField.png)
 
 
 ## Coverage of our Project
