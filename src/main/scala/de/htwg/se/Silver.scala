@@ -9,9 +9,16 @@ object Silver {
   val injector = Guice.createInjector(new SilverModule)
   val controller = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
-  val gui = new WelcomePanel(controller)
+
+
+  val UIType: Boolean = if (System.getenv("UI_TYPE").equals("full")) true else false
 
   def main(args: Array[String]): Unit = {
+    if (UIType) {
+      val gui = new WelcomePanel(controller)
+      gui.visible = true
+      tui.run()
+    }
     tui.run()
   }
 }

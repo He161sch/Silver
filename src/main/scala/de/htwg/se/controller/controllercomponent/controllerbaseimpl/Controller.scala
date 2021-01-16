@@ -37,6 +37,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   }
   def performSetPlayerName(playerName: String): Unit = {
     undoManager.doStep(new CommandInputNames(this, playerName))
+    publish(new updateData)
   }
   def performViewCard(idx: Int): Unit = {
     undoManager.doStep(new CommandViewCard(this, idx))
@@ -142,10 +143,14 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
 
   def whoWon(): Unit = {
     var closestValue = 0
+    var closestValueOld = 100
     for (i <- gameConfig.getAllPlayers.indices) {
       val handValue = gameConfig.getPlayerAtIdx(i).getHand.handValue()
       if (handValue >= 0) {
-        closestValue = handValue
+        if (handValue < closestValueOld)
+          closestValue = handValue
+          closestValueOld = handValue
+
       }
     }
     for (i <- gameConfig.getAllPlayers.indices) {

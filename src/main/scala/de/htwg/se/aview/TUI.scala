@@ -86,6 +86,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
       case "save" => controller.save
       case "load" => controller.load
       case "new" => controller.newGame
+      case "gameState" => controller.gameStateToString
       case _ => println("unknown command ... Try again")
 
     }

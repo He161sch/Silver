@@ -20,8 +20,8 @@ class SilverModule extends AbstractModule with ScalaModule{
 
     bind[ControllerInterface].to[Controller]
     bind[GameConfigInterface].toInstance(GameConfig())
-//    bind[FileIOInterface].to[Json]
-    bind[FileIOInterface].to[Xml]
+    bind[FileIOInterface].to[Json]
+//    bind[FileIOInterface].to[Xml]
 
 
   }

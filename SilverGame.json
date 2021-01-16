@@ -1,0 +1,131 @@
+{
+  "controller" : {
+    "gameState" : "PLAYER_TURN",
+    "gameConfig" : {
+      "players" : [ {
+        "player" : {
+          "name" : "wdawda",
+          "hand" : [ {
+            "card" : "2"
+          }, {
+            "card" : "12"
+          }, {
+            "card" : "3"
+          }, {
+            "card" : "3"
+          }, {
+            "card" : "5"
+          } ]
+        }
+      }, {
+        "player" : {
+          "name" : "awd",
+          "hand" : [ {
+            "card" : "11"
+          }, {
+            "card" : "7"
+          }, {
+            "card" : "12"
+          }, {
+            "card" : "11"
+          }, {
+            "card" : "2"
+          } ]
+        }
+      }, {
+        "player" : {
+          "name" : "",
+          "hand" : [ {
+            "card" : "4"
+          }, {
+            "card" : "7"
+          }, {
+            "card" : "10"
+          }, {
+            "card" : "6"
+          }, {
+            "card" : "8"
+          } ]
+        }
+      } ],
+      "deck" : [ {
+        "card" : "9"
+      }, {
+        "card" : "10"
+      }, {
+        "card" : "3"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "0"
+      }, {
+        "card" : "6"
+      }, {
+        "card" : "8"
+      }, {
+        "card" : "13"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "8"
+      }, {
+        "card" : "9"
+      }, {
+        "card" : "11"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "11"
+      }, {
+        "card" : "9"
+      }, {
+        "card" : "13"
+      }, {
+        "card" : "4"
+      }, {
+        "card" : "4"
+      }, {
+        "card" : "0"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "9"
+      }, {
+        "card" : "4"
+      }, {
+        "card" : "6"
+      }, {
+        "card" : "3"
+      }, {
+        "card" : "6"
+      }, {
+        "card" : "10"
+      }, {
+        "card" : "7"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "12"
+      }, {
+        "card" : "8"
+      }, {
+        "card" : "7"
+      }, {
+        "card" : "12"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "2"
+      }, {
+        "card" : "2"
+      } ],
+      "discardDeck" : [ {
+        "card" : "10"
+      } ],
+      "activePlayerIdx" : 1,
+      "winners" : [ ]
+    }
+  }
+}

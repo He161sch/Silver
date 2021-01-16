@@ -39,6 +39,7 @@ class WelcomePanel(controller: ControllerInterface) extends Frame {
 
   val loadButton = new Button("Load Game") {
     font = myFont
+
   }
 
   val askPlayer = new Label("How many Players want to play?") {
