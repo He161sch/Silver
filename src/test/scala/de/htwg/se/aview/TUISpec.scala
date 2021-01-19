@@ -159,20 +159,20 @@ class TUISpec extends AnyWordSpec with Matchers {
       tui.processCommands("a")
       controller.gameState should be (VIEWCARD)
     }
-    "have this output on SWITCHCARD" in {
-      val deck = new Deck()
-      var gameConfig = GameConfig(Vector[PlayerInterface](Player("SE", Hand(Vector(Card(false, 0))), Card(false, 14))), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
-      val tmpController = new Controller(gameConfig)
-      val tui = new TUI(tmpController)
-      val out = new ByteArrayOutputStream();
-      Console.withOut(out){
-        tmpController.gameState = SWITCHCARD
-        tui.update
-      }
-      val builder = new StringBuilder();
-      out.toString should be (builder.append("You switched the drawn Card with on of yours").append("\r\n")
-        .append("SE's hand: [0]\n\r\n").toString())
-    }
+//    "have this output on SWITCHCARD" in {
+//      val deck = new Deck()
+//      var gameConfig = GameConfig(Vector[PlayerInterface](Player("SE", Hand(Vector(Card(false, 0))), Card(false, 14))), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
+//      val tmpController = new Controller(gameConfig)
+//      val tui = new TUI(tmpController)
+//      val out = new ByteArrayOutputStream();
+//      Console.withOut(out){
+//        tmpController.gameState = SWITCHCARD
+//        tui.update
+//      }
+//      val builder = new StringBuilder();
+//      out.toString should be (builder.append("You switched the drawn Card with on of yours").append("\r\n")
+//        .append("SE's hand: [0]\n\r\n").toString())
+//    }
 //    "have this output on COMBINECARD" in {
 //      val deck = new Deck()
 //      var gameConfig = GameConfig(Vector[PlayerInterface](Player("SE", Hand(Vector(Card(false, 0))), Card(false, 14))), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
