@@ -26,9 +26,9 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   val fileIO = injector.getInstance(classOf[FileIOInterface])
 
 
-  val file = Paths get "src/main/images/deckShuffle.mp3"
-  LogManager.getLogManager().reset()
-  val deckShuffle = new FileJavaSoundPlayer(file)
+//  val file = Paths get "src/main/images/deckShuffle.mp3"
+//  LogManager.getLogManager().reset()
+//  val deckShuffle = new FileJavaSoundPlayer(file)
 
   private val undoManager = new UndoManager
 
@@ -82,8 +82,8 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
       gameState = NEWGAME
       publish(new updateData)
       gameState = PLAYER_TURN
-      deckShuffle.play()
-      deckShuffle.volume = 20
+//      deckShuffle.play()
+//      deckShuffle.volume = 20
     }
   }
 
