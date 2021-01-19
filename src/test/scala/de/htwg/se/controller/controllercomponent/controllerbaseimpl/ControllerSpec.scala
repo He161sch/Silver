@@ -3,17 +3,13 @@ package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 import java.io.ByteArrayOutputStream
 
 import de.htwg.se.controller.controllercomponent.{GameState, IsNotRunning, IsRunning}
-import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import de.htwg.se.model.cardcomponent.CardInterface
 import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
-import de.htwg.se.model.gameconfigcomponent.GameConfigInterface
 import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
 import de.htwg.se.model.handcomponent.handbaseimpl.Hand
 import de.htwg.se.model.playercomponent.playerbaseimpl.Player
-import de.htwg.se.util.Observer
 
 class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
