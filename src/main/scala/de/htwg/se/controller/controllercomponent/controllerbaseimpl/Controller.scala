@@ -2,7 +2,7 @@ package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
 import com.google.inject.{Guice, Inject}
 import com.malliina.audio.javasound.FileJavaSoundPlayer
-import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, EndGame, FALSECOMMAND, IDLE, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
+import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, ENDGAME, FALSECOMMAND, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
 import de.htwg.se.controller.controllercomponent._
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
 import de.htwg.se.model.gameconfigcomponent.GameConfigInterface
@@ -176,7 +176,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   }
 
   def quitGame(): Unit = {
-    gameState = EndGame
+    gameState = ENDGAME
     publish(new updateData)
   }
 
@@ -240,7 +240,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   }
 
   def newGame(): Unit ={
-    if (gameState != EndGame) {
+    if (gameState != ENDGAME) {
       gameState = FALSECOMMAND
       publish(new updateData)
       gameState = PLAYER_TURN

@@ -1,4 +1,4 @@
-package de.htwg.se.controller
+package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
 import java.io.ByteArrayOutputStream
 

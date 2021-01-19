@@ -8,7 +8,7 @@ import scala.swing.Publisher
 object GameState extends Enumeration{
   type GameState = Value
   val  WelcomeState, InputName, PLAYER_TURN, NEWGAME, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD, FALSECOMMAND, IDLE,
-  PlayerWon, EndGame = Value
+  PlayerWon, ENDGAME = Value
 }
 
 

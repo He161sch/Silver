@@ -9,7 +9,7 @@ import org.scalatest.wordspec.AnyWordSpec
 class PlayerTest extends AnyWordSpec with Matchers {
   "A Player" when {
     "new" should {
-      val player = Player("Player", Hand(Vector(Card(false, 1))), Card(true, 0))
+      val player = Player("Player", Hand(Vector(Card(false, 1))), Card(true, 14))
       "have a name" in {
         player.name should be("Player")
       }
@@ -17,24 +17,26 @@ class PlayerTest extends AnyWordSpec with Matchers {
         player.toString should be("Player's hand: " + Hand(Vector(Card(false, 1))))
       }
       "get the Player" in {
-        player.getPlayer.toString should be ("Player's hand: " + Hand(Vector(Card(false, 1))))
+        player.getPlayer.toString should be("Player's hand: " + Hand(Vector(Card(false, 1))))
       }
       "have a hand" in {
-        player.hand should be (Hand(Vector(Card(false, 1))))
+        player.hand should be(Hand(Vector(Card(false, 1))))
       }
       "get the hand" in {
-        player.getHand should be (Hand(Vector(Card(false, 1))))
+        player.getHand should be(Hand(Vector(Card(false, 1))))
       }
       "get the Name" in {
-        player.getName should be ("Player")
+        player.getName should be("Player")
       }
       "get the new Card" in {
-        player.getNewCard should be (Card(true, 0))
+        player.getNewCard should be(Card(true, 14))
+      }
+      "set the new Card" in {
+        player.setNewCard should be(Card(false, 14))
       }
       "when unapplied" in {
-        Player.unapply(player).get should be ("Player", Hand(Vector(Card(false, 1))), Card(true, 0))
+        Player.unapply(player).get should be("Player", Hand(Vector(Card(false, 1))), Card(false, 14))
       }
     }
   }
-
 }

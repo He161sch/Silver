@@ -91,24 +91,24 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
     copy(players, deck, discardDeck,0, isWinner)
   }
 
-  def allPlayersToString(): String = {
-    val sb = new StringBuilder
-    if (players.size == 3) {
-      sb.append(players(0).getName).append(" has a total of ").append(players(0).getHand.handValue())
-        .append(" points\n")
-      sb.append(players(1).getName).append(" has a total of ").append(players(0).getHand.handValue())
-        .append(" points\n")
-      sb.append(players(2).getName).append(" has a total of ").append(players(0).getHand.handValue())
-        .append(" points\n")
-
-    } else if (players.size == 2) {
-      sb.append(players(0).getName).append(" has a total of ").append(players(0).getHand.handValue())
-        .append(" points\n")
-      sb.append(players(1).getName).append(" has a total of ").append(players(0).getHand.handValue())
-        .append(" points\n")
-    }
-    sb.toString()
-  }
+//  def allPlayersToString(): String = {
+//    val sb = new StringBuilder
+//    if (players.size == 3) {
+//      sb.append(players(0).getName).append(" has a total of ").append(players(0).getHand.handValue())
+//        .append(" points\n")
+//      sb.append(players(1).getName).append(" has a total of ").append(players(0).getHand.handValue())
+//        .append(" points\n")
+//      sb.append(players(2).getName).append(" has a total of ").append(players(0).getHand.handValue())
+//        .append(" points\n")
+//
+//    } else if (players.size == 2) {
+//      sb.append(players(0).getName).append(" has a total of ").append(players(0).getHand.handValue())
+//        .append(" points\n")
+//      sb.append(players(1).getName).append(" has a total of ").append(players(0).getHand.handValue())
+//        .append(" points\n")
+//    }
+//    sb.toString()
+//  }
 
 
   def winnerToString(): String = {

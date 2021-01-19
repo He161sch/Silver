@@ -5,6 +5,7 @@ import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
 import de.htwg.se.model.deckcomponent.DeckInterface
 import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
+import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
 import de.htwg.se.model.handcomponent.handbaseimpl.Hand
 import de.htwg.se.model.playercomponent.{PlayerInterface, playerbaseimpl}
 import de.htwg.se.model.playercomponent.playerbaseimpl.Player
@@ -53,7 +54,10 @@ class GameConfigSpec extends AnyWordSpec with Matchers {
 
 
       }
-
+      "set DiscardDeck" in {
+        gameConfig.setDiscardDeck
+        gameConfig.getDiscardDeck should be (Card(false, 0))
+      }
       "draw a card" in {
         gameConfig.drawCard()
         gameConfig.deck.cardsInDeck should be (14)
@@ -103,15 +107,11 @@ class GameConfigSpec extends AnyWordSpec with Matchers {
         val config = gameConfig.addWinner(playerbaseimpl.Player("SETest", Hand(Vector(Card(false, 1), Card(false, 1))), Card(false, 0)))
         config.winnerToString() should be("SETest has won with a total of 2 points\n")
       }
-//      "reset the Game" in {
-//        gameConfig.restartGame()
-//        gameConfig.deck should be (Deck(Vector(Card(false, 0),Card(false, 1), Card(false, 2), Card(false, 3), Card(false, 4), Card(false, 5), Card(false, 6), Card(false, 7), Card(false, 8),
-//          Card(false, 9), Card(false, 10), Card(false, 11), Card(false, 12), Card(false, 13))))
-//        gameConfig.players should be (Vector(Player("SETest", Hand(Vector(Card(false, 1), Card(false, 1))), Card(false, 0))))
-//        gameConfig.discardDeck should be (Card(true, 15))
-//        gameConfig.activePlayerIdx should be (0)
-//        gameConfig.winners should be (Vector[PlayerInterface]())
-//      }
+      "reset the Game" in {
+        gameConfig.restartGame()
+        gameConfig.players should be (Vector(Player("SETest", Hand(Vector(Card(true, 1), Card(true, 1))), Card(false, 0))))
+
+      }
     }
   }
 }

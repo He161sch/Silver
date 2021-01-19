@@ -18,7 +18,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
     controller.publish(new updateData)
     var input: String = ""
 
-    while (input != "q" && controller.gameState != EndGame) {
+    while (input != "q" && controller.gameState != ENDGAME) {
       input = readLine()
       processCommands(input)
     }
@@ -128,10 +128,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
         println(controller.gameStateToString)
         println("Which Card you want to view ?[v [0-4]]")
       }
-      case PlayerWon => {
-        println(controller.gameStateToString)
-      }
-      case EndGame => {
+      case PlayerWon => println(controller.gameStateToString)
+      case ENDGAME => {
         println("Was fun playing!\n\n")
       }
       case FALSECOMMAND => print("Command isn't allowed\n")
