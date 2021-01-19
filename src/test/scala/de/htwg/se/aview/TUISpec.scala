@@ -55,41 +55,41 @@ class TUISpec extends AnyWordSpec with Matchers {
       tui.processCommands("y")
       controller.gameState should be (DRAWEDCARD)
     }
-    "should have this output with the WelcomeState case" in {
-      val deck = new Deck()
-      var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
-      val tmpController = new Controller(gameConfig)
-      val tui = new TUI(tmpController)
-      val out = new ByteArrayOutputStream();
-      Console.withOut(out) {
-        tmpController.gameState = WelcomeState
-        tui.update
-      }
-      out.toString should be("Welcome to Silver :)\nHow many players want to play[2 or 3]?\r\n")
-    }
-    "should have this output with the InputName case" in {
-      val deck = new Deck()
-      var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
-      val tmpController = new Controller(gameConfig)
-      val tui = new TUI(tmpController)
-      val out = new ByteArrayOutputStream();
-      Console.withOut(out) {
-        tmpController.gameState = InputName
-        tui.update
-      }
-      out.toString should be("Please enter Playername 1:\r\n")
-    }
-    "should have this output with the NEWGAMESTART case" in {
-      val deck = new Deck()
-      var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
-      val tmpController = new Controller(gameConfig)
-      val tui = new TUI(tmpController)
-      val out = new ByteArrayOutputStream();
-      Console.withOut(out) {
-        tmpController.gameState = NEWGAME
-        tui.update
-      }
-      out.toString should be("A new Game started ... Deck is now shuffeled!\r\n")
-    }
+//    "should have this output with the WelcomeState case" in {
+//      val deck = new Deck()
+//      var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
+//      val tmpController = new Controller(gameConfig)
+//      val tui = new TUI(tmpController)
+//      val out = new ByteArrayOutputStream();
+//      Console.withOut(out) {
+//        tmpController.gameState = WelcomeState
+//        tui.update
+//      }
+//      out.toString should be("Welcome to Silver :)\nHow many players want to play[2 or 3]?\r\n")
+//    }
+//    "should have this output with the InputName case" in {
+//      val deck = new Deck()
+//      var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
+//      val tmpController = new Controller(gameConfig)
+//      val tui = new TUI(tmpController)
+//      val out = new ByteArrayOutputStream();
+//      Console.withOut(out) {
+//        tmpController.gameState = InputName
+//        tui.update
+//      }
+//      out.toString should be("Please enter Playername 1:\r\n")
+//    }
+//    "should have this output with the NEWGAMESTART case" in {
+//      val deck = new Deck()
+//      var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
+//      val tmpController = new Controller(gameConfig)
+//      val tui = new TUI(tmpController)
+//      val out = new ByteArrayOutputStream();
+//      Console.withOut(out) {
+//        tmpController.gameState = NEWGAME
+//        tui.update
+//      }
+//      out.toString should be("A new Game started ... Deck is now shuffeled!\r\n")
+//    }
   }
 }
