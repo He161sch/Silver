@@ -3,7 +3,6 @@ package de.htwg.se.aview
 import java.io.ByteArrayOutputStream
 import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
 import de.htwg.se.controller.controllercomponent.GameState._
-import de.htwg.se.model.cardcomponent.CardInterface
 import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
 import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
@@ -56,12 +55,6 @@ class TUISpec extends AnyWordSpec with Matchers {
       tui.processCommands("y")
       controller.gameState should be (DRAWEDCARD)
     }
-//    "get the state" in {
-//      tui.processInputLine("state") should be(controller.getState())
-//    }
-//    "not a right input" in {
-//      tui.processInputLine("a") should be(println("unknown command ... Try again"))
-//    }
     "should have this output with the WelcomeState case" in {
       val deck = new Deck()
       var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
@@ -98,22 +91,5 @@ class TUISpec extends AnyWordSpec with Matchers {
       }
       out.toString should be("A new Game started ... Deck is now shuffeled!\r\n")
     }
-//      "should have this output with the PLAYER_TURN case" in {
-//        val deck = new Deck()
-//        var gameConfig = GameConfig(Vector[PlayerInterface](), deck.resetDeck(), Card(false, 15), 0, Vector[PlayerInterface]())
-//        val tmpController = new Controller(gameConfig)
-//        val tui = new TUI(tmpController)
-//        val out = new ByteArrayOutputStream();
-//        tui.processCommands("2")
-//        tui.processCommands("SE1")
-//        tui.processCommands("SE2")
-//        Console.withOut(out){
-//          tmpController.gameState = PLAYER_TURN
-//          tui.update
-//        }
-//        val builder = new StringBuilder();
-//        out.toString should be (builder.append("SE1's turn. Draw or View a Card?(d/v)\n\n")
-//                                .append(tmpController.gameStateToString).append("\n").toString())
-//      }
   }
 }
