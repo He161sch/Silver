@@ -1,11 +1,15 @@
 package de.htwg.se.aview.gui
 
+import com.malliina.audio.javasound.FileJavaSoundPlayer
 import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
 
 import scala.swing._
 import scala.swing.event.ButtonClicked
 import de.htwg.se.controller.controllercomponent.GameState._
 import de.htwg.se.controller.controllercomponent.{ControllerInterface, updateData}
+
+import java.nio.file.Paths
+import java.util.logging.LogManager
 
 class SetupGui(controller: ControllerInterface) extends Frame {
   listenTo(controller)
@@ -15,6 +19,8 @@ class SetupGui(controller: ControllerInterface) extends Frame {
 
   val undoButton = new Button("\u2190" + " undo")
   val doButton = new Button("do " + "\u2192")
+
+
 
 
   val inputName = new TextField {
@@ -61,6 +67,7 @@ class SetupGui(controller: ControllerInterface) extends Frame {
       }
     }
   }
+
 
   reactions += {
     case event: updateData => {

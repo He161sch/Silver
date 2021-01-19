@@ -1,63 +1,56 @@
-//package de.htwg.se.controller
-//
-//import java.io.ByteArrayOutputStream
-//
-//import de.htwg.se.de.htwg.se.model.{Card, Deck, GameConfig, Hand, Player}
-//import org.scalatest.matchers.should.Matchers
-//import org.scalatest.wordspec.AnyWordSpec
-//import de.htwg.se.de.htwg.se.util.Observer
-//
-//class ControllerSpec extends AnyWordSpec with Matchers {
-//  "A Controller" when {
-//    "new" should {
-//      val de.htwg.se.controller = new Controller()
-//      val observer = new Observer {
-//        var updated: Boolean = false
-//        def isUpdated: Boolean = updated
-//        override def update: Boolean = {updated = true; updated}
-//      }
-//      de.htwg.se.controller.add(observer)
-//      val deck = new Deck
-//
-//      "when game is Running" in {
-//        de.htwg.se.controller.running = IsRunning()
-//
-//        val out = new ByteArrayOutputStream();
-//        Console.withOut(out) {
-//          de.htwg.se.controller.getState()
-//        }
-//        out.toString should include ("Game is running!")
-//      }
-//      "when game is not Running" in {
-//        de.htwg.se.controller.running = IsNotRunning()
-//
-//        val out = new ByteArrayOutputStream();
-//        Console.withOut(out) {
-//          de.htwg.se.controller.getState()
-//        }
-//        out.toString should include ("Game is not running!")
-//      }
-//
-//      "notify its observer after init game" in {
-//        de.htwg.se.controller.performInitGame(2)
-//        observer.updated should be(true)
-//      }
-//      "get active player name" in {
-//        de.htwg.se.controller.gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 0, Vector[Player]())
-//        de.htwg.se.controller.gameConfig = de.htwg.se.controller.gameConfig.createPlayer("SETest")
-//        de.htwg.se.controller.getActivePlayerName should be("SETest")
-//      }
-//      "get player name" in {
-//        de.htwg.se.controller.gameConfig = GameConfig(Vector[Player](), deck.resetDeck(), 1, Vector[Player]())
-//        de.htwg.se.controller.getPlayerName should be("Please enter Playername 2:")
-//      }
-//      "notify its observer when performing set player name" in {
-//        val playerList = Vector[Player](Player("SE1", Hand(Vector[Card]()), Card(0)))
-//        de.htwg.se.controller.gameConfig = GameConfig(playerList, deck.resetDeck(), 0, Vector[Player]())
-//        de.htwg.se.controller.performSetPlayerName("SETest")
-//        observer.updated should be(true)
-//        de.htwg.se.controller.gameConfig.getActivePlayerName should be("SETest")
-//      }
-//    }
-//  }
-//}
+package de.htwg.se.controller
+
+import java.io.ByteArrayOutputStream
+
+import de.htwg.se.controller.controllercomponent.{GameState, IsNotRunning, IsRunning}
+import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
+import de.htwg.se.model.cardcomponent.CardInterface
+import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
+import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
+import de.htwg.se.model.gameconfigcomponent.GameConfigInterface
+import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
+import de.htwg.se.model.handcomponent.handbaseimpl.Hand
+import de.htwg.se.model.playercomponent.playerbaseimpl.Player
+import de.htwg.se.util.Observer
+
+class ControllerSpec extends AnyWordSpec with Matchers {
+  "A Controller" when {
+    "new" should {
+      val controller = new Controller(new GameConfig())
+      val deck = new Deck
+
+      "when game is Running" in {
+        controller.running = IsRunning()
+
+        val out = new ByteArrayOutputStream();
+        Console.withOut(out) {
+          controller.getState()
+        }
+        out.toString should include ("Game is running!")
+      }
+      "when game is not Running" in {
+        controller.running = IsNotRunning()
+
+        val out = new ByteArrayOutputStream();
+        Console.withOut(out) {
+          controller.getState()
+        }
+        out.toString should include ("Game is not running!")
+      }
+      "get player name" in {
+        controller.gameConfig = GameConfig(Vector[Player](), deck.resetDeck(),Card(false, 15), 1, Vector[Player]())
+        controller.getPlayerName should be("Please enter Playername 2:")
+      }
+      "view a card" in {
+        controller.gameConfig = GameConfig(Vector[Player](Player("moin", Hand(Vector(Card(false, 1))), Card(false, 1))), deck.resetDeck(),Card(false, 15), 0, Vector[Player]())
+        controller.viewCard(0)
+        controller.gameConfig.getAllPlayers(0).getHand.getCard(0).getVisibility should be (true)
+        controller.viewCard()
+        controller.gameState should be (GameState.VIEWCARD)
+      }
+
+    }
+  }
+}

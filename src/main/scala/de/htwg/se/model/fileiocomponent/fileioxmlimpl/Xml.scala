@@ -64,13 +64,6 @@ class Xml extends FileIOInterface {
     players
   }
 
-  def playerFromXml(seq: NodeSeq): PlayerInterface = {
-    val cards = cardsFromXml(seq \ "hand" \\ "card")
-    Player(
-      (seq \ "name").text,
-      Hand(cards), Card(false, 14)
-    )
-  }
 
   def cardFromXml(seq: NodeSeq): CardInterface = {
     var card = Card(false, 0)
