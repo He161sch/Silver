@@ -56,7 +56,6 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
   }
 
   def drawFromDiscard(): GameConfigInterface = {
-
     val newPlayer = Player(players(activePlayerIdx).getName, players(activePlayerIdx).getHand, discardDeck)
     discardDeck = Card(true, 15)
     updatePlayerAtIdx(newPlayer, activePlayerIdx, deck)
@@ -69,7 +68,7 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
   }
 
   def combineCard(idx1: Int, idx2: Int): GameConfigInterface = {
-    val drawedCard = players(activePlayerIdx).getNewCard
+    var drawedCard = players(activePlayerIdx).getNewCard
 
     if (players(activePlayerIdx).getHand.getCard(idx1).getNumber.equals(players(activePlayerIdx).getHand.getCard(idx2).getNumber)
       || players(activePlayerIdx).getHand.getCard(idx1).getNumber == 13
@@ -81,6 +80,7 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
 
     } else {
       discardDeck = drawedCard
+      players(activePlayerIdx).setNewCard
       updatePlayerAtIdx(players(activePlayerIdx), activePlayerIdx, deck)
     }
 
@@ -90,26 +90,6 @@ case class GameConfig (players: Vector[PlayerInterface] = Vector[PlayerInterface
     val isWinner = winners :+ winner
     copy(players, deck, discardDeck,0, isWinner)
   }
-
-//  def allPlayersToString(): String = {
-//    val sb = new StringBuilder
-//    if (players.size == 3) {
-//      sb.append(players(0).getName).append(" has a total of ").append(players(0).getHand.handValue())
-//        .append(" points\n")
-//      sb.append(players(1).getName).append(" has a total of ").append(players(0).getHand.handValue())
-//        .append(" points\n")
-//      sb.append(players(2).getName).append(" has a total of ").append(players(0).getHand.handValue())
-//        .append(" points\n")
-//
-//    } else if (players.size == 2) {
-//      sb.append(players(0).getName).append(" has a total of ").append(players(0).getHand.handValue())
-//        .append(" points\n")
-//      sb.append(players(1).getName).append(" has a total of ").append(players(0).getHand.handValue())
-//        .append(" points\n")
-//    }
-//    sb.toString()
-//  }
-
 
   def winnerToString(): String = {
     val sb = new StringBuilder

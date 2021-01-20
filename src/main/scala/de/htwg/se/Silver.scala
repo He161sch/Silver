@@ -18,7 +18,8 @@ object Silver {
       val gui = new WelcomePanel(controller)
       gui.visible = true
       tui.run()
+    } else {
+      tui.run()
     }
-    tui.run()
   }
 }

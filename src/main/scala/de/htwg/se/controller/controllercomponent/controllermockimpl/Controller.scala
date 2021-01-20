@@ -47,4 +47,5 @@ case class Controller() extends ControllerInterface {
   override def newGame: Unit = {}
   override def drawFromDiscard(): Unit = {}
   override def discardCard(): Unit = {}
+  override def help: Unit = {}
 }

@@ -26,9 +26,9 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   val fileIO = injector.getInstance(classOf[FileIOInterface])
 
 
-//  val file = Paths get "src/main/images/deckShuffle.mp3"
-//  LogManager.getLogManager().reset()
-//  val deckShuffle = new FileJavaSoundPlayer(file)
+  val file = Paths get "src/main/images/deckShuffle.mp3"
+  LogManager.getLogManager().reset()
+  val deckShuffle = new FileJavaSoundPlayer(file)
 
   private val undoManager = new UndoManager
 
@@ -82,8 +82,8 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
       gameState = NEWGAME
       publish(new updateData)
       gameState = PLAYER_TURN
-//      deckShuffle.play()
-//      deckShuffle.volume = 20
+      deckShuffle.play()
+      deckShuffle.volume = 20
     }
   }
 
@@ -171,14 +171,15 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
     gameState = PlayerWon
     publish(new updateData)
     running = IsNotRunning()
-    quitGame()
-
-  }
-
-  def quitGame(): Unit = {
     gameState = ENDGAME
     publish(new updateData)
+
   }
+
+//  def quitGame(): Unit = {
+//    gameState = ENDGAME
+//    publish(new updateData)
+//  }
 
 
   def gameStateToString: String = {
@@ -252,5 +253,16 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
       running = IsRunning()
     }
   }
+
+  def help: Unit = {
+    print("Du musst versuchen dir deine Karten zu merken und am Ende so wenig Punkte wie möglich zu haben\n" +
+      "Bei Draw wird eine Karte gezogen\n" +
+      "Bei DiscardPile wird von Ablagestapel gezogen\n" +
+      "Danach kann getauscht(Switch) oder verschmolzen(Combine) werde\n" +
+      "Bei View kann sich eine Karte angeschaut werden\n" +
+      "Cabo beendet das Spiel und der gewinner wird berechnet\n"
+    )
+  }
+
 }
 

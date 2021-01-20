@@ -16,7 +16,8 @@ class HelpPanel() extends Frame {
   var help = new BoxPanel(Orientation.Horizontal) {
     contents += new Label() {
       font = myFont
-      text += "<html><p style=\"text-align:left;\">Bei Draw wird eine Karte gezogen</p>" +
+      text += "<html><p style=\"text-align:left;\">Du musst versuchen dir deine Karten zu merken und am Ende so wenig Punkte wie möglich zu haben</p>" +
+        "<p style=\"text-align:left;\">Bei Draw wird eine Karte gezogen</p>" +
         "<p style=\"text-align:left;\">Bei DiscardPile wird von Ablagestapel gezogen</p>" +
         "<p style=\"text-align:left;\">Danach kann getauscht(Switch) oder verschmolzen(Combine) werde</p>" +
         "<p style=\"text-align:left;\">Bei View kann sich eine Karte angeschaut werden</p>" +

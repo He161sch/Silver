@@ -81,12 +81,14 @@ class TUI(controller: ControllerInterface) extends Reactor {
     inputsplit.head match{
       case "d" => controller.drawCard()
       case "v" => controller.viewCard()
+      case "dp" => controller.drawFromDiscard()
       case "state" => controller.getState()
       case "cabo" => controller.whoWon()
       case "save" => controller.save
       case "load" => controller.load
       case "new" => controller.newGame
       case "gameState" => controller.gameStateToString
+      case "help" => controller.help
       case _ => println("unknown command ... Try again")
 
     }
@@ -94,7 +96,6 @@ class TUI(controller: ControllerInterface) extends Reactor {
 
   reactions += {
     case _ => update
-    case event: Saved => print("Game saved :)\n")
   }
 
   def update: Unit = {
@@ -109,7 +110,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
         println("A new Game started ... Deck is now shuffeled!")
       }
       case PLAYER_TURN => {
-        print(controller.gameConfig.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n")
+        print(controller.gameConfig.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n" +
+          "After first Discard you can choose dp for Drawing from the DiscardPile\n")
         println(controller.gameStateToString)
       }
       case DRAWEDCARD => {
