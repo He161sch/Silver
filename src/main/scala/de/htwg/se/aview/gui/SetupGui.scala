@@ -1,7 +1,6 @@
 package de.htwg.se.aview.gui
 
 import com.malliina.audio.javasound.FileJavaSoundPlayer
-import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
 
 import scala.swing._
 import scala.swing.event.ButtonClicked

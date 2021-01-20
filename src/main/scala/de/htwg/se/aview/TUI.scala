@@ -2,7 +2,6 @@ package de.htwg.se.aview
 
 import de.htwg.se.controller.controllercomponent.GameState._
 import de.htwg.se.controller.controllercomponent.{ControllerInterface, updateData, Saved}
-import de.htwg.se.util.Observer
 
 import scala.io.StdIn.readLine
 import scala.swing._

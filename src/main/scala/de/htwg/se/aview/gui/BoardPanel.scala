@@ -1,13 +1,11 @@
 package de.htwg.se.aview.gui
 
-import de.htwg.se.controller.controllercomponent.GameState.{DRAWEDCARD, SWITCHCARD, VIEWCARD}
+import de.htwg.se.controller.controllercomponent.GameState.{DRAWEDCARD, VIEWCARD}
 
 import java.awt.Image
-import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
+
 import de.htwg.se.controller.controllercomponent.{ControllerInterface, loadGame, updateData}
 
-import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import scala.swing._
 import scala.swing.event.ButtonClicked
@@ -22,6 +20,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
   val pathToImage = "src/main/images/"
   val imageHeight = 160
   val imageWidth = 120
+
 
 
   val player = new Label {
@@ -262,14 +261,12 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
         icon = scaledImageIcon(pathToImage + str, imageWidth, imageHeight)
         reactions += {
           case ButtonClicked(_) => { // DRAW BUTTON
-
             controller.drawCard()
             viewSC(true)
             drawViewVisible(false)
             viewButtonsVisible(false)
             caboVisible(false)
             discardButton.visible = true
-
           }
         }
       }

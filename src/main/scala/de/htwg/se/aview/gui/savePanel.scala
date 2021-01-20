@@ -2,7 +2,7 @@ package de.htwg.se.aview.gui
 
 import de.htwg.se.controller.controllercomponent.ControllerInterface
 
-import scala.swing.{BoxPanel, Button, Color, Dimension, Font, Frame, GridPanel, Label, Orientation}
+import scala.swing.{Button, Color, Dimension, Font, Frame, GridPanel}
 import scala.swing.event.ButtonClicked
 
 class savePanel(controller: ControllerInterface) extends Frame {

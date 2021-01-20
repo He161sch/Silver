@@ -1,7 +1,6 @@
 package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
 import com.google.inject.{Guice, Inject}
-import com.malliina.audio.javasound.FileJavaSoundPlayer
 import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, ENDGAME, FALSECOMMAND, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
 import de.htwg.se.controller.controllercomponent._
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
@@ -10,10 +9,7 @@ import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
 import de.htwg.se.model.fileiocomponent.FileIOInterface
 import de.htwg.se.util.UndoManager
 import de.htwg.se.SilverModule
-import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
 
-import java.nio.file.Paths
-import java.util.logging.LogManager
 import scala.swing.Publisher
 
 
