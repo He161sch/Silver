@@ -1,130 +1,131 @@
 {
   "controller" : {
-    "gameState" : "PLAYER_TURN",
+    "gameState" : "WelcomeState",
     "gameConfig" : {
       "players" : [ {
         "player" : {
-          "name" : "wdawda",
+          "name" : "Marco",
           "hand" : [ {
-            "card" : "2"
-          }, {
-            "card" : "12"
-          }, {
-            "card" : "3"
-          }, {
-            "card" : "3"
-          }, {
-            "card" : "5"
+            "card" : "1"
           } ]
         }
       }, {
         "player" : {
-          "name" : "awd",
+          "name" : "Heiko",
           "hand" : [ {
-            "card" : "11"
-          }, {
-            "card" : "7"
-          }, {
-            "card" : "12"
-          }, {
-            "card" : "11"
-          }, {
-            "card" : "2"
-          } ]
-        }
-      }, {
-        "player" : {
-          "name" : "",
-          "hand" : [ {
-            "card" : "4"
-          }, {
-            "card" : "7"
-          }, {
-            "card" : "10"
-          }, {
-            "card" : "6"
-          }, {
-            "card" : "8"
+            "card" : "1"
           } ]
         }
       } ],
       "deck" : [ {
+        "card" : "11"
+      }, {
+        "card" : "7"
+      }, {
+        "card" : "3"
+      }, {
+        "card" : "11"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "13"
+      }, {
+        "card" : "2"
+      }, {
         "card" : "9"
       }, {
         "card" : "10"
       }, {
-        "card" : "3"
+        "card" : "4"
       }, {
         "card" : "1"
       }, {
         "card" : "0"
       }, {
-        "card" : "6"
-      }, {
         "card" : "8"
       }, {
-        "card" : "13"
+        "card" : "12"
       }, {
-        "card" : "5"
-      }, {
-        "card" : "8"
+        "card" : "2"
       }, {
         "card" : "9"
-      }, {
-        "card" : "11"
-      }, {
-        "card" : "1"
-      }, {
-        "card" : "11"
-      }, {
-        "card" : "9"
-      }, {
-        "card" : "13"
-      }, {
-        "card" : "4"
-      }, {
-        "card" : "4"
-      }, {
-        "card" : "0"
-      }, {
-        "card" : "5"
-      }, {
-        "card" : "1"
-      }, {
-        "card" : "9"
-      }, {
-        "card" : "4"
-      }, {
-        "card" : "6"
       }, {
         "card" : "3"
-      }, {
-        "card" : "6"
       }, {
         "card" : "10"
       }, {
         "card" : "7"
       }, {
-        "card" : "1"
+        "card" : "4"
       }, {
         "card" : "12"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "9"
+      }, {
+        "card" : "4"
+      }, {
+        "card" : "11"
+      }, {
+        "card" : "3"
+      }, {
+        "card" : "11"
+      }, {
+        "card" : "6"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "10"
+      }, {
+        "card" : "9"
+      }, {
+        "card" : "8"
+      }, {
+        "card" : "2"
+      }, {
+        "card" : "6"
+      }, {
+        "card" : "12"
+      }, {
+        "card" : "12"
+      }, {
+        "card" : "3"
+      }, {
+        "card" : "1"
+      }, {
+        "card" : "2"
+      }, {
+        "card" : "10"
+      }, {
+        "card" : "6"
+      }, {
+        "card" : "8"
+      }, {
+        "card" : "6"
+      }, {
+        "card" : "4"
+      }, {
+        "card" : "13"
+      }, {
+        "card" : "5"
+      }, {
+        "card" : "7"
       }, {
         "card" : "8"
       }, {
         "card" : "7"
       }, {
-        "card" : "12"
-      }, {
-        "card" : "5"
-      }, {
-        "card" : "2"
-      }, {
-        "card" : "2"
+        "card" : "0"
       } ],
       "discardDeck" : [ {
-        "card" : "10"
+        "card" : "15"
       } ],
-      "activePlayerIdx" : 1,
+      "activePlayerIdx" : 0,
       "winners" : [ ]
     }
   }

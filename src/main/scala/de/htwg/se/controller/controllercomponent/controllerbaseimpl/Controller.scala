@@ -1,6 +1,7 @@
 package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
 import com.google.inject.{Guice, Inject}
+import com.malliina.audio.javasound.FileJavaSoundPlayer
 import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, EndGame, FALSECOMMAND, IDLE, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
 import de.htwg.se.controller.controllercomponent._
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
@@ -11,6 +12,8 @@ import de.htwg.se.util.UndoManager
 import de.htwg.se.SilverModule
 import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
 
+import java.nio.file.Paths
+import java.util.logging.LogManager
 import scala.swing.Publisher
 
 
@@ -22,6 +25,10 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   val injector = Guice.createInjector(new SilverModule)
   val fileIO = injector.getInstance(classOf[FileIOInterface])
 
+
+//  val file = Paths get "src/main/images/deckShuffle.mp3"
+//  LogManager.getLogManager().reset()
+//  val deckShuffle = new FileJavaSoundPlayer(file)
 
   private val undoManager = new UndoManager
 
@@ -75,6 +82,8 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
       gameState = NEWGAME
       publish(new updateData)
       gameState = PLAYER_TURN
+//      deckShuffle.play()
+//      deckShuffle.volume = 20
     }
   }
 
@@ -174,7 +183,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
 
   def gameStateToString: String = {
     gameState match {
-      case PLAYER_TURN | VIEWCARD | SWITCHCARD | COMBINECARD => gameConfig.getActivePlayer.toString
+      case PLAYER_TURN | VIEWCARD | SWITCHCARD | COMBINECARD => gameConfig.getAllPlayers(gameConfig.getActivePlayerIdx).toString
       case PlayerWon => gameConfig.winnerToString()
     }
   }
