@@ -16,8 +16,7 @@ class GameOverPanel(controller: ControllerInterface) extends Frame {
   var winner = new BoxPanel(Orientation.Horizontal) {
     contents += new Label() {
       font = myFont
-      text += "<html><p style=\"text-align;left;\">" + controller.gameConfig.allPlayersToString + "</p>" +
-      "<p style=\"text-align;left;\">" + controller.gameConfig.winnerToString() + "</p></html>"
+      text += "<html><p style=\"text-align;left;\">" + controller.gameConfig.winnerToString() + "</p></html>"
     }
   }
 

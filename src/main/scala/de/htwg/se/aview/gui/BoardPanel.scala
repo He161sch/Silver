@@ -1,13 +1,11 @@
 package de.htwg.se.aview.gui
 
-import de.htwg.se.controller.controllercomponent.GameState.{DRAWEDCARD, SWITCHCARD, VIEWCARD}
+import de.htwg.se.controller.controllercomponent.GameState.{DRAWEDCARD, VIEWCARD}
 
 import java.awt.Image
-import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
+
 import de.htwg.se.controller.controllercomponent.{ControllerInterface, loadGame, updateData}
 
-import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 import scala.swing._
 import scala.swing.event.ButtonClicked
@@ -22,6 +20,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
   val pathToImage = "src/main/images/"
   val imageHeight = 160
   val imageWidth = 120
+
 
 
   val player = new Label {
@@ -78,7 +77,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
 
 
   val helpButton = new Button {
-    text = "Help Please"
+    text = "Help"
     preferredSize = new Dimension(200, 100)
   }
 
@@ -98,16 +97,46 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
   val switch5 = new Button ("5")
 
   // COMBINE BUTTONS
-  val cb12 = new Button ("1 + 2")
-  val cb13 = new Button ("1 + 3")
-  val cb14 = new Button ("1 + 4")
-  val cb15 = new Button ("1 + 5")
-  val cb23 = new Button ("2 + 3")
-  val cb24 = new Button ("2 + 4")
-  val cb25 = new Button ("2 + 5")
-  val cb34 = new Button ("3 + 4")
-  val cb35 = new Button ("3 + 5")
-  val cb45 = new Button ("4 + 5")
+  val cb12 = new Button {
+    text = "1 + 2"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb13 = new Button {
+    text = "1 + 3"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb14 = new Button {
+    text = "1 + 4"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb15 = new Button {
+    text = "1 + 5"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb23 = new Button {
+    text = "2 + 3"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb24 = new Button {
+    text = "2 + 4"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb25 = new Button {
+    text = "2 + 5"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb34 = new Button {
+    text = "3 + 4"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb35 = new Button {
+    text = "3 + 5"
+    preferredSize = new Dimension(100, 50)
+  }
+  val cb45 = new Button {
+    text = "4 + 5"
+    preferredSize = new Dimension(100, 50)
+  }
 
   def getCards(hidePlayerCards: Boolean): collection.mutable.Buffer[Component] = {
     var content = collection.mutable.Buffer[Component]()
@@ -232,14 +261,12 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
         icon = scaledImageIcon(pathToImage + str, imageWidth, imageHeight)
         reactions += {
           case ButtonClicked(_) => { // DRAW BUTTON
-
             controller.drawCard()
             viewSC(true)
             drawViewVisible(false)
             viewButtonsVisible(false)
             caboVisible(false)
             discardButton.visible = true
-
           }
         }
       }
@@ -332,36 +359,6 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
 
   }
 
-//  def createCardGrid: GridPanel = new GridPanel(2,2) {
-//    contents += decktxt
-//    contents += discardPiletxt
-//    val drawedCard = getDrawedCard(false)
-//    for (content <- drawedCard) {
-//      contents += content
-//    }
-//
-//    val discardCard = getDiscardCard(false)
-//    for (content <- discardCard) {
-//      contents += content
-//    }
-//  }
-
-//  val deckPanel = new GridPanel(2, 1) {
-//    contents += decktxt
-//    val drawedCard = getDrawedCard(false)
-//    for (content <- drawedCard) {
-//      contents += content
-//    }
-//  }
-//
-//  val discardPanel = new GridPanel(2,1) {
-//    contents += discardPiletxt
-//    val discardCard = getDiscardCard(false)
-//    for (content <- discardCard) {
-//      contents += content
-//    }
-//  }
-
   def createPlayerCards(): FlowPanel = new FlowPanel {
     opaque = false
     val cards = getCards(false)
@@ -413,61 +410,67 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
           combineVisible(true)
           viewButtonsVisible(false)
           caboVisible(false)
-//        }else if (component == switchButton) {          // SWITCH BUTTON
-//          viewSC(false)
-//          switchVisible(true)
-//          viewButtonsVisible(false)
-//          caboVisible(false)
+          saveHelpSmall()
         } else if (component == cb12) {                  // COMBINE
           controller.combineCard(0, 1)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb13) {
           controller.combineCard(0, 2)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb14) {
           controller.combineCard(0, 3)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb15) {
           controller.combineCard(0, 4)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb23) {
           controller.combineCard(1, 2)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb24) {
           controller.combineCard(1, 3)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb25) {
           controller.combineCard(1, 4)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb34) {
           controller.combineCard(2, 3)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb35) {
           controller.combineCard(2, 4)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == cb45) {
           controller.combineCard(3, 4)
           combineVisible(false)
           drawViewVisible(true)
           caboVisible(true)
+          saveHelpBig()
         } else if (component == viewButton) {           // VIEW BUTTON
           controller.viewCard()
           viewSC(false)
@@ -586,14 +589,15 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
   }
 
 
-  // BoxPanel unten drunter
-  // Image einführen
+  def saveHelpSmall(): Unit = {
+    saveGameButton.preferredSize = new Dimension(100, 50)
+    helpButton.preferredSize = new Dimension(100, 50)
+  }
 
-
-  // View:
-  // Karten Panel ersetzen mit der Karte die man anschauen will
-  // neuer Button: NextPlayer
-  // sonst switcht es direkt um
+  def saveHelpBig(): Unit = {
+    saveGameButton.preferredSize = new Dimension(200, 100)
+    helpButton.preferredSize = new Dimension(200, 100)
+  }
 
 
 }

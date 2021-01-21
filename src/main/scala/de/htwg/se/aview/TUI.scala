@@ -2,7 +2,6 @@ package de.htwg.se.aview
 
 import de.htwg.se.controller.controllercomponent.GameState._
 import de.htwg.se.controller.controllercomponent.{ControllerInterface, updateData, Saved}
-import de.htwg.se.util.Observer
 
 import scala.io.StdIn.readLine
 import scala.swing._
@@ -18,7 +17,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
     controller.publish(new updateData)
     var input: String = ""
 
-    while (input != "q" && controller.gameState != EndGame) {
+    while (input != "q" && controller.gameState != ENDGAME) {
       input = readLine()
       processCommands(input)
     }
@@ -81,12 +80,14 @@ class TUI(controller: ControllerInterface) extends Reactor {
     inputsplit.head match{
       case "d" => controller.drawCard()
       case "v" => controller.viewCard()
+      case "dp" => controller.drawFromDiscard()
       case "state" => controller.getState()
       case "cabo" => controller.whoWon()
       case "save" => controller.save
       case "load" => controller.load
       case "new" => controller.newGame
       case "gameState" => controller.gameStateToString
+      case "help" => controller.help
       case _ => println("unknown command ... Try again")
 
     }
@@ -94,7 +95,6 @@ class TUI(controller: ControllerInterface) extends Reactor {
 
   reactions += {
     case _ => update
-    case event: Saved => print("Game saved :)\n")
   }
 
   def update: Unit = {
@@ -109,7 +109,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
         println("A new Game started ... Deck is now shuffeled!")
       }
       case PLAYER_TURN => {
-        print(controller.gameConfig.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n")
+        print(controller.gameConfig.getActivePlayerName + "'s turn. Draw or View a Card?(d/v)\n" +
+          "After first Discard you can choose dp for Drawing from the DiscardPile\n")
         println(controller.gameStateToString)
       }
       case DRAWEDCARD => {
@@ -128,10 +129,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
         println(controller.gameStateToString)
         println("Which Card you want to view ?[v [0-4]]")
       }
-      case PlayerWon => {
-        println(controller.gameStateToString)
-      }
-      case EndGame => {
+      case PlayerWon => println(controller.gameStateToString)
+      case ENDGAME => {
         println("Was fun playing!\n\n")
       }
       case FALSECOMMAND => print("Command isn't allowed\n")

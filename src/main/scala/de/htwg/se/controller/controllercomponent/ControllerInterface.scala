@@ -8,7 +8,7 @@ import scala.swing.Publisher
 object GameState extends Enumeration{
   type GameState = Value
   val  WelcomeState, InputName, PLAYER_TURN, NEWGAME, DRAWEDCARD, SWITCHCARD, COMBINECARD, VIEWCARD, FALSECOMMAND, IDLE,
-  PlayerWon, EndGame = Value
+  PlayerWon, ENDGAME = Value
 }
 
 
@@ -41,7 +41,7 @@ trait ControllerInterface extends Publisher {
   def nextPlayer(): Unit
   def discardCard(): Unit
   def whoWon(): Unit
-  def quitGame(): Unit
+//  def quitGame(): Unit
   def gameStateToString: String
   def undoStep: Unit
   def redoStep: Unit
@@ -51,4 +51,5 @@ trait ControllerInterface extends Publisher {
   def save: Unit
   def load: Unit
   def newGame: Unit
+  def help: Unit
 }

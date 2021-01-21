@@ -1,7 +1,6 @@
 package de.htwg.se.aview.gui
 
 import com.malliina.audio.javasound.FileJavaSoundPlayer
-import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
 
 import scala.swing._
 import scala.swing.event.ButtonClicked
@@ -20,6 +19,9 @@ class SetupGui(controller: ControllerInterface) extends Frame {
   val undoButton = new Button("\u2190" + " undo")
   val doButton = new Button("do " + "\u2192")
 
+  val file = Paths get "src/main/images/deckShuffle.mp3"
+  LogManager.getLogManager().reset()
+  val deckShuffle = new FileJavaSoundPlayer(file)
 
 
 
@@ -60,6 +62,8 @@ class SetupGui(controller: ControllerInterface) extends Frame {
           controller.performSetPlayerName(inputName.text)
           if (controller.gameConfig.getActivePlayerIdx == 0) {
             dispose()
+            deckShuffle.play()
+            deckShuffle.volume = 20
           }
         }
 

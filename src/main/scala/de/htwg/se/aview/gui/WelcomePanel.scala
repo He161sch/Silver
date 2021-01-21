@@ -2,14 +2,11 @@ package de.htwg.se.aview.gui
 
 import de.htwg.se.controller.controllercomponent.ControllerInterface
 
-import java.awt.Image
-import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
-
 import javax.swing._
-import scala.swing.Swing.LineBorder
-import scala.swing.event.{ButtonClicked, MouseClicked}
+
+import scala.swing.event.{ButtonClicked}
 import scala.swing.{Label, _}
-import scala.util.Try
+
 
 class WelcomePanel(controller: ControllerInterface) extends Frame {
   background = new Color(0,100,0)

@@ -1,8 +1,7 @@
 package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
 import com.google.inject.{Guice, Inject}
-import com.malliina.audio.javasound.FileJavaSoundPlayer
-import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, EndGame, FALSECOMMAND, IDLE, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
+import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, ENDGAME, FALSECOMMAND, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
 import de.htwg.se.controller.controllercomponent._
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
 import de.htwg.se.model.gameconfigcomponent.GameConfigInterface
@@ -10,10 +9,7 @@ import de.htwg.se.model.gameconfigcomponent.gameconfigbaseimpl.GameConfig
 import de.htwg.se.model.fileiocomponent.FileIOInterface
 import de.htwg.se.util.UndoManager
 import de.htwg.se.SilverModule
-import de.htwg.se.model.cardcomponent.cardbaseimlp.Card
 
-import java.nio.file.Paths
-import java.util.logging.LogManager
 import scala.swing.Publisher
 
 
@@ -26,9 +22,6 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   val fileIO = injector.getInstance(classOf[FileIOInterface])
 
 
-//  val file = Paths get "src/main/images/deckShuffle.mp3"
-//  LogManager.getLogManager().reset()
-//  val deckShuffle = new FileJavaSoundPlayer(file)
 
   private val undoManager = new UndoManager
 
@@ -82,8 +75,6 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
       gameState = NEWGAME
       publish(new updateData)
       gameState = PLAYER_TURN
-//      deckShuffle.play()
-//      deckShuffle.volume = 20
     }
   }
 
@@ -171,14 +162,15 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
     gameState = PlayerWon
     publish(new updateData)
     running = IsNotRunning()
-    quitGame()
-
-  }
-
-  def quitGame(): Unit = {
-    gameState = EndGame
+    gameState = ENDGAME
     publish(new updateData)
+
   }
+
+//  def quitGame(): Unit = {
+//    gameState = ENDGAME
+//    publish(new updateData)
+//  }
 
 
   def gameStateToString: String = {
@@ -240,7 +232,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
   }
 
   def newGame(): Unit ={
-    if (gameState != EndGame) {
+    if (gameState != ENDGAME) {
       gameState = FALSECOMMAND
       publish(new updateData)
       gameState = PLAYER_TURN
@@ -252,5 +244,16 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
       running = IsRunning()
     }
   }
+
+  def help: Unit = {
+    print("Du musst versuchen dir deine Karten zu merken und am Ende so wenig Punkte wie möglich zu haben\n" +
+      "Bei Draw wird eine Karte gezogen\n" +
+      "Bei DiscardPile wird von Ablagestapel gezogen\n" +
+      "Danach kann getauscht(Switch) oder verschmolzen(Combine) werde\n" +
+      "Bei View kann sich eine Karte angeschaut werden\n" +
+      "Cabo beendet das Spiel und der gewinner wird berechnet\n"
+    )
+  }
+
 }
 

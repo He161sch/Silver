@@ -3,6 +3,7 @@ package de.htwg.se.controller
 import java.io.ByteArrayOutputStream
 
 import de.htwg.se.controller.controllercomponent.{GameState, IsNotRunning, IsRunning}
+
 import de.htwg.se.controller.controllercomponent.controllerbaseimpl.Controller
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
