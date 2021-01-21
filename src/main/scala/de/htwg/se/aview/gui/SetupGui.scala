@@ -46,11 +46,17 @@ class SetupGui(controller: ControllerInterface) extends Frame {
     listenTo(undoButton)
     listenTo(doButton)
 
+    undoButton.visible = false
+
     reactions += {
       case ButtonClicked(component) => {
         if(component == undoButton) {
           controller.undoStep
+          if(controller.gameConfig.getActivePlayerIdx == 0) {
+            undoButton.visible = false
+          }
         } else if(component == doButton) {
+          undoButton.visible = true
           controller.performSetPlayerName(inputName.text)
           if (controller.gameConfig.getActivePlayerIdx == 0) {
             dispose()
