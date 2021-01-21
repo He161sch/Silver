@@ -17,6 +17,7 @@ class HelpPanel() extends Frame {
     contents += new Label() {
       font = myFont
       text += "<html><p style=\"text-align:left;\">Du musst versuchen dir deine Karten zu merken und am Ende so wenig Punkte wie möglich zu haben</p>" +
+        "<p style=\"text-align:left;\">Falls du in der Gui die Buttons suchst. Die 5 Karten sind Switch Buttons und die unteren sind Draw Buttons! :)</p>" +
         "<p style=\"text-align:left;\">Bei Draw wird eine Karte gezogen</p>" +
         "<p style=\"text-align:left;\">Bei DiscardPile wird von Ablagestapel gezogen</p>" +
         "<p style=\"text-align:left;\">Danach kann getauscht(Switch) oder verschmolzen(Combine) werde</p>" +
