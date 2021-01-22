@@ -6,12 +6,12 @@
 
 This is our Project for the course Software Engineering.
 <br>
-We recreated the Game Silver and made our own version based on the original.
+We recreated the game Silver and made our own version based on the original.
 <br>
 By **Marco Mollo** and **Heiko Schmid**
 
 ## Description
-At the start of the game you have five Cards laying in front of you, the first two are faced up so you can look at them.
+At the start of the game you have five cards laying in front of you, the first two are faced up, so you can look at them.
 <br>
 Make sure you remember them because after the first round they are going to be covered.
 <br>
@@ -28,9 +28,9 @@ you can't draw a new card that round.
 <br>
 Say Cabo when you think you have fewer points then the other players. 
 <br>
-The goal of this game is to have the fewest Points at the end, which determines the winner.
+The goal of this game is to have the fewest points at the end, which determines the winner.
 <br>
-Have fun playing our little Project :)
+Have fun playing our little project :)
 
 ## GameField
 ![GameField](src/main/images/GameField.png)
