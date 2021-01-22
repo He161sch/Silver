@@ -9,7 +9,7 @@ import scala.swing.{Label, _}
 
 
 class WelcomePanel(controller: ControllerInterface) extends Frame {
-  background = new Color(0,100,0)
+  background = new Color(0,0,0)
   visible = true
   centerOnScreen()
   val myFont = new Font("Herculanum", java.awt.Font.PLAIN, 20)
@@ -19,6 +19,7 @@ class WelcomePanel(controller: ControllerInterface) extends Frame {
   peer.setResizable(false)
 
   var logo = new BoxPanel(Orientation.Horizontal) {
+    background = new Color(0, 0, 0)
     contents += new Label() {
       icon = new ImageIcon("src/main/images/Silver_logo.png")
       horizontalAlignment = Alignment.Center
@@ -40,12 +41,14 @@ class WelcomePanel(controller: ControllerInterface) extends Frame {
   }
 
   val askPlayer = new Label("How many Players want to play?") {
+    background = new Color(0, 0, 0)
     font = new Font("Herculanum", java.awt.Font.PLAIN, 35)
+    foreground = new Color(255,255,255)
   }
 
   val flowPanel = new FlowPanel {
 
-
+    background = new Color(0, 0, 0)
     contents += new FlowPanel()
     contents += twoPlayers
     contents += threePlayers
@@ -74,11 +77,13 @@ class WelcomePanel(controller: ControllerInterface) extends Frame {
 
 
   val grid = new GridPanel(2, 1) {
+    background = new Color(0, 0, 0)
     contents += askPlayer
     contents += flowPanel
 
   }
   contents = new GridPanel(2, 1) {
+    background = new Color(0, 0, 0)
     contents += logo
     contents += grid
   }
