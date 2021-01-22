@@ -20,7 +20,7 @@ After that the fun begins.
 <br> 
 Each round you can change one of your cards with one from the deck or discard pile, then you have to smartly switch to get the lowest point value possible, which would be 0.
 <br>
-If you have two of the same cards you can combine them and switch both of the with the drawn card. In this case the card
+If you have two of the same cards you can combine them and switch both of them with the drawn card. In this case the card
 13 is a Joker, it can be combined with any other card.
 <br>
 If you'r not sure you rememberd the card correctly you have the option to look at one card, but then 
