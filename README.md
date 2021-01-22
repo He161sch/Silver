@@ -11,13 +11,22 @@ We recreated the Game Silver and made our own version based on the original.
 By **Marco Mollo** and **Heiko Schmid**
 
 ## Description
-At the start of each round you have five covered Cards laying in front of you, which the first two you can look at. 
+At the start of the game you have five Cards laying in front of you, the first two are faced up so you can look at them.
+<br>
+Make sure you remember them because after the first round they are going to be covered.
 <br>
 <br>
 After that the fun begins.
 <br> 
-You can change your own cards with the ones from the deck or discard pile, then you have to smartly switch and combine
-your cards and say Cabo when you think you have fewer points then the other players. 
+Each round you can change one of your cards with one from the deck or discard pile, then you have to smartly switch to get the lowest point value possible, which would be 0.
+<br>
+If you have two of the same cards you can combine them and switch both of the with the drawn card. In this case the card
+13 is a Joker, it can be combined with any other card.
+<br>
+If you'r not sure you rememberd the card correctly you have the option to look at one card, but then 
+you can't draw a new card that round.
+<br>
+Say Cabo when you think you have fewer points then the other players. 
 <br>
 The goal of this game is to have the fewest Points at the end, which determines the winner.
 <br>
