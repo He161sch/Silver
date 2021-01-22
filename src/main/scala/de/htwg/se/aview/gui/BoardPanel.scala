@@ -3,10 +3,10 @@ package de.htwg.se.aview.gui
 import de.htwg.se.controller.controllercomponent.GameState.{DRAWEDCARD, VIEWCARD}
 
 import java.awt.Image
-
 import de.htwg.se.controller.controllercomponent.{ControllerInterface, loadGame, updateData}
 
 import javax.swing.ImageIcon
+import scala.collection.mutable
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
@@ -309,40 +309,35 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
   def createCardGrid: FlowPanel = new FlowPanel() {
     opaque = false
 
-    val deckTxt = new GridPanel(1, 1) {
+    val deckTxt: GridPanel = new GridPanel(1, 1) {
       opaque = false
       contents += decktxt
-//      preferredSize = new Dimension (50, 50)
     }
-    val deckPanel = new GridPanel(1, 1) {
+    val deckPanel: GridPanel = new GridPanel(1, 1) {
       opaque = false
-      val drawedCard = getDrawedCard(false)
+      val drawedCard: mutable.Seq[Component] = getDrawedCard(false)
       for (content <- drawedCard) {
         contents += content
       }
-//      preferredSize = new Dimension(250,350)
     }
 
-    val fullDeckPanel = new GridPanel(2, 1) {
+    val fullDeckPanel: GridPanel = new GridPanel(2, 1) {
       opaque = false
       contents += deckTxt
       contents += deckPanel
-//      preferredSize = new Dimension (500, 500)
     }
 
-    val discardPileTxt = new GridPanel(1,1) {
+    val discardPileTxt: GridPanel = new GridPanel(1,1) {
       opaque = false
       contents += discardPiletxt
-//      preferredSize = new Dimension (50, 50)
     }
 
-    val discardPanel = new GridPanel(1,1) {
+    val discardPanel: GridPanel = new GridPanel(1,1) {
       opaque = false
-      val discardCard = getDiscardCard(false)
+      val discardCard: mutable.Seq[Component] = getDiscardCard(false)
       for (content <- discardCard) {
         contents += content
       }
-//      preferredSize = new Dimension(250,350)
     }
 
     val fullDiscardPanel = new GridPanel(2, 1) {

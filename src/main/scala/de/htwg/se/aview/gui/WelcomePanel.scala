@@ -49,7 +49,6 @@ class WelcomePanel(controller: ControllerInterface) extends Frame {
   val flowPanel = new FlowPanel {
 
     background = new Color(0, 0, 0)
-    contents += new FlowPanel()
     contents += twoPlayers
     contents += threePlayers
     contents += loadButton

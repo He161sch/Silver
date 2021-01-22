@@ -7,7 +7,7 @@ import scala.swing.event.ButtonClicked
 import de.htwg.se.controller.controllercomponent.GameState._
 import de.htwg.se.controller.controllercomponent.{ControllerInterface, updateData}
 
-import java.nio.file.Paths
+import java.nio.file.{Path, Paths}
 import java.util.logging.LogManager
 
 class SetupGui(controller: ControllerInterface) extends Frame {
@@ -19,17 +19,15 @@ class SetupGui(controller: ControllerInterface) extends Frame {
   val undoButton = new Button("\u2190" + " undo")
   val doButton = new Button("do " + "\u2192")
 
-  val file = Paths get "src/main/images/deckShuffle.mp3"
-  LogManager.getLogManager().reset()
+  val file: Path = Paths get "src/main/images/deckShuffle.mp3"
+  LogManager.getLogManager.reset()
   val deckShuffle = new FileJavaSoundPlayer(file)
 
-
-
-  val inputName = new TextField {
+  val inputName: TextField = new TextField {
     columns = 40
   }
 
-  val playername = new Label {
+  val playername: Label = new Label {
     text = controller.getPlayerName
   }
 
