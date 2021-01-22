@@ -1,7 +1,7 @@
 package de.htwg.se.aview
 
 import de.htwg.se.controller.controllercomponent.GameState._
-import de.htwg.se.controller.controllercomponent.{ControllerInterface, updateData, Saved}
+import de.htwg.se.controller.controllercomponent.{ControllerInterface, updateData}
 
 import scala.io.StdIn.readLine
 import scala.swing._
@@ -34,7 +34,9 @@ class TUI(controller: ControllerInterface) extends Reactor {
       }
     } else if (controller.gameState == InputName) {
       input match {
-        case "z" => controller.undoStep
+        case "z" => if (controller.gameConfig.getActivePlayerIdx != 0) {
+          controller.undoStep
+        }
         case "y" => controller.redoStep
         case _ => controller.performSetPlayerName(input)
       }
