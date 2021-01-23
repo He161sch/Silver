@@ -1,7 +1,7 @@
 package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
 import com.google.inject.{Guice, Inject}
-import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, ENDGAME, FALSECOMMAND, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD}
+import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, ENDGAME, FALSECOMMAND, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD, WelcomeState}
 import de.htwg.se.controller.controllercomponent._
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
 import de.htwg.se.model.gameconfigcomponent.GameConfigInterface
@@ -33,11 +33,15 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
 
   def performInitGame(playerAmount: Int): Unit = {
     undoManager.doStep(new CommandPlayerAmount(this, playerAmount))
-    publish(new updateData)
+    publish(new PlayerAmount)
   }
   def performSetPlayerName(playerName: String): Unit = {
     undoManager.doStep(new CommandInputNames(this, playerName))
-    publish(new updateData)
+    if (gameState == PLAYER_TURN) {
+      publish(new StartGame)
+    } else{
+      publish(new updateData)
+    }
   }
   def performViewCard(idx: Int): Unit = {
     undoManager.doStep(new CommandViewCard(this, idx))
