@@ -46,4 +46,5 @@ class GameOverPanel(controller: ControllerInterface) extends Frame {
     contents += winner
     contents += buttons
   }
+
 }

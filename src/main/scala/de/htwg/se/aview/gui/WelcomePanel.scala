@@ -1,6 +1,6 @@
 package de.htwg.se.aview.gui
 
-import de.htwg.se.controller.controllercomponent.{ControllerInterface, PlayerAmount}
+import de.htwg.se.controller.controllercomponent.{ControllerInterface}
 
 import javax.swing._
 import scala.swing.event.ButtonClicked
@@ -45,13 +45,6 @@ class WelcomePanel(controller: ControllerInterface) extends Frame {
     foreground = new Color(255,255,255)
   }
 
-
-  reactions += {
-    case _: PlayerAmount => {
-      new SetupGui(controller).visible = true
-      dispose()
-    }
-  }
 
   val flowPanel = new FlowPanel {
 

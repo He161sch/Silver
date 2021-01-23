@@ -88,10 +88,7 @@ class SetupGui(controller: ControllerInterface) extends Frame {
       inputName.text = ""
     }
     case event: StartGame => {
-      boardPanel.deafTo(controller)
-      boardPanel = new BoardPanel(controller)
-      boardPanel.pack()
-      boardPanel.visible = true
+      new BoardPanel(controller)
       dispose()
     }
   }

@@ -33,7 +33,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
 
   def performInitGame(playerAmount: Int): Unit = {
     undoManager.doStep(new CommandPlayerAmount(this, playerAmount))
-    publish(new PlayerAmount)
+    publish(new updateData)
   }
   def performSetPlayerName(playerName: String): Unit = {
     undoManager.doStep(new CommandInputNames(this, playerName))
@@ -167,7 +167,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
     publish(new updateData)
     running = IsNotRunning()
     gameState = ENDGAME
-    publish(new updateData)
+    publish(new endGame)
 
   }
 
@@ -257,6 +257,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
       "Bei View kann sich eine Karte angeschaut werden\n" +
       "Cabo beendet das Spiel und der gewinner wird berechnet\n"
     )
+    publish(new helpData)
   }
 
 }

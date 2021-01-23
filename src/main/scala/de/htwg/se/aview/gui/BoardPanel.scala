@@ -3,7 +3,7 @@ package de.htwg.se.aview.gui
 import de.htwg.se.controller.controllercomponent.GameState.{DRAWEDCARD, VIEWCARD}
 
 import java.awt.Image
-import de.htwg.se.controller.controllercomponent.{ControllerInterface, loadGame, updateData}
+import de.htwg.se.controller.controllercomponent.{ControllerInterface, endGame, helpData, loadGame, updateData}
 
 import javax.swing.ImageIcon
 import scala.collection.mutable
@@ -514,6 +514,14 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
     case event: loadGame => {
       redraw
       player.text = controller.gameConfig.getActivePlayerName
+    }
+    case event: endGame => {
+      new GameOverPanel(controller)
+      dispose()
+    }
+    case event: helpData => {
+      new HelpPanel()
+//      öffnet sich komischer weise 3 mal
     }
   }
 
