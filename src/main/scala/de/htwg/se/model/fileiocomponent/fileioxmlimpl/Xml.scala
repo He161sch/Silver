@@ -58,7 +58,7 @@ class Xml extends FileIOInterface {
       players = players :+ Player(
         (p \ "name").text,
         Hand(cardsFromXml(p \ "hand")),
-        Card(false, 14)
+        Card(visible = false, 14)
       )
     }
     players

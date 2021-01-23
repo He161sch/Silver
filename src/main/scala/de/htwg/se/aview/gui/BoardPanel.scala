@@ -14,7 +14,7 @@ class BoardPanel(controller: ControllerInterface) extends Frame {
   listenTo(controller)
   title = "Silver"
   peer.setPreferredSize(new Dimension(1000, 1000))
-  peer.setResizable(true)
+  peer.setResizable(false)
 
   val myFont = new Font("Herculanum", java.awt.Font.PLAIN, 25)
   val pathToImage = "src/main/images/"

@@ -1,6 +1,6 @@
 package de.htwg.se.controller.controllercomponent.controllerbaseimpl
 
-import com.google.inject.{Guice, Inject}
+import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.controller.controllercomponent.GameState.{COMBINECARD, DRAWEDCARD, ENDGAME, FALSECOMMAND, InputName, NEWGAME, PLAYER_TURN, PlayerWon, SWITCHCARD, VIEWCARD, WelcomeState}
 import de.htwg.se.controller.controllercomponent._
 import de.htwg.se.model.deckcomponent.deckbaseimpl.Deck
@@ -12,17 +12,13 @@ import de.htwg.se.SilverModule
 
 import scala.swing.Publisher
 
-
 class Controller @Inject() (var gameConfig: GameConfigInterface) extends ControllerInterface with Publisher{
 
+  val injector: Injector = Guice.createInjector(new SilverModule)
+  val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
 
   var deck = new Deck
   var running: State = IsNotRunning()
-  val injector = Guice.createInjector(new SilverModule)
-  val fileIO = injector.getInstance(classOf[FileIOInterface])
-
-
-
   private val undoManager = new UndoManager
 
   def getState(): Unit = {
@@ -223,6 +219,7 @@ class Controller @Inject() (var gameConfig: GameConfigInterface) extends Control
 
     cardImageNames
   }
+
   def save: Unit = {
     fileIO.save(this)
     publish(new Saved)
